@@ -15,7 +15,7 @@ const Header = () => {
   <header id="header" >
   <div class="container d-flex align-items-center">
 
-    <h1 class="logo me-auto"><Link to="/">Title</Link></h1>
+    <h1 class="logo me-auto"><Link to="/">Dope<span >Tutor</span></Link></h1>
    
   
     <nav id="navbar" class="navbar">
