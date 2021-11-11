@@ -1,54 +1,57 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { LOGIN_USER } from '../../utils/mutations';
+import { ADD_USER } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-const Login = props => {
-    const [formState, setFormState] = useState({ email: '', password: '' });
-    const [login, { error }] = useMutation(LOGIN_USER);
-
+const Signup = () => {
+    const [formState, setFormState] = useState({ username: '', email: '', password: '' });
+    const [addUser, { error }] = useMutation(ADD_USER);
+  
     // update state based on form input changes
     const handleChange = event => {
-        const { name, value } = event.target;
-
-        setFormState({
-            ...formState,
-            [name]: value
-        });
+      const { name, value } = event.target;
+  
+      setFormState({
+        ...formState,
+        [name]: value
+      });
     };
-
+  
     // submit form
     const handleFormSubmit = async event => {
-        event.preventDefault();
-
-        try {
-            const { data } = await login({
-                variables: { ...formState }
-            });
-
-            Auth.login(data.login.token);
-        } catch (e) {
-            console.error(e);
-        }
-
-        // clear form values
-        setFormState({
-            email: '',
-            password: ''
+      event.preventDefault();
+  
+      try {
+        const { data } = await addUser({
+          variables: { ...formState }
         });
+  
+        Auth.login(data.addUser.token);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     return (
         <section id="contact" class="contact">
             <div class="container" data-aos="fade-up">
                 <div class="row justify-content-center">
-                    <div class="col-lg-6 col-m-8 mt-0  d-flex   align-items-stretch">
-                        <form onSubmit={handleFormSubmit} class="php-email-form">
-                            <h3 class="text-center">Login</h3>
-                            <div class="row">
-                                <div class="form-group col-md-6">
+                    <div class="col-lg-4 col-md-8 col-sm-10 mt-0  d-flex   align-items-stretch">
+                        <form onSubmit={handleFormSubmit} class="php-email-form  ">
+                            <h3 class="text-center">Signup</h3>
+                           
+                            <div class="form-group ">
                                     <label for="name">Your Name</label>
+                                    <input class="form-control" placeholder="Your name"
+                                        name="username"
+                                        type="username"
+                                        id="username"
+                                        value={formState.username}
+                                        onChange={handleChange} required />
+                                </div>
+                                <div class="form-group ">
+                                    <label for="email">Your Email</label>
                                     <input class="form-control" placeholder="Your email"
                                         name="email"
                                         type="email"
@@ -56,7 +59,7 @@ const Login = props => {
                                         value={formState.email}
                                         onChange={handleChange} required />
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group ">
                                     <label for="name">Your Password</label>
                                     <input class="form-control" placeholder="******"
                                         name="password"
@@ -65,8 +68,8 @@ const Login = props => {
                                         value={formState.password}
                                         onChange={handleChange}
                                         required />
-                                </div></div>
-                            {error && <div>Login failed</div>}
+                               </div>
+                               {error && <div>Signup failed</div>}
                             <div class="text-center"><button className="btn  w-50" type="submit">
                                 Submit
                             </button></div>
@@ -81,4 +84,4 @@ const Login = props => {
     );
 };
 
-export default Login;
+export default Signup;
