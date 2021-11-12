@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Hero from './components/Hero';
+import Profile from './components/Profile';
 
 
 const client = new ApolloClient({
@@ -27,8 +28,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        
-        <Header />
+    <Header />
+      
         <Switch>
               
               <Route exact path="/login" component={Login} />
@@ -36,7 +37,16 @@ function App() {
             </Switch>
         
       
-   <Hero />
+            <Switch>
+      <Route exact path="/" component={Hero} />
+      <Route exact path="/login" component={Hero} />
+      <Route exact path="/signup" component={Hero} />
+      </Switch>
+   <Switch>
+              
+              <Route exact path="/profile" component={Profile} />
+              
+            </Switch>
 
          <Footer />
        
