@@ -28,6 +28,7 @@ const Login = props => {
             });
 
             Auth.login(data.login.token);
+            window.location.assign(window.location.href.replace("login","")+"profile");
         } catch (e) {
             console.error(e);
         }

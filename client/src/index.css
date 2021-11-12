@@ -613,10 +613,15 @@ section {
 .why-us .accordion-list li + li {
   margin-top: 15px;
 }
-.why-us .accordion-list li {
+/* rfereg */
+.why-us h4{
+  color: #37517e;
+}
+.why-us input {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
+  width: 100%;
 }
 .why-us .accordion-list a {
   display: block;
@@ -659,6 +664,10 @@ section {
 }
 .why-us .accordion-list a.collapsed .icon-close {
   display: none;
+}
+/* non  d */
+.bgimg {
+  background-image: url("./img/hero-img.png");
 }
 @media (max-width: 1024px) {
   .why-us .content, .why-us .accordion-list {
