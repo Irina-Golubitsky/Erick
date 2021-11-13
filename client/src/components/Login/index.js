@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER } from '../../utils/mutations';
+import { Redirect } from 'react-router-dom';
 
 import Auth from '../../utils/auth';
 
@@ -28,16 +29,18 @@ const Login = props => {
             });
 
             Auth.login(data.login.token);
-            window.location.assign(window.location.href.replace("login","")+"profile");
+
+            // window.location.assign(window.location.href.replace("login","")+"profile");
+     
         } catch (e) {
             console.error(e);
         }
-
         // clear form values
         setFormState({
             email: '',
             password: ''
         });
+
     };
 
     return (
@@ -67,12 +70,15 @@ const Login = props => {
                                         onChange={handleChange}
                                         required />
                                 </div></div>
-                            {error && <div>Login failed</div>}
+                                {error && <div>Login failed</div>}
+                                {Auth.loggedIn() ? <Redirect to="/profile" /> :<> </>}
+                                
+
                             <div class="text-center"><button className="btn  w-50" type="submit">
                                 Submit
                             </button></div>
                         </form>
-
+                      
 
                     </div>
 
