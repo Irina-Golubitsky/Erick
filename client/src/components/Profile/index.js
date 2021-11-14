@@ -1,62 +1,49 @@
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/react-hooks';
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import Auth from '../../utils/auth';
+import {  useParams } from 'react-router-dom';
+
 
 
 import Info from '../Info'
-let usemail="";
+let usemail = "";
 
 const Profile = props => {
   const [currentCategory, setCurrentCategory] = useState('info');
-  const loggedIn=Auth.loggedIn();
-  if (loggedIn) { usemail=Auth.getProfile().data.email};
-  const {  data } = useQuery(QUERY_USER, {
-    variables: { email: usemail }
+  const { email: userParam } = useParams();
+  const loggedIn = Auth.loggedIn();
+
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    variables: { email: userParam }
   });
- 
- 
-  if (!loggedIn) 
-  {   
-    return (
-      <div class="login-error">
-      <h4 >
-        You need to be logged in to see this. Use the navigation links above to sign up or log in!
-      </h4>
-      </div>
-    );
+  const user = data?.me || data?.user || {}
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  //   Auth.getProfile().data.username === userParam
-  // ) {
-  //   return <Redirect to="/profile" />;
-  // }
-
+  if (!loggedIn) {
+    return (
+      <h4 class="login-error">
+        You need to be logged in to see this. Use the navigation links above to sign up or log in!
+      </h4>
+    );
+  }
 
 
   return (
 
     <section class="why-us section-bg">
-    <div  class=" d-flex justify-content-center">
-            <button type="button" class=" mebtn"  onClick={()=> setCurrentCategory("info")}>Info</button>
-            <button type="button" class="mebtn "  onClick={() => setCurrentCategory("table")} >Timetable</button>
-            <button type="button" class="mebtn  "  onClick={() => setCurrentCategory ("page")} >Page preview</button>
-</div>
+      <div class=" d-flex justify-content-center">
+        <button type="button" class=" mebtn" onClick={() => setCurrentCategory("info")}>Info</button>
+        <button type="button" class="mebtn " onClick={() => setCurrentCategory("table")} >Timetable</button>
+        <button type="button" class="mebtn  " onClick={() => setCurrentCategory("page")} >Page preview</button>
+      </div>
 
-
-               
-                    
-                   
-                   
-                    {(currentCategory==="info") ? <Info user={data}/> : <>  </> }
-
-
-
-                 
-                            
-               
-            </section>
+      {(currentCategory === "info") ? <Info user={data} /> : <>  </>}
+    </section>
 
   );
 };
