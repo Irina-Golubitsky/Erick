@@ -9,6 +9,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Hero from './components/Hero';
 import Profile from './components/Profile';
+import Userpage from './components/Userpage';
 
 
 
@@ -56,7 +57,18 @@ function App() {
 
         </Switch>
 
-        <Footer />
+        <Switch>
+
+          <Route exact path="/" component={Footer} />
+          <Route exact path="/profile" component={Footer} />
+          <Route exact path="/login" component={Footer} />
+          <Route exact path="/signup" component={Footer} />
+        </Switch>
+
+
+        <Switch>
+          <Route exact path="/page/:username?" component={Userpage} />
+        </Switch>
 
       </Router>
     </ApolloProvider>

@@ -19,7 +19,7 @@ const Info =props => {
     console.log(user.me.email);
 //     console.log(props);
 //     console.log(props.user);
-    // const user = data?.me|| {};
+    // const user = data?.me|| {} ;
     console.log(user);
     const handleClick = async () => {
         try {
@@ -30,8 +30,6 @@ const Info =props => {
           console.error(e);
         }
       };
-
-
 
     return (
 
