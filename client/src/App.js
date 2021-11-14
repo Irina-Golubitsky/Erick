@@ -11,6 +11,7 @@ import Hero from './components/Hero';
 import Profile from './components/Profile';
 
 
+
 const client = new ApolloClient({
   request: operation => {
     const token = localStorage.getItem('id_token');
@@ -28,28 +29,35 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-    <Header />
-      
-        <Switch>
-              
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-            </Switch>
-        
-      
-            <Switch>
-      <Route exact path="/" component={Hero} />
-      <Route exact path="/login" component={Hero} />
-      <Route exact path="/signup" component={Hero} />
-      </Switch>
-   <Switch>
-              
-              <Route exact path="/profile" component={Profile} />
-              
-            </Switch>
 
-         <Footer />
-       
+        <Switch>
+
+          <Route exact path="/" component={Header} />
+          <Route exact path="/profile" component={Header} />
+          <Route exact path="/login" component={Header} />
+          <Route exact path="/signup" component={Header} />
+        </Switch>
+
+        <Switch>
+
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+        </Switch>
+
+
+        <Switch>
+          <Route exact path="/" component={Hero} />
+          <Route exact path="/login" component={Hero} />
+          <Route exact path="/signup" component={Hero} />
+        </Switch>
+        <Switch>
+
+          <Route exact path="/profile" component={Profile} />
+
+        </Switch>
+
+        <Footer />
+
       </Router>
     </ApolloProvider>
   );

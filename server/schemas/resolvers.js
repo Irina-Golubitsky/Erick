@@ -8,23 +8,23 @@ const resolvers = {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
             .select('-__v -password')
-          
   
           return userData;
         }
   
         throw new AuthenticationError('Not logged in');
       },
+      
+      user: async (parent, { email }) => {
+        return User.findOne({ email })
+          .select('-__v -password')
+      
+      },
       users: async () => {
         return User.find()
           .select('-__v -password')
-    
-      },
-      user: async (parent, { username }) => {
-        return User.findOne({ username })
-          .select('-__v -password')
       
-      }
+      },
     },
   
     Mutation: {
@@ -34,6 +34,13 @@ const resolvers = {
   
         return { token, user };
       },
+       updateUser: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   
@@ -49,14 +56,7 @@ const resolvers = {
   
         const token = signToken(user);
         return { token, user };
-      },
-      updateUser: async (parent, args, context) => {
-        if (context.user) {
-          return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-        }
-  
-        throw new AuthenticationError('Not logged in');
-      },
+      }
     }
   };
   

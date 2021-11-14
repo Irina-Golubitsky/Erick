@@ -1,51 +1,49 @@
-import React from 'react';
 
-const Profile = () => {
+import { QUERY_USER, QUERY_ME } from '../../utils/queries';
+import { useQuery } from '@apollo/react-hooks';
+import React, { useState } from 'react';
+import Auth from '../../utils/auth';
+import {  useParams } from 'react-router-dom';
+
+
+
+import Info from '../Info'
+let usemail = "";
+
+const Profile = props => {
+  const [currentCategory, setCurrentCategory] = useState('info');
+  const { email: userParam } = useParams();
+  const loggedIn = Auth.loggedIn();
+
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    variables: { email: userParam }
+  });
+  const user = data?.me || data?.user || {}
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!loggedIn) {
+    return (
+      <h4 class="login-error">
+        You need to be logged in to see this. Use the navigation links above to sign up or log in!
+      </h4>
+    );
+  }
+
+
   return (
 
-    <div id="why-us" class="why-us section-bg">
-      <div class="container-fluid" data-aos="fade-up">
-
-        <div class="row">
-
-          <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
-
-            <div class="content">
-              <h3>Fill out this fields <strong>to create your webpage</strong></h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-              </p>
-            </div>
-
-           
-                  <div  class="accordion-list" >
-                  <h4 > Title</h4>
-                    <input  />
-                    
-                  </div>
-             
-                  <div  class="accordion-list" >
-                  <h4 > About Me</h4>
-                    <input  />
-                    
-                  </div>
-                  <div  class="accordion-list" >
-                  <h4 > Contacts</h4>
-                    <input  />
-                    
-                  </div>
-
-
-            
-           
-
-          </div>
-
-          <div class="col-lg-5 align-items-stretch order-1 order-lg-2 img bgimg " data-aos="zoom-in" data-aos-delay="150">&nbsp;</div>
-        </div>
-
+    <section class="why-us section-bg">
+      <div class=" d-flex justify-content-center">
+        <button type="button" class=" mebtn" onClick={() => setCurrentCategory("info")}>Info</button>
+        <button type="button" class="mebtn " onClick={() => setCurrentCategory("table")} >Timetable</button>
+        <button type="button" class="mebtn  " onClick={() => setCurrentCategory("page")} >Page preview</button>
       </div>
-    </div>
+
+      {(currentCategory === "info") ? <Info user={data} /> : <>  </>}
+    </section>
 
   );
 };
