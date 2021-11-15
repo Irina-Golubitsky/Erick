@@ -25,13 +25,15 @@ export const ADD_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($title: String, $about: String, $contacts: String) {
-    updateUser( title: $title, about: $about, contacts: $contacts) {
+  mutation updateUser($title: String, $about: String, $contacts: String, $fullname: String, $nb: String) {
+    updateUser( title: $title, about: $about, contacts: $contacts, fullname: $fullname, nb: $nb) {
       username
       email
       title
       about
       contacts
+      fullname
+      nb
     }
   }
 `;

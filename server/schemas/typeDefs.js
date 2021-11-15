@@ -8,6 +8,8 @@ type User {
     title: String
     about: String
     contacts: String
+    fullname: String
+    nb:String
 
   }
 type Auth {
@@ -25,7 +27,7 @@ type Auth {
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    updateUser(title: String, about: String, contacts: String): User
+    updateUser(title: String, about: String, contacts: String, fullname: String, nb: String): User
   
   }
   `;

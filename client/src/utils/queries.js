@@ -10,6 +10,8 @@ export const QUERY_USER = gql`
       title
       about
       contacts
+      fullname
+      nb
       
     }
   }
@@ -22,6 +24,8 @@ export const QUERY_ME = gql`
       title
       about
       contacts
+      fullname
+      nb
     }
   }
 `;

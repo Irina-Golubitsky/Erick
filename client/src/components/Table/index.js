@@ -7,7 +7,7 @@ import {  useMutation } from '@apollo/react-hooks';
 let SetForm=true;
 
 
-const Info =props => {
+const Table =props => {
     
     const [updateUser] = useMutation(UPDATE_USER);
     const [formState, setFormState] = useState({ title: "", about :"", contacts:"", fullname: "", nb:""});
@@ -20,8 +20,8 @@ const Info =props => {
         return <div>Loading...</div>;
       }
       
-      console.log ("my user " + user.username);
-      console.log ("my user " + user.title);
+      console.log ("my user timetable" + user);
+      console.log ("my user timetable .title " + user.title);
     //  const [formState, setFormState] = useState({ title: user.title, about : user.about, contacts: user.contacts, fullname: user.fullname, nb: user.nb });
  console.log(formState);
       if (!user?.username) {
@@ -73,9 +73,9 @@ const Info =props => {
                     <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
 
                         <div class="content">
-                            <h3>Fill out this fields <strong>to create your webpage</strong></h3>
+                            <h3>My Students </h3>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                                <Students />
                             </p>
                         </div>
 
@@ -131,4 +131,4 @@ const Info =props => {
     );
 };
 
-export default Info;
+export default Table;
