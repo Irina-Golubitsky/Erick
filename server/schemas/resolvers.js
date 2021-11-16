@@ -8,6 +8,7 @@ const resolvers = {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
             .select('-__v -password')
+            // .populate ('students')
   
           return userData;
         }
@@ -18,11 +19,13 @@ const resolvers = {
       user: async (parent, { username }) => {
         return User.findOne({ username })
           .select('-__v -password')
+          // .populate ('students')
       
       },
       users: async () => {
         return User.find()
           .select('-__v -password')
+          // .populate ('students')
       
       },
     },
@@ -40,6 +43,19 @@ const resolvers = {
       }
 
       throw new AuthenticationError('Not logged in');
+    },
+    addStudent: async (parent, { studentname }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user.id },
+          { $push: { students: { studentname} } },
+          { new: true, runValidators: true }
+        );
+
+        return updatedThought;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });

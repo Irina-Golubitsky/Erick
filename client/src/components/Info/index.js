@@ -4,16 +4,32 @@ import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import {  useMutation } from '@apollo/react-hooks';
-let SetForm=true;
 
 
 const Info =props => {
-    
+   
     const [updateUser] = useMutation(UPDATE_USER);
+    const [queryMe] = useMutation(UPDATE_USER);
     const [formState, setFormState] = useState({ title: "", about :"", contacts:"", fullname: "", nb:""});
-  
-    const { loading, data } = useQuery( QUERY_ME, {
-       
+
+
+    // const [updateUser, { error }] = useMutation( UPDATE_USER, {
+    //     update(cache, { data: { updateUser } }) {
+    //         try {
+    //         const { me } = cache.readQuery({ query: QUERY_ME  });
+    //         cache.writeQuery({
+    //           query: QUERY_ME,
+    //           data: { me: { ...me, updateUser } }
+    //         });
+    //      console.log ("cache title " +data.me.title);
+    //     } catch (e) {
+    //         console.error(e);
+    //       }
+    //     }
+    //   });
+
+
+    const { loading, data } = useQuery( QUERY_ME, {    
       });
       const user = data?.me || {};
       if (loading) {
@@ -21,8 +37,7 @@ const Info =props => {
       }
       
       console.log ("my user " + user.username);
-      console.log ("my user " + user.title);
-    //  const [formState, setFormState] = useState({ title: user.title, about : user.about, contacts: user.contacts, fullname: user.fullname, nb: user.nb });
+      console.log ("my user title " + user.title);
  console.log(formState);
       if (!user?.username) {
         return (
@@ -54,14 +69,22 @@ const Info =props => {
         if (formState.nb!=""){variablesfs.nb=formState.nb};
         console.log(variablesfs);
         try {
-          await updateUser({
-            variables: variablesfs              
-              
-          });
-        } catch (e) {
-          console.error(e);
-        }
-      };
+            await updateUser({
+              variables: variablesfs
+            });
+          } catch (e) {
+            console.error(e);
+          }
+     
+    //   const user2 = useQuery( QUERY_ME, {  username:user.username  
+    //   });
+    //         console.log("user2 title after updateUser" + user2.title);
+    //         user=user2;
+    //       console.log("user title after updateUser" + user.title);
+       
+        };
+          //  const [formState, setFormState] = useState({ title: user.title, about : user.about, contacts: user.contacts, fullname: user.fullname, nb: user.nb });
+
 
       return (
 

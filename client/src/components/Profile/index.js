@@ -33,7 +33,7 @@ const Profile = props => {
       </div>
 
       {(currentCategory === "info") ? <Info /> : <>  </>}
-      {(currentCategory === "table") ? <Table /> : <>  </>}
+      {(currentCategory === "table") ? <Table /> : <p> x </p>}
     </section>
 
   );
