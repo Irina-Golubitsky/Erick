@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const studentsSchema = require('./Students');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -28,13 +29,24 @@ const userSchema = new Schema(
     about: {
       type: String,
       minlength: 1,
-      maxlength: 400
+      maxlength: 800
     },
     contacts: {
       type: String,
       minlength: 1,
       maxlength: 400
     },
+    fullname: {
+      type: String,
+      minlength: 1,
+      maxlength: 200
+    },
+    nb: {
+      type: String,
+      minlength: 1,
+      maxlength: 400
+    },
+    students: [studentsSchema]
     
 
   },

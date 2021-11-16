@@ -137,6 +137,7 @@ h1, h2, h3, h4, h5, h6 {
   max-height: 40px;
 }
 
+
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -339,14 +340,22 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
-#hero {
+#hero{
   width: 100%;
   height: 80vh;
   background: #37517e;
 }
+ #hero-user{
+  width: 100%;
+  height: 40vh;
+  
+}
+
 #hero .container {
   padding-top: 72px;
 }
+
+
 #hero h1 {
   margin: 0 0 10px 0;
   font-size: 48px;
@@ -359,6 +368,24 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 50px;
   font-size: 24px;
 }
+#hero-user .container {
+  padding-top: 72px;
+  
+}
+#hero-user h1 {
+  margin: 0 0 10px 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #fff;
+}
+#hero-user h2 {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 50px;
+  font-size: 24px;
+}
+
+
 #hero .btn-get-started {
   font-family: "Jost", sans-serif;
   font-weight: 500;
@@ -397,11 +424,17 @@ h1, h2, h3, h4, h5, h6 {
 #hero .animated {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
+
 @media (max-width: 991px) {
   #hero {
     height: 100vh;
     text-align: center;
   }
+  #hero-user {
+    height: 100vh;
+    text-align: center;
+  }
+  
   #hero .animated {
     -webkit-animation: none;
     animation: none;
@@ -410,6 +443,12 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
   }
   #hero .hero-img img {
+    width: 50%;
+  }
+  #hero-user .hero-img {
+    text-align: center;
+  }
+  #hero-user .hero-img img {
     width: 50%;
   }
 }
@@ -423,12 +462,24 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 24px;
     margin-bottom: 30px;
   }
+  #hero-user h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
   #hero .hero-img img {
     width: 70%;
   }
+  #hero-user .hero-img img {
+    width: 70%;
+  }
+
 }
 @media (max-width: 575px) {
   #hero .hero-img img {
+    width: 80%;
+  }
+  #hero-user .hero-img img {
     width: 80%;
   }
   #hero .btn-get-started {
@@ -455,11 +506,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 /*--------------------------------------------------------------
+# hero userpage
+--------------------------------------------------------------*/
+#hero-user {
+color:#fff;
+  background: #333333;
+}
+
+/*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
 section {
   padding: 40px 0;
-  overflow: hidden;
+  
 }
 
 .section-bg {
@@ -468,7 +527,7 @@ section {
 
 .section-title {
   text-align: center;
-  padding-bottom: 30px;
+  /* padding-bottom: 10px; */
 }
 .section-title h2 {
   font-size: 32px;
@@ -479,6 +538,7 @@ section {
   position: relative;
   color: #37517e;
 }
+
 .section-title h2::before {
   content: "";
   position: absolute;
@@ -499,6 +559,12 @@ section {
   bottom: 0;
   left: calc(50% - 20px);
 }
+.user-page h2 {
+  color: #ce4170;}
+  .user-page h2::after {
+    background: #ce4170;}
+
+
 .section-title p {
   margin-bottom: 0;
 }
@@ -582,7 +648,7 @@ section {
 # Why Us
 --------------------------------------------------------------*/
 .content {
-  padding: 60px 50px 0 50px;
+  padding: 30px 50px 0 50px;
 }
 .why-us .content h3 {
   font-weight: 400;
@@ -603,8 +669,11 @@ section {
   background-repeat: no-repeat;
   background-position: center center;
 }
-.info-list {
+/* .info-list {
   padding: 0 50px 20px 50px;
+} */
+.infobox {
+  padding-left: 50px;
 }
 .why-us .accordion-list ul {
   padding: 0;
@@ -1459,6 +1528,12 @@ footer {
   font-size: 16px;
   background: rgba(40, 58, 90, 0.9);
   color:#ddd;
+}
+ .footer-user{
+  background:#333333;
+}
+.footer-user a{
+  color:lightcoral;
 }
 
 

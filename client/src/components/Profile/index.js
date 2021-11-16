@@ -1,28 +1,18 @@
 
-import { QUERY_USER, QUERY_ME } from '../../utils/queries';
-import { useQuery } from '@apollo/react-hooks';
+
 import React, { useState } from 'react';
 import Auth from '../../utils/auth';
-import {  useParams } from 'react-router-dom';
+
 
 
 
 import Info from '../Info'
-let usemail = "";
+import Table from '../Table'
+
 
 const Profile = props => {
   const [currentCategory, setCurrentCategory] = useState('info');
-  const { email: userParam } = useParams();
   const loggedIn = Auth.loggedIn();
-
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    variables: { email: userParam }
-  });
-  const user = data?.me || data?.user || {}
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (!loggedIn) {
     return (
@@ -42,7 +32,8 @@ const Profile = props => {
         <button type="button" class="mebtn  " onClick={() => setCurrentCategory("page")} >Page preview</button>
       </div>
 
-      {(currentCategory === "info") ? <Info user={data} /> : <>  </>}
+      {(currentCategory === "info") ? <Info /> : <>  </>}
+      {(currentCategory === "table") ? <Table /> : <p> x </p>}
     </section>
 
   );
