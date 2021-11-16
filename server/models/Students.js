@@ -5,8 +5,13 @@ const studentsSchema = new Schema(
     studentname: {
       type: String,
       required: true,
-      maxlength: 280
+      maxlength: 50
     },
+    username: {
+        type: String
+     
+     
+      },
   },
   {
     toJSON: {
@@ -14,5 +19,6 @@ const studentsSchema = new Schema(
     }
   }
 );
+
 
 module.exports = studentsSchema;

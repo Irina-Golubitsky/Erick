@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import {  useMutation } from '@apollo/react-hooks';
+import StudentForm from '../../components/StudentForm';
 let SetForm=true;
 
 
@@ -51,6 +52,7 @@ const Table =props => {
                             <p>
                               
                             </p>
+                            <StudentForm userId={user._id} />
                         </div>
 
                         

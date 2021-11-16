@@ -12,13 +12,18 @@ export const QUERY_USER = gql`
       contacts
       fullname
       nb
+      students {
+        studentname
+        username
+      }
       
     }
   }
 `;
 export const QUERY_ME = gql`
   {
-    me { _id
+    me { 
+      _id
       username
       email
       title
@@ -26,6 +31,10 @@ export const QUERY_ME = gql`
       contacts
       fullname
       nb
+      students {
+        studentname
+        username
+      }
     }
   }
 `;
