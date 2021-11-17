@@ -1,14 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { QUERY_USER } from '../../utils/queries';
+import { QUERY_USER,QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/react-hooks';
 
 const Userpage = () => {
     const { username: userParam } = useParams();
-    const { loading, data } = useQuery(QUERY_USER, {
+    console.log("userparam" + userParam);
+    const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
         variables: { username: userParam }
-    });
-    const user = data?.user || {};
+      });
+    
+      const user = data?.me || data?.user || {};
     console.log(user);
 
     if (loading) {
@@ -32,6 +34,7 @@ const emailLink="mailto:"+ user.email;
                     <div class="row">
                         <div class="col-lg-6 d-flex flex-column justify-content-center pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
                             <h1>Hello, I'm </h1>
+                            <h2>{user.fullname}</h2>
                             <h2>{user.email}</h2>
                         </div>
                         <div className="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -69,7 +72,7 @@ const emailLink="mailto:"+ user.email;
                 <div class="container ">
                     <div class="row text-center">
                         <div class="col-lg-6 col-sm-12">
-                            By Irina Golubitsky
+                            {user.fullname}
                         </div>
                         <div class="col-lg-6 col-sm-12">
                             <a href={emailLink} target="_blank"><i class="fa fa-envelope fa-2x"></i></a>

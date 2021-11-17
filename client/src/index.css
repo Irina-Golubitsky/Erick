@@ -512,13 +512,15 @@ h1, h2, h3, h4, h5, h6 {
 color:#fff;
   background: #333333;
 }
-
+.border {
+  border:  2px solid rgb(54, 52, 52);
+}
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
 section {
   padding: 40px 0;
-  
+  overflow: hidden;
 }
 
 .section-bg {
@@ -933,6 +935,27 @@ section {
   background-color:#47b2e4 ;
   
 }
+.tablebtn {
+  cursor: pointer;
+  background: #47b2e4;
+  margin: 10px 5px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  border: 0px;
+  
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: "Poppins", sans-serif;
+}
+.tablebtn:hover
+{
+  background-color:#2e8cb8 ;
+  color: #fff;
+  
+}
+
 .mebtn.active
 {
   color: #333;

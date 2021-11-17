@@ -6,11 +6,13 @@ import { UPDATE_USER } from '../../utils/mutations';
 import {  useMutation } from '@apollo/react-hooks';
 
 
-const Info =props => {
+const Info =({ user }) => {
    
     const [updateUser] = useMutation(UPDATE_USER);
     const [queryMe] = useMutation(UPDATE_USER);
-    const [formState, setFormState] = useState({ title: "", about :"", contacts:"", fullname: "", nb:""});
+   // const [formState, setFormState] = useState({ title: "", about :"", contacts:"", fullname: "", nb:""});
+const [formState, setFormState] = useState({ title: user.title, about : user.about, contacts: user.contacts, fullname: user.fullname, nb: user.nb });
+
 
 
     // const [updateUser, { error }] = useMutation( UPDATE_USER, {
@@ -29,17 +31,17 @@ const Info =props => {
     //   });
 
 
-    const { loading, data } = useQuery( QUERY_ME, {    
-      });
-      const user = data?.me || {};
-      if (loading) {
-        return <div>Loading...</div>;
-      }
+    // const { loading, data } = useQuery( QUERY_ME, {    
+    //   });
+    //   const user = data?.me || {};
+    //   if (loading) {
+    //     return <div>Loading...</div>;
+    //   }
       
       console.log ("my user " + user.username);
       console.log ("my user title " + user.title);
  console.log(formState);
-      if (!user?.username) {
+ if (!Auth.loggedIn()){
         return (
           <h4 class="login-error">
             You need to be logged in to see this. Use the navigation links above to sign up or log in!
@@ -60,17 +62,10 @@ const Info =props => {
 
    
     const handleClick = async () => {
-        console.log ("formstate "+ formState);
-         let variablesfs={};
-        if (formState.title!=""){variablesfs.title=formState.title};
-        if (formState.about!=""){variablesfs.about=formState.about};
-        if (formState.contacts!=""){variablesfs.contacts=formState.contacts};
-        if (formState.fullname!=""){variablesfs.fullname=formState.fullname};
-        if (formState.nb!=""){variablesfs.nb=formState.nb};
-        console.log(variablesfs);
+      
         try {
             await updateUser({
-              variables: variablesfs
+              variables: formState
             });
           } catch (e) {
             console.error(e);
@@ -133,9 +128,6 @@ const Info =props => {
                         <div class="infosend text-center"><button class=" " type="submit" onClick={handleClick} >
                             Save
                         </button></div>
-
-
-
 
 
                     </div>
