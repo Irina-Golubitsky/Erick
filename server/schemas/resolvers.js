@@ -57,6 +57,17 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
+    deleteStudent: async (parent, { userId, studentname }, context) => {
+     
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { $pull: { students: { studentname } } },
+          { new: true, runValidators: true }
+        );
+
+        return updatedUser;
+    
+    },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   

@@ -60,3 +60,21 @@ export const ADD_STUDENT = gql`
     }
   }
 `;
+export const DELETE_STUDENT = gql`
+  mutation addStudent($userId: ID!, $studentname: String!) {
+    deleteStudent(userId: $userId, studentname: $studentname) {
+      _id
+      username
+      email
+      title
+      about
+      contacts
+      fullname
+      nb
+      students {
+        studentname
+        username
+      }
+    }
+  }
+`;

@@ -33,6 +33,7 @@ type Auth {
     addUser(username: String!, email: String!, password: String!): Auth
     updateUser(title: String, about: String, contacts: String, fullname: String, nb: String): User
      addStudent(userId: ID!, studentname: String!): User
+     deleteStudent(userId: ID!, studentname: String!): User
   
   }
   `;

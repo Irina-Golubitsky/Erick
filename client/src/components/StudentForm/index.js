@@ -35,23 +35,24 @@ console.log(studentname);
   return (
     <div>
       <p className={`m-0 ${characterCount === 50 || error ? 'text-error' : ''}`}>
-        Character Count: {characterCount}/50
         {error && <span className="ml-2">Something went wrong...</span>}
       </p>
-      <form
+      <form 
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
       >
-        <textarea
-          placeholder="Leave a reaction to this thought..."
+      <div class="info-list ">
+        <input
+          placeholder="Sudent name"
           value={studentname}
-          className="form-input col-12 col-md-9"
+          className="form-input col-12 col-md-5 "
           onChange={handleChange}
-        ></textarea>
+        ></input>
 
-        <button className="btn col-12 col-md-3" type="submit">
-          Submit
+        <button className="btn tablebtn col-12 col-md-3" type="submit">
+          Add Student
         </button>
+        </div>
       </form>
 
       {error && <div>Something went wrong...</div>}
