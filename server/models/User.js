@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const studentsSchema = require('./Students');
+const eventSchema = require('./Event');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -46,7 +47,8 @@ const userSchema = new Schema(
       minlength: 1,
       maxlength: 400
     },
-    students: [studentsSchema]
+    students: [studentsSchema],
+    events: [eventSchema]
     
 
   },

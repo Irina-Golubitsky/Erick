@@ -93,8 +93,7 @@ const [formState, setFormState] = useState({ title: user.title, about : user.abo
                         <div class="content">
                             <h3>Fill out this fields <strong>to create your webpage</strong></h3>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                            </p>
+                            About me page is a space for individuality and originality, it is an important marketing tool that should convince.                            </p>
                         </div>
 
                         <div class="row info-list">
@@ -125,7 +124,7 @@ const [formState, setFormState] = useState({ title: user.title, about : user.abo
                         </div>
                         </div>
 
-                        <div class="infosend text-center"><button class=" " type="submit" onClick={handleClick} >
+                        <div class="infosend text-center"><button  type="submit" onClick={handleClick} >
                             Save
                         </button></div>
 

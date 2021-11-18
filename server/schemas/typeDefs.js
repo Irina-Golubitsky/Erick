@@ -11,10 +11,19 @@ type User {
     fullname: String
     nb:String
     students:[Student]
+    events:[Event]
   }
   type Student {
     studentname:String
-    username: String
+    userId: String
+  }
+  type Event {
+    userId:String
+    day:String
+    start:String
+    end: String
+    student:String
+    comment:String
   }
 type Auth {
     token: ID!
@@ -23,9 +32,7 @@ type Auth {
   type Query {
     me: User
     users: [User]
-    user(username: String!): User
-  
-  
+    user(username: String!): User 
   }
 
   type Mutation {
@@ -34,6 +41,7 @@ type Auth {
     updateUser(title: String, about: String, contacts: String, fullname: String, nb: String): User
      addStudent(userId: ID!, studentname: String!): User
      deleteStudent(userId: ID!, studentname: String!): User
+     addEvent(userId: ID!, day: String! start: String! end: String! student: String! comment: String): User
   
   }
   `;

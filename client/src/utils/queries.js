@@ -14,7 +14,15 @@ export const QUERY_USER = gql`
       nb
       students {
         studentname
-        username
+        userId
+      }
+      events {
+        userId
+        day
+        start
+        end
+        student
+        comment
       }
       
     }
@@ -33,7 +41,15 @@ export const QUERY_ME = gql`
       nb
       students {
         studentname
-        username
+        userId
+      }
+      events {
+        userId
+        day
+        start
+        end
+        student
+        comment
       }
     }
   }

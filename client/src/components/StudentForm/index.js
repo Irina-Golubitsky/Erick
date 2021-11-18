@@ -45,11 +45,11 @@ console.log(studentname);
         <input
           placeholder="Sudent name"
           value={studentname}
-          className="form-input col-12 col-md-5 "
+          className="form-input col-12 col-md-3"
           onChange={handleChange}
         ></input>
 
-        <button className="btn tablebtn col-12 col-md-3" type="submit">
+        <button className="btn tablebtn col-3 col-md-3 " type="submit">
           Add Student
         </button>
         </div>

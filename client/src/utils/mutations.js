@@ -35,10 +35,6 @@ export const UPDATE_USER = gql`
       contacts
       fullname
       nb
-      students {
-        studentname
-        username
-      }
     }
   }
 `;
@@ -47,33 +43,21 @@ export const ADD_STUDENT = gql`
     addStudent(userId: $userId, studentname: $studentname) {
       _id
       username
-      email
-      title
-      about
-      contacts
-      fullname
-      nb
       students {
         studentname
-        username
+        userId
       }
     }
   }
 `;
 export const DELETE_STUDENT = gql`
-  mutation addStudent($userId: ID!, $studentname: String!) {
+  mutation deleteStudent($userId: ID!, $studentname: String!) {
     deleteStudent(userId: $userId, studentname: $studentname) {
       _id
       username
-      email
-      title
-      about
-      contacts
-      fullname
-      nb
       students {
         studentname
-        username
+        userId
       }
     }
   }

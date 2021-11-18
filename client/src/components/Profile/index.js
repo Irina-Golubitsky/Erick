@@ -35,9 +35,9 @@ const Profile = props => {
 
     <section class="why-us section-bg">
       <div class=" d-flex justify-content-center">
-        <button type="button" class=" mebtn" onClick={() => setCurrentCategory("info")}>Info</button>
-        <button type="button" class="mebtn " onClick={() => setCurrentCategory("table")} >Timetable</button>
-        <button type="button" class="mebtn  " onClick={() => setCurrentCategory("page")} >Page preview</button>
+        <button type="button" class={`mebtn ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Info</button>
+        <button type="button" class={`mebtn ${currentCategory === 'table' ? 'active' : ''}`} onClick={() => setCurrentCategory("table")} >Timetable</button>
+        <button type="button" class={`mebtn ${currentCategory === 'page' ? 'active' : ''}`} onClick={() => setCurrentCategory("page")} >Page preview</button>
       </div>
 
       {(currentCategory === "info") ? <Info user={user}/> : <>  </>}
