@@ -676,6 +676,7 @@ section {
 } */
 .infobox {
   padding-left: 50px;
+  padding-right: 50px;
 }
 .why-us .accordion-list ul {
   padding: 0;
@@ -748,6 +749,7 @@ section {
 .bgimg {
   background-image: url("./img/hero-img.png");
 }
+
 @media (max-width: 1024px) {
   .why-us .content, .why-us .accordion-list {
     padding-left: 0;
@@ -833,6 +835,7 @@ section {
   padding: 50px 30px;
   transition: all ease-in-out 0.4s;
   background: #fff;
+width:100%;
 }
 .services .icon-box .icon {
   margin-bottom: 10px;
@@ -918,7 +921,7 @@ section {
 }
 .mebtn {
   cursor: pointer;
-  background: #e7881b;
+  background: #47b2e4;
   margin: 10px 5px;
   font-size: 15px;
   font-weight: 500;
@@ -932,7 +935,12 @@ section {
 }
 .mebtn:hover
 {
-  background-color:#47b2e4 ;
+  background-color:#e7881b  ;
+  
+}
+.mebtn.active
+{
+  background-color:#e7881b ;
   
 }
 .tablebtn {
@@ -956,11 +964,7 @@ section {
   
 }
 
-.mebtn.active
-{
-  color: #333;
-  background-color:red;
-}
+
 
 .portfolio #portfolio-flters button:hover, portfolio #portfolio-flters button:active {
   background: #47b2e4;

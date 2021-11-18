@@ -37,7 +37,15 @@ export const UPDATE_USER = gql`
       nb
       students {
         studentname
-        username
+        userId
+      }
+      events {
+        userId
+        start
+        end
+        day
+        student
+        comment
       }
     }
   }
@@ -47,33 +55,35 @@ export const ADD_STUDENT = gql`
     addStudent(userId: $userId, studentname: $studentname) {
       _id
       username
-      email
-      title
-      about
-      contacts
-      fullname
-      nb
       students {
         studentname
-        username
+        userId
       }
     }
   }
 `;
 export const DELETE_STUDENT = gql`
-  mutation addStudent($userId: ID!, $studentname: String!) {
+  mutation deleteStudent($userId: ID!, $studentname: String!) {
     deleteStudent(userId: $userId, studentname: $studentname) {
       _id
       username
-      email
-      title
-      about
-      contacts
-      fullname
-      nb
       students {
         studentname
-        username
+        userId
+      }
+    }
+  }
+`;
+
+export const ADD_EVENT = gql`
+  mutation addEvent($userId: ID!, $day: String! $start: String! $end: String! $student: String! $comment: String) {
+    addEvent(userId: $userId, day: $day, start: $start, end: $end, student: $student, comment: $comment) {
+      _id
+      username
+      events {
+        start
+        student
+        day
       }
     }
   }

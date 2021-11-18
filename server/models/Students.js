@@ -7,10 +7,8 @@ const studentsSchema = new Schema(
       required: true,
       maxlength: 50
     },
-    username: {
-        type: String
-     
-     
+    userId: {
+        type: String 
       },
   },
   {

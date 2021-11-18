@@ -48,7 +48,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: userId },
-          { $push: { students: { studentname, username: context.user.username } } },
+          { $push: { students: { studentname, userId: context.user._id } } },
           { new: true, runValidators: true }
         );
 
@@ -58,15 +58,34 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     deleteStudent: async (parent, { userId, studentname }, context) => {
-     
+      if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: userId },
-          { $pull: { students: { studentname } } },
+          { $pull: { students: { studentname, userId } } },
           { new: true, runValidators: true }
         );
 
         return updatedUser;
-    
+        }
+        throw new AuthenticationError('You need to be logged in!');
+    },
+    addEvent: async (parent, args, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id},
+          { 
+            $push: { 
+              events:{
+              $each:[{ ...args} ],
+              $sort:{start:1} 
+            } }},
+          { new: true, runValidators: true }
+        );
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
