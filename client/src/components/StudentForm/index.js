@@ -34,9 +34,7 @@ console.log(studentname);
 
   return (
     <div>
-      <p className={`m-0 ${characterCount === 50 || error ? 'text-error' : ''}`}>
-        {error && <span className="ml-2">Something went wrong...</span>}
-      </p>
+  
       <form 
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}

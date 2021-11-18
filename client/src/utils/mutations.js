@@ -35,6 +35,18 @@ export const UPDATE_USER = gql`
       contacts
       fullname
       nb
+      students {
+        studentname
+        userId
+      }
+      events {
+        userId
+        start
+        end
+        day
+        student
+        comment
+      }
     }
   }
 `;
@@ -58,6 +70,20 @@ export const DELETE_STUDENT = gql`
       students {
         studentname
         userId
+      }
+    }
+  }
+`;
+
+export const ADD_EVENT = gql`
+  mutation addEvent($userId: ID!, $day: String! $start: String! $end: String! $student: String! $comment: String) {
+    addEvent(userId: $userId, day: $day, start: $start, end: $end, student: $student, comment: $comment) {
+      _id
+      username
+      events {
+        start
+        student
+        day
       }
     }
   }

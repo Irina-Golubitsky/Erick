@@ -3,7 +3,7 @@ import Auth from '../../utils/auth';
 
 
 
-import { QUERY_USER, QUERY_ME } from '../../utils/queries';
+import {  QUERY_ME } from '../../utils/queries';
 import Info from '../Info'
 import Table from '../Table'
 import Preview from '../Preview'

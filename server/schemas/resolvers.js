@@ -73,7 +73,12 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id},
-          { $push: { events: { ...args} } },
+          { 
+            $push: { 
+              events:{
+              $each:[{ ...args} ],
+              $sort:{start:1} 
+            } }},
           { new: true, runValidators: true }
         );
 
