@@ -132,9 +132,7 @@ const [formState, setFormState] = useState({ title: user.title, about : user.abo
                     </div>
 
                     <div class="col-lg-5  d-flex justify-content-center order-2 order-lg-2 img bgimg  " data-aos="zoom-in" data-aos-delay="150">
-                        <div class="h-100 d-flex align-items-end infosend  text-center"><button class="" type="submit">
-                            Go next
-                        </button></div></div>
+                        </div>
 
 
 
