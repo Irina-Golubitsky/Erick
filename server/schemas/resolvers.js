@@ -87,6 +87,19 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
+    deleteEvent: async (parent, args, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { events: { ...args} } },
+          { new: true, runValidators: true }
+        );
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   

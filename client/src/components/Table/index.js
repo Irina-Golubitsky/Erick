@@ -169,13 +169,13 @@ const Table = props => {
               <section id="services" class="services section-bg">
     <div class="row">
   
-    <ShowTable events={user.events} day="Monday" />
-    <ShowTable events={user.events} day="Tuesday" />
-    <ShowTable events={user.events} day="Wednesday" />
-    <ShowTable events={user.events} day="Thurstday" />
-    <ShowTable events={user.events} day="Friday" />
-    <ShowTable events={user.events} day="Saturday" />
-    <ShowTable events={user.events} day="Sunday" />
+    <ShowTable events={user.events} day="Monday" userId={user._id} />
+    <ShowTable events={user.events} day="Tuesday" userId={user._id} />
+    <ShowTable events={user.events} day="Wednesday" userId={user._id}/>
+    <ShowTable events={user.events} day="Thurstday" userId={user._id}/>
+    <ShowTable events={user.events} day="Friday" userId={user._id} />
+    <ShowTable events={user.events} day="Saturday" userId={user._id}/>
+    <ShowTable events={user.events} day="Sunday" userId={user._id}/>
  
            
 

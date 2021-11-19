@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { QUERY_USER,QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/react-hooks';
+import ShowTableUser from '../../components/ShowTableUser';
 
 const Userpage = () => {
     const { username: userParam } = useParams();
@@ -67,6 +68,22 @@ const emailLink="mailto:"+ user.email;
         </div>
 
       </div>
+    </section>
+
+    <section id="services" class="services section-bg">
+    <div class="row">
+  
+    <ShowTableUser events={user.events} day="Monday" />
+    <ShowTableUser events={user.events} day="Tuesday" />
+    <ShowTableUser events={user.events} day="Wednesday" />
+    <ShowTableUser events={user.events} day="Thurstday" />
+    <ShowTableUser events={user.events} day="Friday" />
+    <ShowTableUser events={user.events} day="Saturday" />
+    <ShowTableUser events={user.events} day="Sunday" />
+ 
+           
+
+    </div>
     </section>
             <footer class="footer-user">
                 <div class="container ">

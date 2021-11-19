@@ -563,6 +563,10 @@ section {
 }
 .user-page h2 {
   color: #ce4170;}
+
+  .user-page h4 {
+    color: #ce4170;}
+    
   .user-page h2::after {
     background: #ce4170;}
 

@@ -42,6 +42,7 @@ type Auth {
      addStudent(userId: ID!, studentname: String!): User
      deleteStudent(userId: ID!, studentname: String!): User
      addEvent(userId: ID!, day: String! start: String! end: String! student: String! comment: String): User
+     deleteEvent(userId: ID!, day: String! start: String! end: String! student: String! comment: String): User
   
   }
   `;

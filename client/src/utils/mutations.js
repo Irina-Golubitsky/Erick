@@ -81,9 +81,28 @@ export const ADD_EVENT = gql`
       _id
       username
       events {
+        userId
         start
+        end
         student
         day
+        comment
+      }
+    }
+  }
+`;
+export const DELETE_EVENT = gql`
+  mutation deleteEvent($userId: ID!, $day: String! $start: String! $end: String! $student: String! $comment: String) {
+    deleteEvent(userId: $userId, day: $day, start: $start, end: $end, student: $student, comment: $comment) {
+      _id
+      username
+      events {
+        userId
+        start
+        end
+        student
+        day
+        comment
       }
     }
   }
