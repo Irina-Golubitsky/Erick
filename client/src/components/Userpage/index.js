@@ -56,16 +56,18 @@ const emailLink="mailto:"+ user.email;
         <div class="row content">
           <div class="col-lg-6">
             <p>
-              {user.about}
+              <span class="font-weight-bold">About Me: </span>{user.about}
             </p>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
             <p>
-             {user.contacts}
+            <span class="font-weight-bold">Contacts: </span>{user.contacts}
             </p>
             
           </div>
         </div>
+        <br></br>
+        <div class="text-center text-danger">{user.nb}</div>
 
       </div>
     </section>
