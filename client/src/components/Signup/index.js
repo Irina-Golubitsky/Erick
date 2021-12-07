@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_USER } from '../../utils/mutations';
+import { Redirect } from 'react-router-dom';
 
 import Auth from '../../utils/auth';
 
@@ -28,9 +29,12 @@ const Signup = () => {
         });
   
         Auth.login(data.addUser.token);
+        window.location.replace("/profile");
       } catch (e) {
         console.error(e);
+        
       }
+    
     };
 
     return (
@@ -45,7 +49,7 @@ const Signup = () => {
                                     <label for="name">Your Name</label>
                                     <input class="form-control" placeholder="Your name"
                                         name="username"
-                                        type="username"
+                                        type="text"
                                         id="username"
                                         value={formState.username}
                                         onChange={handleChange} required />
@@ -54,7 +58,7 @@ const Signup = () => {
                                     <label for="email">Your Email</label>
                                     <input class="form-control" placeholder="Your email"
                                         name="email"
-                                        type="email"
+                                        type="string"
                                         id="email"
                                         value={formState.email}
                                         onChange={handleChange} required />
@@ -70,12 +74,13 @@ const Signup = () => {
                                         required />
                                </div>
                                {error && <div>Signup failed</div>}
+                               {Auth.loggedIn() ? <Redirect to="/profile" /> :<> </>}
                             <div class="text-center"><button className="btn  w-50" type="submit">
                                 Submit
                             </button></div>
                         </form>
 
-
+    
                     </div>
 
                 </div>
