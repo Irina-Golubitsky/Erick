@@ -13,9 +13,10 @@ const Header = () => {
  
    
   <header id="header" >
-  <div class="container d-flex align-items-center">
+  <div class="container d-flex align-items-center pl-4">
 
-    <h1 class="logo me-auto"><Link to="/">Tutor<span >Pro</span></Link></h1>
+    <h1 class="logo me-auto"><Link to="/"> <img src={require(`../../img/ak_logo.webp`).default}
+                            alt="hero-img" key="hero-img.png" className="aklogo" /></Link></h1>
    
   
     <nav id="navbar" class="navbar">
@@ -29,7 +30,7 @@ const Header = () => {
           ) : (
             <>
               <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
+              {/* <Link to="/signup">Signup</Link> */}
             </>
           )}
    

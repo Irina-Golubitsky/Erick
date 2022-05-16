@@ -10,7 +10,7 @@ const Footer = () => {
             By Irina Golubitsky
           </div>
           <div class="col-lg-6 col-sm-12">
-          <a href="https://github.com/Irina-Golubitsky/project-3" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+          <a href="https://github.com/Irina-Golubitsky/Erick" target="_blank"><i class="fa fa-github fa-2x"></i></a>
           </div>
         </div>
       </div>

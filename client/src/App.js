@@ -10,6 +10,8 @@ import Login from './components/Login';
 import Hero from './components/Hero';
 import Profile from './components/Profile';
 import Userpage from './components/Userpage';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
 
 
 
@@ -52,10 +54,19 @@ function App() {
           <Route exact path="/signup" component={Hero} />
         </Switch>
         <Switch>
+        <Route exact path="/profile" component={Sidebar} />
+        
 
-          <Route exact path="/profile" component={Profile} />
+      
 
         </Switch>
+        {/* <Switch>
+     
+        <Route exact path="/profile" component={Main} />
+
+      
+
+        </Switch> */}
 
         <Switch>
 
