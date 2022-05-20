@@ -1520,6 +1520,18 @@ width:100%;
     transform: rotate(360deg);
   }
 }
+/* vertical text */
+.text-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+/* one line td */
+.one-line { white-space:nowrap;}
+
+.top-solid {
+  border-top-style:solid;
+  border-top-color: coral;
+  border-top-width: 2px;}
 
 /*--------------------------------------------------------------
 # Breadcrumbs

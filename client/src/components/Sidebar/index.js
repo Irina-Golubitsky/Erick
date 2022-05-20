@@ -8,10 +8,11 @@ import Info from '../Info'
 import Table from '../Table'
 import Preview from '../Preview'
 import IntDashboard from '../IntDashboard'
+import IntMembers from '../IntMembers'
 import { useQuery } from '@apollo/react-hooks';
 
 const Sidebar = props => {
-  const [currentCategory, setCurrentCategory] = useState('info');
+  const [currentCategory, setCurrentCategory] = useState('IntDashboard');
   const { loading, data } = useQuery( QUERY_ME, {    
   });
   const user = data?.me || {};
@@ -19,8 +20,6 @@ const Sidebar = props => {
     return <div>Loading...</div>;
   }
   
-  console.log ("profile user " + user.username);
-  console.log ("profile title " + user.title);
   const loggedIn = Auth.loggedIn();
 
   if (!loggedIn) {
@@ -30,6 +29,7 @@ const Sidebar = props => {
       </h4>
     );
   }
+  
 
 
 
@@ -75,7 +75,12 @@ const Sidebar = props => {
             
               <ul>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntDashboard")}>Intakes
+                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntDashboard")}>Intakes Platforms
+                    <span class="badge badge-pill badge-success">v</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntMembers")}>Intakes Members
                     <span class="badge badge-pill badge-success">v</span>
                   </a>
                 </li>
@@ -142,10 +147,13 @@ const Sidebar = props => {
   <div>
   
   {(currentCategory === "IntDashboard") ? <IntDashboard user={user}/> : <>  </>}
+  {(currentCategory === "IntMembers") ? <IntMembers user={user}/> : <>  </>}
       {(currentCategory === "table") ? <Table user={user}/> : <> </>}
       {(currentCategory === "page") ? <Preview user={user}/> : <>  </>}
       </div>
+      <script src="script.js"></script>
   </div>
+  
 
   );
 }
