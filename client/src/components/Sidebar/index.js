@@ -10,6 +10,8 @@ import Preview from '../Preview'
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
 import { useQuery } from '@apollo/react-hooks';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 const Sidebar = props => {
   const [currentCategory, setCurrentCategory] = useState('IntDashboard');
@@ -31,7 +33,41 @@ const Sidebar = props => {
   }
   
 
+  function ss ( $ ) {
 
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+};
 
 
   return (
@@ -133,6 +169,10 @@ const Sidebar = props => {
     
     <div class="sidebar-footer">
     
+      <a href="#">
+        <i class="fa fa-user"></i>
+        
+      </a>
       <a href="#">
         <i class="fa fa-cog"></i>
         
