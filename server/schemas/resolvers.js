@@ -15,19 +15,18 @@ const resolvers = {
   
         throw new AuthenticationError('Not logged in');
       },
-      
-      user: async (parent, { username }) => {
-        return User.findOne({ username })
-          .select('-__v -password')
-          .populate ('students')
-      
-      },
       users: async () => {
         return User.find()
           .select('-__v -password')
-         .populate ('students')
-      
+        
       },
+      user: async (parent, { _id }) => {
+        return User.findOne({ _id })
+          .select('-__v -password')
+        
+      },
+      
+      
     },
   
     Mutation: {
@@ -37,68 +36,21 @@ const resolvers = {
   
         return { token, user };
       },
-       updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
+       updateUser: async (parent, { userId, username, email, role, department,active }, context) => {
+      // if (context.user) {
+        
+        // , email:email, role:role, department:department, active:active
+
+        return await User.findOneAndUpdate(
+          { _id: userId },
+          { $set:{ username: username, email:email, role:role, department: department, active:active}},
+          {
+            new: true,
+          }
+          );
+      // }
 
       throw new AuthenticationError('Not logged in');
-    },
-    addStudent: async (parent, { userId, studentname }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: userId },
-          { $push: { students: { studentname, userId: context.user._id } } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedUser;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    deleteStudent: async (parent, { userId, studentname }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: userId },
-          { $pull: { students: { studentname, userId } } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedUser;
-        }
-        throw new AuthenticationError('You need to be logged in!');
-    },
-    addEvent: async (parent, args, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id},
-          { 
-            $push: { 
-              events:{
-              $each:[{ ...args} ],
-              $sort:{start:1} 
-            } }},
-          { new: true, runValidators: true }
-        );
-
-        return updatedUser;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    deleteEvent: async (parent, args, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { events: { ...args} } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedUser;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
     },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });

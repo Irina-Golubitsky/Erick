@@ -25,85 +25,16 @@ export const ADD_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($title: String, $about: String, $contacts: String, $fullname: String, $nb: String) {
-    updateUser( title: $title, about: $about, contacts: $contacts, fullname: $fullname, nb: $nb) {
+  mutation updateUser($userId: ID!, $username: String, $email: String,  
+     $role: String, $department: String, $active:Boolean) {
+    updateUser( userId:$userId, username: $username, email: $email,  role: $role, department: $department, active: $active ) {
       _id
       username
       email
-      title
-      about
-      contacts
-      fullname
-      nb
-      students {
-        studentname
-        userId
-      }
-      events {
-        userId
-        start
-        end
-        day
-        student
-        comment
-      }
-    }
-  }
-`;
-export const ADD_STUDENT = gql`
-  mutation addStudent($userId: ID!, $studentname: String!) {
-    addStudent(userId: $userId, studentname: $studentname) {
-      _id
-      username
-      students {
-        studentname
-        userId
-      }
-    }
-  }
-`;
-export const DELETE_STUDENT = gql`
-  mutation deleteStudent($userId: ID!, $studentname: String!) {
-    deleteStudent(userId: $userId, studentname: $studentname) {
-      _id
-      username
-      students {
-        studentname
-        userId
-      }
-    }
-  }
-`;
-
-export const ADD_EVENT = gql`
-  mutation addEvent($userId: ID!, $day: String! $start: String! $end: String! $student: String! $comment: String) {
-    addEvent(userId: $userId, day: $day, start: $start, end: $end, student: $student, comment: $comment) {
-      _id
-      username
-      events {
-        userId
-        start
-        end
-        student
-        day
-        comment
-      }
-    }
-  }
-`;
-export const DELETE_EVENT = gql`
-  mutation deleteEvent($userId: ID!, $day: String! $start: String! $end: String! $student: String! $comment: String) {
-    deleteEvent(userId: $userId, day: $day, start: $start, end: $end, student: $student, comment: $comment) {
-      _id
-      username
-      events {
-        userId
-        start
-        end
-        student
-        day
-        comment
-      }
+      active
+      role
+      department
+     
     }
   }
 `;

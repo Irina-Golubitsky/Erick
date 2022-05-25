@@ -29,7 +29,7 @@ const Signup = () => {
         });
   
         Auth.login(data.addUser.token);
-        window.location.replace("/profile");
+        window.location.replace("/admin");
       } catch (e) {
         console.error(e);
         
@@ -74,7 +74,7 @@ const Signup = () => {
                                         required />
                                </div>
                                {error && <div>Signup failed</div>}
-                               {Auth.loggedIn() ? <Redirect to="/profile" /> :<> </>}
+                               {Auth.loggedIn() ? <Redirect to="/admin" /> :<> </>}
                             <div class="text-center"><button className="btn  w-50" type="submit">
                                 Submit
                             </button></div>

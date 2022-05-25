@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { QUERY_ME } from '../../utils/queries';
 import { UPDATE_USER } from '../../utils/mutations';
 import { useMutation } from '@apollo/react-hooks';
-import { DELETE_STUDENT, ADD_EVENT } from '../../utils/mutations';
+
 import Auth from '../../utils/auth';
 import { useQuery } from '@apollo/react-hooks';
 import IntakesD from '../../components/IntakesD';
@@ -24,7 +24,7 @@ const IntDashboard = props => {
     const [dataState, setDataState] = useState([]);
     const [reportMarket, setReportMarket] = useState([{ platform: "", calls: 0 }]);
     const [rangeState, setRangeState] = useState({ dayStart: priorDate, dayEnd: today });
-    const [updateUser] = useMutation(UPDATE_USER);
+   
     const { loading, data } = useQuery(QUERY_ME, {
     });
 

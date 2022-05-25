@@ -2,28 +2,30 @@ import gql from 'graphql-tag';
 
 
 export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
+  query user($id: ID!) {
+    user(_id: $id) {
       _id
       username
       email
-      title
-      about
-      contacts
-      fullname
-      nb
-      students {
-        studentname
-        userId
-      }
-      events {
-        userId
-        day
-        start
-        end
-        student
-        comment
-      }
+      active
+      role
+      department
+      
+      
+    }
+  }
+`;
+export const QUERY_USERS = gql`
+  query users {
+    users {
+      _id
+      username
+     
+      email
+      active
+      role
+      department
+      
       
     }
   }
@@ -34,23 +36,9 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      title
-      about
-      contacts
-      fullname
-      nb
-      students {
-        studentname
-        userId
-      }
-      events {
-        userId
-        day
-        start
-        end
-        student
-        comment
-      }
+      active
+      role
+      department
     }
   }
 `;

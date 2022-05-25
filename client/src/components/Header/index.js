@@ -22,7 +22,7 @@ const Header = () => {
     <nav id="navbar" class="navbar">
     {Auth.loggedIn() ? (
             <>
-              <Link to="/profile">Me</Link>
+              <Link to="/admin">Me</Link>
               <a href="/" onClick={logout}>
                 Logout
               </a>
@@ -30,7 +30,7 @@ const Header = () => {
           ) : (
             <>
               <Link to="/login">Login</Link>
-              {/* <Link to="/signup">Signup</Link> */}
+              <Link to="/signup">Signup</Link>
             </>
           )}
    

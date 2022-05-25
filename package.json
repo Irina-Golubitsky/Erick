@@ -16,6 +16,7 @@
     "concurrently": "^6.3.0"
   },
   "dependencies": {
+    "@mui/x-data-grid": "^5.11.1",
     "jquery": "^3.6.0",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",

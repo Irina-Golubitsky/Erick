@@ -8,10 +8,10 @@ import Footer from './components/Footer';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Hero from './components/Hero';
-import Profile from './components/Profile';
-import Userpage from './components/Userpage';
+import EditUser from './components/EditUser';
+
 import Sidebar from './components/Sidebar';
-import Main from './components/Main';
+
 
 
 
@@ -32,14 +32,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-
-        <Switch>
-
-          <Route exact path="/" component={Header} />
-          <Route exact path="/profile" component={Header} />
-          <Route exact path="/login" component={Header} />
-          <Route exact path="/signup" component={Header} />
-        </Switch>
+<Header />
+       
 
         <Switch>
 
@@ -54,12 +48,13 @@ function App() {
           <Route exact path="/signup" component={Hero} />
         </Switch>
         <Switch>
-        <Route exact path="/profile" component={Sidebar} />
-        
+        <Route exact path="/admin" component={Sidebar} />
+        <Route exact path="/admin/user:id" component={EditUser} />
 
       
 
         </Switch>
+       
         {/* <Switch>
      
         <Route exact path="/profile" component={Main} />
@@ -68,18 +63,10 @@ function App() {
 
         </Switch> */}
 
-        <Switch>
-
-          <Route exact path="/" component={Footer} />
-          <Route exact path="/profile" component={Footer} />
-          <Route exact path="/login" component={Footer} />
-          <Route exact path="/signup" component={Footer} />
-        </Switch>
+        <Footer />
 
 
-        <Switch>
-          <Route exact path="/page/:username?" component={Userpage} />
-        </Switch>
+     
 
       </Router>
     </ApolloProvider>

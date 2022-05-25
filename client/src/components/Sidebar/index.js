@@ -4,11 +4,11 @@ import Auth from '../../utils/auth';
 
 
 import {  QUERY_ME } from '../../utils/queries';
-import Info from '../Info'
-import Table from '../Table'
-import Preview from '../Preview'
+
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
+import Users from '../Users'
+import CMData from '../CMData'
 import { useQuery } from '@apollo/react-hooks';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
@@ -121,7 +121,7 @@ $("#show-sidebar").click(function() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("table")}>Case Managers</a>
+                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
                 </li>
                 <li>
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("preview")}>Demands</a>
@@ -169,7 +169,7 @@ $("#show-sidebar").click(function() {
     
     <div class="sidebar-footer">
     
-      <a href="#">
+    <a href="#" class={` ${currentCategory === 'users' ? 'active' : ''}`} onClick={() => setCurrentCategory("Users")}>
         <i class="fa fa-user"></i>
         
       </a>
@@ -188,8 +188,9 @@ $("#show-sidebar").click(function() {
   
   {(currentCategory === "IntDashboard") ? <IntDashboard user={user}/> : <>  </>}
   {(currentCategory === "IntMembers") ? <IntMembers user={user}/> : <>  </>}
-      {(currentCategory === "table") ? <Table user={user}/> : <> </>}
-      {(currentCategory === "page") ? <Preview user={user}/> : <>  </>}
+  {(currentCategory === "CMData") ? <CMData user={user}/> : <>  </>}
+  {(currentCategory === "Users") ? <Users user={user}/> : <>  </>}
+    
       </div>
       <script src="script.js"></script>
   </div>

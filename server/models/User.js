@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
-const studentsSchema = require('./Students');
-const eventSchema = require('./Event');
+
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -22,33 +21,19 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    title: {
-      type: String,
-      minlength: 1,
-      maxlength: 200
+    active: {
+      type: Boolean,
+      default: false 
     },
-    about: {
+    role: {
       type: String,
-      minlength: 1,
-      maxlength: 800
+     
+      maxlength: 50
     },
-    contacts: {
+    department: {
       type: String,
-      minlength: 1,
-      maxlength: 400
+      maxlength: 50
     },
-    fullname: {
-      type: String,
-      minlength: 1,
-      maxlength: 200
-    },
-    nb: {
-      type: String,
-      minlength: 1,
-      maxlength: 400
-    },
-    students: [studentsSchema],
-    events: [eventSchema]
     
 
   },
@@ -69,7 +54,7 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// compare the incoming password with the hashed password
+// // compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function(password) {
   return bcrypt.compare(password, this.password);
 };

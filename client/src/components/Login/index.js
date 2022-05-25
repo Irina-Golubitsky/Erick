@@ -52,7 +52,7 @@ const Login = props => {
                             <h3 class="text-center">Login</h3>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="name">Your Name</label>
+                                    <label for="name">Email</label>
                                     <input class="form-control" placeholder="Your email"
                                         name="email"
                                         type="email"
@@ -61,7 +61,7 @@ const Login = props => {
                                         onChange={handleChange} required />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="name">Your Password</label>
+                                    <label for="name">Password</label>
                                     <input class="form-control" placeholder="******"
                                         name="password"
                                         type="password"
@@ -71,7 +71,7 @@ const Login = props => {
                                         required />
                                 </div></div>
                                 {error && <div>Login failed</div>}
-                                {Auth.loggedIn() ? <Redirect to="/profile" /> :<> </>}
+                                {Auth.loggedIn() ? <Redirect to="/admin" /> :<> </>}
                                 
 
                             <div class="text-center"><button className="btn  w-50" type="submit">
