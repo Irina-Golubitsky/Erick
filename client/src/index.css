@@ -1483,6 +1483,14 @@ width:100%;
   padding: 1px;
 }
 
+.container-user {
+  margin: 30px;
+}
+.full-screen {
+  min-height:90vh;
+
+}
+
 .contact .php-email-form textarea {
   padding: 10px 12px;
 }

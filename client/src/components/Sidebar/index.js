@@ -9,6 +9,7 @@ import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
 import Users from '../Users'
 import CMData from '../CMData'
+import AddCase from '../AddCase'
 import { useQuery } from '@apollo/react-hooks';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
@@ -124,7 +125,7 @@ $("#show-sidebar").click(function() {
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("preview")}>Demands</a>
+                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("AddCase")}>AddCase</a>
                 </li>
                 <li>
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Negotiaions</a>
@@ -190,7 +191,8 @@ $("#show-sidebar").click(function() {
   {(currentCategory === "IntMembers") ? <IntMembers user={user}/> : <>  </>}
   {(currentCategory === "CMData") ? <CMData user={user}/> : <>  </>}
   {(currentCategory === "Users") ? <Users user={user}/> : <>  </>}
-    
+  {(currentCategory === "AddCase") ? <AddCase user={user}/> : <>  </>}
+
       </div>
       <script src="script.js"></script>
   </div>

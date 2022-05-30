@@ -1,0 +1,495 @@
+import React, { useState } from 'react';
+import  { Component } from 'react';
+
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
+import { useMutation } from '@apollo/react-hooks';
+import { ADD_CASEDATA} from '../../utils/mutations';
+import { UPDATE_USER } from '../../utils/mutations';
+import { Redirect } from 'react-router-dom';
+
+
+import Auth from '../../utils/auth';
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_USER } from '../../utils/queries';
+import {roles, departments, typesol,typecase,liability,levelinjury,phase,policy,umbrella,umuim, lps,level1,level2,level3} from "../arrays.js"
+
+
+const AddCase = props => {
+    const [userState, setuserState] = useState({
+        dol: "",
+        sol: "",
+        typesol: "",
+        fv: "",
+        client: "",
+        passenger: "",
+        typecase: "",
+        liability: "",
+        levelinjury: "",
+        phase: "",
+        propertyd: "",
+        policy: "",
+        umbrella: "",
+        umuim:"",
+        med:"",
+        lps:"",
+        def:"",
+        status:"",
+        level:""});
+
+        // useEffect(() => {
+         
+            
+        //   }, [ userState]);
+
+
+
+    const [addCase, { error }] = useMutation(ADD_CASEDATA);
+    
+
+    
+    const loggedIn = Auth.loggedIn();
+
+    if (!loggedIn) {
+        return (
+            <h4 class="login-error">
+                You need to be logged in to see this. Use the navigation links above to sign up or log in!
+            </h4>
+        );
+    }
+    const handleChange = event => {
+        const { name, value } = event.target;
+        // if (((name=="dol")||(name=="typesol"))&((userState.dol!=="")&(userState.typesol!=="")))
+
+       if ((name ==="dol")&(userState.typesol!=="")){
+        let dateSol="";
+        let dateDol=value.split("-");
+        console.log(dateDol);
+        if (userState.typesol==="1 year"){
+        let newDate=new Date(parseInt(dateDol[0])+1, parseInt(dateDol[1])-1, parseInt(dateDol[2]));
+         dateSol= newDate.toISOString().split('T')[0];}
+        else if(userState.typesol==="2 years"){
+            let newDate=new Date(parseInt(dateDol[0])+2, parseInt(dateDol[1])-1, parseInt(dateDol[2]));
+             dateSol= newDate.toISOString().split('T')[0];
+        }
+        else if (userState.typesol==="6 months"){
+            let newDate=new Date(parseInt(dateDol[0]), parseInt(dateDol[1])+5, parseInt(dateDol[2]));
+             dateSol= newDate.toISOString().split('T')[0];
+        }
+        
+        
+        setuserState({
+            ...userState,
+            [name]: value,
+            sol:dateSol
+          });
+
+       }else if((name ==="typesol")&(userState.dol!=="")){
+        let dateSol="";
+        let dateDol=userState.dol.split("-");
+       ;
+        if (value==="1 year"){
+        let newDate=new Date(parseInt(dateDol[0])+1, parseInt(dateDol[1])-1, parseInt(dateDol[2]));
+         dateSol= newDate.toISOString().split('T')[0];}
+        else if(value==="2 years"){
+            let newDate=new Date(parseInt(dateDol[0])+2, parseInt(dateDol[1])-1, parseInt(dateDol[2]));
+             dateSol= newDate.toISOString().split('T')[0];
+        }
+        else if (value==="6 months"){
+            let newDate=new Date(parseInt(dateDol[0]), parseInt(dateDol[1])+5, parseInt(dateDol[2]));
+             dateSol= newDate.toISOString().split('T')[0];
+        }
+        
+        
+        setuserState({
+            ...userState,
+            [name]: value,
+            sol:dateSol
+          });
+
+       }else if(name ==="policy"){
+           let level="";
+           if (level1.includes(value)){level="Level 1";} 
+           else if
+            (level2.includes(value)){level="Level 2";}  
+            else if
+            (level3.includes(value)){level="Level 3";}  
+        setuserState({
+            ...userState,
+            [name]: value,
+            level:level,
+           
+          });
+
+       }
+
+
+        else{
+        
+       
+     
+    
+        setuserState({
+          ...userState,
+          [name]: value
+        });
+    }
+        // if ((name=="dol")||(name=="typesol")){SetSol()}
+      };
+ 
+   
+         // submit form
+    const handleFormSubmit = async event => {
+        event.preventDefault();
+      
+      
+
+    
+        try {
+          
+            await addCase({
+                variables: {...userState}
+              });
+    
+
+        } catch (e) {
+            
+          console.error(e);
+       
+        }
+      
+      };
+ 
+
+    return (
+        <div id="info" class="section-bg full-screen " >
+        <section id="contact" class="contact">
+    <div class="container">
+    <form id="contact-form" onSubmit={handleFormSubmit}>
+        <div class="messages"></div>
+        <div class="controls">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">Dol*</label>
+                        <input 
+                        id="dol"
+                        type="date"
+                        name="dol" 
+                        class="form-control"
+                        value={userState.dol}
+                        onChange={handleChange} 
+                        required
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">Type of S.O.L.*</label>
+                        <select 
+                        id="typesol"
+                        type="text"
+                        name="typesol" 
+                        class="form-control"
+                        value={userState.typesol}
+                        required
+                        onChange={handleChange} >
+                        <option ></option>
+                                     {typesol.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">Sol*</label>
+                        <input 
+                        id="sol"
+                        type="date"
+                        name="sol" 
+                        class="form-control"
+                        value={userState.sol}
+                        onChange={handleChange} 
+                        required 
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">FileVine #*</label>
+                        <input 
+                        id="fv"
+                        type="text"
+                        name="fv" 
+                        class="form-control"
+                        value={userState.fv}
+                        onChange={handleChange} 
+                        required
+                        />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">CLIENT'S NAME*</label>
+                        <input 
+                        id="client"
+                        type="text"
+                        name="client" 
+                        class="form-control"
+                        value={userState.client}
+                        onChange={handleChange} 
+                        required
+                       
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">PASSENGER'S NAME</label>
+                        <input 
+                        id="passenger"
+                        type="text"
+                        name="passenger" 
+                        class="form-control"
+                        value={userState.passenger}
+                        onChange={handleChange} 
+                       
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">TYPE OF CASE*</label>
+                        <select 
+                        id="typecase"
+                        type="text"
+                        name="typecase" 
+                        class="form-control"
+                        value={userState.typecase}
+                        onChange={handleChange}
+                        required >
+                        <option ></option>
+                                     {typecase.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">LIABILITY* </label>
+                        <select
+                        id="liability"
+                        type="text"
+                        name="liability" 
+                        class="form-control"
+                        value={userState.liability}
+                        onChange={handleChange} 
+                        required
+                        
+                        >
+                                  <option ></option>
+                                     {liability.map(role => (
+                      <option >{role}</option>
+                    ))}
+                    </select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">LEVEL OF INJURY*</label>
+                        <select 
+                        id="levelinjury"
+                        type="text"
+                        name="levelinjury" 
+                        class="form-control"
+                        value={userState.levelinjury}
+                        onChange={handleChange} 
+                        required>
+                        <option ></option>
+                                     {levelinjury.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">PHASE*</label>
+                        <select 
+                        id="phase"
+                        type="text"
+                        name="phase" 
+                        class="form-control"
+                        value={userState.phase}
+                        onChange={handleChange}
+                        required >
+                        <option ></option>
+                                     {phase.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">PROPERTY DAMAGE</label>
+                        <input 
+                        id="propertyd"
+                        type="text"
+                        name="propertyd" 
+                        class="form-control"
+                        value={userState.propertyd}
+                        onChange={handleChange} >
+                   
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">POLICY LIMITS</label>
+                        <select
+                        id="policy"
+                        type="text"
+                        name="policy" 
+                        class="form-control"
+                        value={userState.policy}
+                        onChange={handleChange} >
+                                  <option ></option>
+                                     {policy.map(role => (
+                      <option >{role}</option>
+                    ))}
+                    </select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">UMBRELLA POLICY</label>
+                        <select 
+                        id="umbrella"
+                        type="text"
+                        name="umbrella" 
+                        class="form-control"
+                        value={userState.umbrella}
+                        onChange={handleChange} >
+                        <option ></option>
+                                     {umbrella.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">UM/UIM</label>
+                        <select 
+                        id="umuim"
+                        type="text"
+                        name="umuim" 
+                        class="form-control"
+                        value={userState.umuim}
+                        onChange={handleChange} >
+                        <option ></option>
+                                     {umuim.map(role => (
+                      <option >{role}</option>
+                    ))}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">MED PAY</label>
+                        <input 
+                        id="med"
+                        type="text"
+                        name="med" 
+                        class="form-control"
+                        value={userState.med}
+                        onChange={handleChange} >
+                   
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="form_name">LPS</label>
+                        <select
+                        id="lps"
+                        type="text"
+                        name="lps" 
+                        class="form-control"
+                        value={userState.lps}
+                        onChange={handleChange} >
+                                  <option ></option>
+                                     {lps.map(role => (
+                      <option >{role}</option>
+                    ))}
+                    </select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">DEF INFO</label>
+                        <input
+                        id="def"
+                        type="text"
+                        name="def" 
+                        class="form-control"
+                        value={userState.def}
+                        onChange={handleChange} >
+                        </input>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                <div class="form-group">
+                        <label for="form_name">STATUS</label>
+                        <input 
+                        id="status"
+                        type="text"
+                        name="status" 
+                        class="form-control"
+                        value={userState.status}
+                        onChange={handleChange} >
+                   
+                        </input>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+         
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-warning btn-send" value="Submit" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-muted"><strong>*</strong> These fields are required.</p>
+            </div>
+        </div>
+    </form>
+</div>
+    </section>
+    </div>
+    );
+};
+
+export default AddCase;

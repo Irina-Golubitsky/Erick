@@ -88,8 +88,7 @@ const Users = props => {
                                                                 {renderListing()}
                                                             </tbody>
                                                         </Table>
-                                                        <Button onClick={() => <Hero />}>Button</Button>
-                                                       <Hero />
+                                                        
            
 </div>
                     </div>

@@ -34,7 +34,12 @@ const userSchema = new Schema(
       type: String,
       maxlength: 50
     },
-    
+    cases: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Casedata'
+      }
+    ]
 
   },
   {

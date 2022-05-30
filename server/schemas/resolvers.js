@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Casedata } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -20,6 +20,11 @@ const resolvers = {
           .select('-__v -password')
         
       },
+      casedata: async () => {
+        return Casedata.find()
+         
+        
+      },
       user: async (parent, { _id }) => {
         return User.findOne({ _id })
           .select('-__v -password')
@@ -37,7 +42,7 @@ const resolvers = {
         return { token, user };
       },
        updateUser: async (parent, { userId, username, email, role, department,active }, context) => {
-      // if (context.user) {
+       if (context.user) {
         
         // , email:email, role:role, department:department, active:active
 
@@ -48,9 +53,25 @@ const resolvers = {
             new: true,
           }
           );
-      // }
+      }
 
       throw new AuthenticationError('Not logged in');
+    },
+    addCase: async (parent, args, context) => {
+      if (context.user) {
+        console.log(context.user.username);
+        const casedata = await Casedata.create({ ...args, username: context.user.username });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { cases: casedata._id } },
+          { new: true }
+        );
+
+        return casedata;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
