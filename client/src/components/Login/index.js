@@ -29,6 +29,10 @@ const Login = props => {
             });
 
             Auth.login(data.login.token);
+            if (Auth.loggedIn()){
+                if (data.login.user.role==="Admin"){window.location.replace("/admin");}
+                if (data.login.user.role==="Manager"){window.location.replace("/manager");}
+            }
 
             // window.location.assign(window.location.href.replace("login","")+"profile");
      
@@ -42,6 +46,7 @@ const Login = props => {
         });
 
     };
+  
 
     return (
         <section id="contact" class="contact">
@@ -71,7 +76,7 @@ const Login = props => {
                                         required />
                                 </div></div>
                                 {error && <div>Login failed</div>}
-                                {Auth.loggedIn() ? <Redirect to="/admin" /> :<> </>}
+                              
                                 
 
                             <div class="text-center"><button className="btn  w-50" type="submit">

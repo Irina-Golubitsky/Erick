@@ -8,7 +8,7 @@ const resolvers = {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
             .select('-__v -password')
-            .populate ('students')
+            .populate({path: 'cases', options: { sort: { 'dol': -1 } } }) 
   
           return userData;
         }
@@ -18,9 +18,11 @@ const resolvers = {
       users: async () => {
         return User.find()
           .select('-__v -password')
+          .populate('cases')
+       
         
       },
-      casedata: async () => {
+      casesdata: async () => {
         return Casedata.find()
          
         
@@ -30,9 +32,18 @@ const resolvers = {
           .select('-__v -password')
         
       },
+      casedata: async (parent, { _id }) => {
+        return Casedata.findOne({ _id })
+        
+        
+        
+      },
+      allcases: async () => {
+        return Casedata.find()
+        .sort( { "username": 1 , "dol":-1} )   
       
-      
-    },
+    }
+  },
   
     Mutation: {
       addUser: async (parent, args) => {
@@ -73,6 +84,24 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
+    updateCase: async (parent, args, context) => {
+      if (context.user) {
+       console.log(args);
+       caseId=args.caseId;
+       delete args.caseId;
+       console.log(args);
+
+       return await Casedata.findOneAndUpdate(
+         { _id: caseId},
+         { $set:{ ...args, lastupdate:Date.now()}},
+         {
+           new: true,
+         }
+         );
+     }
+
+     throw new AuthenticationError('Not logged in');
+   },
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   

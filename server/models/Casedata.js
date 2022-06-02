@@ -7,7 +7,8 @@ const caseSchema = new Schema(
   
     createdAt: {
       type: Date,
-      default: Date.now
+      default: Date.now,
+      get: timestamp => dateFormat(timestamp)
   
     },
     username: {
@@ -17,10 +18,12 @@ const caseSchema = new Schema(
 
     dol: {
       type: Date,
-      required: true
+      required: true,
+      get: timestamp => dateFormat(timestamp)
     },
     sol: {
-      type: Date
+      type: Date,
+      get: timestamp => dateFormat(timestamp)
     },
     typesol:{
       type:String
@@ -81,7 +84,11 @@ const caseSchema = new Schema(
     },
     lastupdate:{
       type:Date,
-      default: Date.now
+      default: Date.now,
+      get: timestamp => dateFormat(timestamp)
+    },
+    show:{
+      type:String
     }
 
 

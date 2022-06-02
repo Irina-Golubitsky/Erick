@@ -7,6 +7,7 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        role
       }
     }
   }
@@ -40,8 +41,8 @@ export const UPDATE_USER = gql`
 `;
 
 export const ADD_CASEDATA = gql`
-mutation addCase($dol: String, $sol: String, $typesol: String, $fv: String, $client: String, $passenger: String, $typecase: String, $liability: String, $levelinjury: String, $phase: String, $propertyd: String, $policy: String, $umbrella: String, $umuim: String, $med: String, $lps: String, $def: String, $status: String, $level: String) {
-  addCase(dol: $dol, sol: $sol, typesol: $typesol, fv: $fv, client: $client, passenger: $passenger, typecase: $typecase, liability: $liability, levelinjury: $levelinjury, phase: $phase, propertyd: $propertyd, policy: $policy, umbrella: $umbrella, umuim: $umuim, med: $med, lps: $lps, def: $def, status: $status, level: $level) {
+mutation addCase($dol: String, $sol: String, $typesol: String, $fv: String, $client: String, $passenger: String, $typecase: String, $liability: String, $levelinjury: String, $phase: String, $propertyd: String, $policy: String, $umbrella: String, $umuim: String, $med: String, $lps: String, $def: String, $status: String, $level: String,$show: String) {
+  addCase(dol: $dol, sol: $sol, typesol: $typesol, fv: $fv, client: $client, passenger: $passenger, typecase: $typecase, liability: $liability, levelinjury: $levelinjury, phase: $phase, propertyd: $propertyd, policy: $policy, umbrella: $umbrella, umuim: $umuim, med: $med, lps: $lps, def: $def, status: $status, level: $level,show: $show) {
     _id
     createdAt
     username
@@ -65,6 +66,37 @@ mutation addCase($dol: String, $sol: String, $typesol: String, $fv: String, $cli
     status
     level
     lastupdate
+    show
+  }
+}
+`;
+export const UPDATE_CASE = gql`
+mutation updateCase($caseId:ID!,$dol: String, $sol: String, $typesol: String, $fv: String, $client: String, $passenger: String, $typecase: String, $liability: String, $levelinjury: String, $phase: String, $propertyd: String, $policy: String, $umbrella: String, $umuim: String, $med: String, $lps: String, $def: String, $status: String, $level: String,$show: String) {
+  updateCase(caseId:$caseId, dol: $dol, sol: $sol, typesol: $typesol, fv: $fv, client: $client, passenger: $passenger, typecase: $typecase, liability: $liability, levelinjury: $levelinjury, phase: $phase, propertyd: $propertyd, policy: $policy, umbrella: $umbrella, umuim: $umuim, med: $med, lps: $lps, def: $def, status: $status, level: $level, show: $show) {
+    _id
+    createdAt
+    username
+    dol
+    sol
+    typesol
+    fv
+    client
+    passenger
+    typecase
+    liability
+    levelinjury
+    phase
+    propertyd
+    policy
+    umbrella
+    umuim
+    med
+    lps
+    def
+    status
+    level
+    lastupdate
+    show
   }
 }
 `;

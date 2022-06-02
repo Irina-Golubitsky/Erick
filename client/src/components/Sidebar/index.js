@@ -4,7 +4,7 @@ import Auth from '../../utils/auth';
 
 
 import {  QUERY_ME } from '../../utils/queries';
-
+import { Redirect } from 'react-router-dom';
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
 import Users from '../Users'
@@ -125,7 +125,7 @@ $("#show-sidebar").click(function() {
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("AddCase")}>AddCase</a>
+                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
                 </li>
                 <li>
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Negotiaions</a>
@@ -191,7 +191,7 @@ $("#show-sidebar").click(function() {
   {(currentCategory === "IntMembers") ? <IntMembers user={user}/> : <>  </>}
   {(currentCategory === "CMData") ? <CMData user={user}/> : <>  </>}
   {(currentCategory === "Users") ? <Users user={user}/> : <>  </>}
-  {(currentCategory === "AddCase") ? <AddCase user={user}/> : <>  </>}
+  {(currentCategory === "AllCases") ? <Redirect to="/admin/allcases" /> : <>  </>}
 
       </div>
       <script src="script.js"></script>

@@ -37,6 +37,7 @@ type User {
     status:String
     level:String
     lastupdate:String
+    show:String
 
 
 
@@ -52,8 +53,10 @@ type Auth {
   type Query {
     me: User
     users: [User]
-    casedata: [Casedata]
+    casesdata: [Casedata]
     user(_id: ID!): User 
+    casedata(_id: ID!): Casedata
+    allcases:[Casedata]
   }
 
   type Mutation {
@@ -78,7 +81,29 @@ type Auth {
       lps:String,
       def:String,
       status:String,
-      level:String):Casedata
+      level:String,
+      show:String):Casedata
+      updateCase(caseId:ID!,
+        dol: String,
+        sol: String,
+        typesol: String,
+        fv: String,
+        client: String,
+        passenger: String,
+        typecase: String,
+        liability: String,
+        levelinjury: String,
+        phase: String,
+        propertyd: String,
+        policy: String,
+        umbrella: String,
+        umuim:String,
+        med:String,
+        lps:String,
+        def:String,
+        status:String,
+        level:String,
+        show:String):Casedata
     updateUser(userId:ID!,username: String, email: String, role: String, department: String, active:Boolean): User
   
   }

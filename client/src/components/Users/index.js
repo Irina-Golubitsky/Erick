@@ -23,7 +23,6 @@ const Users = props => {
         return <div>Loading...</div>;
     }
     
-  console.log(users);
    
     const loggedIn = Auth.loggedIn();
 

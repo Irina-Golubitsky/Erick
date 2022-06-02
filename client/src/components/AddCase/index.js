@@ -7,13 +7,14 @@ import { useEffect } from 'react';
 
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_CASEDATA} from '../../utils/mutations';
+import { UPDATE_CASE} from '../../utils/mutations';
 import { UPDATE_USER } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 
 
 import Auth from '../../utils/auth';
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_USER } from '../../utils/queries';
+import { QUERY_CASE} from '../../utils/queries';
 import {roles, departments, typesol,typecase,liability,levelinjury,phase,policy,umbrella,umuim, lps,level1,level2,level3} from "../arrays.js"
 
 
@@ -39,15 +40,50 @@ const AddCase = props => {
         status:"",
         level:""});
 
-        // useEffect(() => {
-         
+        const { id: caseId } = useParams();
+
+        const { loading, data } = useQuery(QUERY_CASE, {
+            variables: { id: caseId }
+        });
+
+        function dateToInput(mydate){
+            mydate=mydate.split("/");
             
-        //   }, [ userState]);
+            if (mydate[0].length===1){mydate[0]="0"+mydate[0]}
+            if (mydate[1].length===1){mydate[1]="0"+mydate[1]}
+            return mydate[2]+"-"+mydate[0]+"-"+mydate[1];
+
+        }
+        useEffect(() => {
+            if (typeof data !== "undefined")  {
+                console.log(data);
+
+                setuserState({
+                    dol: dateToInput(data.casedata.dol),
+                    sol: dateToInput(data.casedata.sol),
+                    typesol:data.casedata.typesol,
+                    fv: data.casedata.fv,
+                    client: data.casedata.client,
+                    passenger: data.casedata.passenger,
+                    typecase: data.casedata.typecase,
+                    liability:data.casedata.liability,
+                    levelinjury:data.casedata.levelinjury,
+                    phase: data.casedata.phase,
+                    propertyd: data.casedata.propertyd,
+                    policy: data.casedata.policy,
+                    umbrella: data.casedata.umbrella,
+                    umuim:data.casedata.umuim,
+                    med:data.casedata.med,
+                    lps:data.casedata.lps,
+                    def:data.casedata.def,
+                    status:data.casedata.status,
+                    level:data.casedata.level});}       
+        }, [ data]);
 
 
 
     const [addCase, { error }] = useMutation(ADD_CASEDATA);
-    
+    const [updateCase, { error2 }] = useMutation(UPDATE_CASE);
 
     
     const loggedIn = Auth.loggedIn();
@@ -65,6 +101,8 @@ const AddCase = props => {
 
        if ((name ==="dol")&(userState.typesol!=="")){
         let dateSol="";
+        console.log(new Date(value) );
+        console.log(new Date(value+"T00:00:00"));
         let dateDol=value.split("-");
         console.log(dateDol);
         if (userState.typesol==="1 year"){
@@ -143,33 +181,47 @@ const AddCase = props => {
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
+        let show="active";
       
       
-
+if (caseId==="new"){
     
-        try {
-          
+        try {        
             await addCase({
-                variables: {...userState}
+                variables: {...userState,dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00"), show:show}
               });
-    
-
+              window.location.replace("/manager");
         } catch (e) {
-            
-          console.error(e);
-       
         }
       
-      };
+      }
+      else{
+        try {        
+            await updateCase({
+                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00"),show:show}
+              });
+
+              window.location.replace("/manager");
+        } catch (e) {
+        }
+
+      }
+    };
+    const BackButton= event =>{
+        event.preventDefault();
+        window.location.replace("/manager");
+    }
  
 
     return (
-        <div id="info" class="section-bg full-screen " >
-        <section id="contact" class="contact">
+        <div id="info" class="section-bg-full  " >
+        
     <div class="container">
+    <button class="mebtn2" onClick={BackButton}>	🔙</button>
     <form id="contact-form" onSubmit={handleFormSubmit}>
         <div class="messages"></div>
         <div class="controls">
+        {(caseId==='new') ? <h3 class="text-center">New Case</h3> : <h3 class="text-center">Edit Case # {caseId}</h3>}
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
@@ -475,9 +527,10 @@ const AddCase = props => {
         <div class="clearfix"></div>
 
         <div class="row">
+       
          
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-warning btn-send" value="Submit" />
+            <div class="col-md-12" align="center">
+                <input type="submit" class="btn btn-warning btn-send" value="Save Changes" />
             </div>
         </div>
         <div class="row">
@@ -486,8 +539,9 @@ const AddCase = props => {
             </div>
         </div>
     </form>
+
 </div>
-    </section>
+    
     </div>
     );
 };

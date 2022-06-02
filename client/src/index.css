@@ -533,6 +533,10 @@ section {
   background-color: #f3f5fa;
   padding-left: 260px;
 }
+.section-bg-full {
+  background-color: #f3f5fa;
+  
+}
 
 .section-title {
   text-align: center;
@@ -950,6 +954,30 @@ width:100%;
   
 }
 .mebtn.active
+{
+  background-color:#e7881b ;
+  
+}
+.mebtn2 {
+  cursor: pointer;
+  background: #47b2e4;
+  margin: 10px 5px;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  border: 0px;
+  
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: "Poppins", sans-serif;
+}
+.mebtn2:hover
+{
+  background-color:#e7881b  ;
+  
+}
+.mebtn2.active
 {
   background-color:#e7881b ;
   

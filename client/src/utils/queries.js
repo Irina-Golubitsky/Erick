@@ -39,6 +39,97 @@ export const QUERY_ME = gql`
       active
       role
       department
+      cases {
+        _id
+        createdAt
+        username
+        dol
+        sol
+        typesol
+        fv
+        client
+        passenger
+        typecase
+        liability
+        levelinjury
+        phase
+        propertyd
+        policy
+        umbrella
+        umuim
+        med
+        lps
+        def
+        status
+        level
+        lastupdate
+        show
+        
+        }
     }
   }
+`;
+export const QUERY_CASE = gql`
+  query casedata($id: ID!) {
+    casedata(_id: $id) {
+      _id
+      createdAt
+      username
+      dol
+      sol
+      typesol
+      fv
+      client
+      passenger
+      typecase
+      liability
+      levelinjury
+      phase
+      propertyd
+      policy
+      umbrella
+      umuim
+      med
+      lps
+      def
+      status
+      level
+      lastupdate
+      show
+      
+    
+    }
+  }
+  
+`;
+export const ALL_CASES = gql`
+query allcases {
+  allcases {
+  _id
+  createdAt
+  username
+  dol
+  sol
+  typesol
+  fv
+  passenger
+  client
+  typecase
+  liability
+  levelinjury
+  phase
+  propertyd
+  policy
+  umbrella
+  umuim
+  med
+  lps
+  def
+  status
+  level
+  lastupdate
+  show
+}}
+
+
 `;
