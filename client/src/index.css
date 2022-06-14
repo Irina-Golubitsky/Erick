@@ -537,7 +537,17 @@ section {
   background-color: #f3f5fa;
   
 }
-
+.tabscroll {
+  overflow: scroll;
+}
+.userlist{
+  font-size:20px;
+  color:#153f65;
+}
+.userlist:hover{
+  cursor: pointer;
+  color:#1786e7;
+}
 .section-title {
   text-align: center;
   /* padding-bottom: 10px; */

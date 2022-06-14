@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ME } from '../../utils/queries';
+import { ALL_PREFS } from '../../utils/queries';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Auth from '../../utils/auth';
@@ -13,13 +14,52 @@ import {
 } from "react-bootstrap";
 import Header from '../Header';
 
-const AllManagerCases = props => {
+const ActiveManagerCases = props => {
     const history = useHistory();
     const [currentCategory, setCurrentCategory] = useState('info');
 
     const { loading, data } = useQuery( QUERY_ME, {    
     });
     const user = data?.me || {};
+    const [prefsState, setprefsState] = useState({    typesol: [],
+        typecase: [],
+        liability: [],
+        levelinjury: [],
+        phase: [],
+        policy: [],
+        level1: [],
+        level2: [],
+        level3: [],
+        umbrella: [],
+        umuim: [],
+        lps: [],
+        showactive: [],
+        showtransfer: []});
+  
+    const { loading:loading2, data:data2 } = useQuery(ALL_PREFS, {
+    });
+    const prefs = data2?.preferences || [];
+    useEffect(() => {
+        if (typeof prefs !== "undefined") {
+           setprefsState({ 
+            typesol: prefs.typesol,
+            typecase: prefs.typecase,
+            liability: prefs.liability,
+            levelinjury: prefs.levelinjury,
+            phase: prefs.phase,
+            policy: prefs.policy,
+            level1: prefs.level1,
+            level2: prefs.level2,
+            level3: prefs.level3,
+            umbrella: prefs.umbrella,
+            umuim: prefs.umuim,
+            lps: prefs.lps,
+            showactive: prefs.showactive,
+            showtransfer: prefs.showtransfer});
+
+        }
+       
+      }, [ data2]);
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -38,22 +78,29 @@ const AllManagerCases = props => {
         history.push(`/manager/case${row}`);
       }  
 
- 
+    //   onClick={()=> handleRowClick(casedata._id)} 
 
     function renderListing() {
         let casedataList=[];
+        let i=0;
         let usercases=user.cases||[];
         console.log(usercases);
         usercases.map(casedata => {
-            casedataList.push(<tr onClick={()=> handleRowClick(casedata._id)} >
-            <td > <Link
-                to={`/manager/case${casedata._id}`}>     <button
+
+            if (casedata.show==="transfer"){i++;
+            casedataList.push(<tr >
+            <td > <Link to={{
+    pathname: `/manager/case${casedata._id}`,
+    state: { ...prefsState }
+  }}
+                >     <button
                     className="tablebtn"
                     key={casedata._id}
                    >
                     ✓
                   </button></Link>
                 </td>
+                <td>{i}</td>
                 <td >{casedata.dol}</td>
                 <td >{casedata.sol}</td>
                <td >{casedata.typesol}</td>
@@ -76,7 +123,7 @@ const AllManagerCases = props => {
                 <td >{casedata.lastupdate}</td>
     
                 
-            </tr>);
+            </tr>);}
         })
 
         return casedataList;
@@ -94,13 +141,14 @@ const AllManagerCases = props => {
                 <div class="row">
 
                     <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
-                    <div class="content">
+                    <div class="content tabscroll">
                     <h3>{user.username}'s cases</h3>
                     <p></p>
-                    <Table bordered hover className='bg-white' size="sm">
+                    <Table bordered hover className='bg-white tabscroll' size="sm">
                                                             <thead>
                                                                 <tr>
                                                                 <th class="checkwidth"></th>
+                                                                <th >N</th>
                                                                     <th className="border-0 text-center one-line">DOL</th>
                                                                     <th className="border-0 text-center">SOL</th>
                                                                     <th className="border-0 text-center">TYPE OF S.O.L.</th>
@@ -124,7 +172,7 @@ const AllManagerCases = props => {
                 
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody className='tabscroll '>
                                                             {renderListing()}
                                                             </tbody>
                                                         </Table>
@@ -139,4 +187,4 @@ const AllManagerCases = props => {
     );
 };
 
-export default AllManagerCases;
+export default ActiveManagerCases;

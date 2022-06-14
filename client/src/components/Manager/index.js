@@ -3,8 +3,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ME } from '../../utils/queries';
 import { Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import AllManagerCases from '../AllManagerCases'
+import ActiveManagerCases from '../ActiveManagerCases'
+import TransferManagerCases from '../TransferManagerCases'
 import Auth from '../../utils/auth';
+import { ALL_PREFS} from '../../utils/queries';
 import Hero from '../Hero'
 import {
     Button,
@@ -16,7 +18,46 @@ import Header from '../Header';
 
 const Manager = props => {
     
-    const [currentCategory, setCurrentCategory] = useState('All');
+    const [currentCategory, setCurrentCategory] = useState('Active');
+    const [prefsState, setprefsState] = useState({    typesol: [],
+        typecase: [],
+        liability: [],
+        levelinjury: [],
+        phase: [],
+        policy: [],
+        level1: [],
+        level2: [],
+        level3: [],
+        umbrella: [],
+        umuim: [],
+        lps: [],
+        showactive: [],
+        showtransfer: []});
+  
+    const { loading, data } = useQuery(ALL_PREFS, {
+    });
+    const prefs = data?.preferences || [];
+    useEffect(() => {
+        if (typeof prefs !== "undefined") {
+           setprefsState({ 
+            typesol: prefs.typesol,
+            typecase: prefs.typecase,
+            liability: prefs.liability,
+            levelinjury: prefs.levelinjury,
+            phase: prefs.phase,
+            policy: prefs.policy,
+            level1: prefs.level1,
+            level2: prefs.level2,
+            level3: prefs.level3,
+            umbrella: prefs.umbrella,
+            umuim: prefs.umuim,
+            lps: prefs.lps,
+            showactive: prefs.showactive,
+            showtransfer: prefs.showtransfer});
+
+        }
+       
+      }, [ data]);
 
     
    
@@ -38,13 +79,18 @@ const Manager = props => {
 
     <section class="why-us ">
       <div class=" d-flex justify-content-center">
-        <button type="button" class={`mebtn ${currentCategory === 'All' ? 'active' : ''}`} onClick={() => setCurrentCategory("All")}>All Cases</button>
+        <button type="button" class={`mebtn ${currentCategory === 'Active' ? 'active' : ''}`} onClick={() => setCurrentCategory("Active")}>Active Cases</button>
+        <button type="button" class={`mebtn ${currentCategory === 'Transfer' ? 'active' : ''}`} onClick={() => setCurrentCategory("Transfer")} >Transferred Case</button>
         <button type="button" class={`mebtn ${currentCategory === 'Add' ? 'active' : ''}`} onClick={() => setCurrentCategory("Add")} >Add Case</button>
      
       </div>
 
-      {(currentCategory === "All") ? <AllManagerCases /> : <>  </>}
-      {(currentCategory === "Add") ? <Redirect to="/manager/casenew" /> :<> </>} 
+      {(currentCategory === "Active") ? <ActiveManagerCases /> : <>  </>}
+      {(currentCategory === "Transfer") ? <TransferManagerCases /> : <>  </>}
+      {(currentCategory === "Add") ? <Redirect to={{
+    pathname: "/manager/casenew",
+    state: { ...prefsState }
+  }} /> :<> </>} 
       
     </section>
 

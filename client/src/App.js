@@ -13,6 +13,7 @@ import EditUser from './components/EditUser';
 import Manager from './components/Manager';
 import AddCase from './components/AddCase';
 import AllCases from './components/AllCases';
+import AddData from './components/AddData';
 
 
 import Sidebar from './components/Sidebar';
@@ -73,9 +74,14 @@ function App() {
        <Switch>
      
      <Route exact path="/admin/allcases" component={AllCases} />
-    
 
-   
+
+     </Switch> 
+
+     <Switch>
+     
+     <Route exact path="/adddata" component={AddData} />
+
 
      </Switch> 
 

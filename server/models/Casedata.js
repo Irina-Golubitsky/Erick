@@ -18,7 +18,7 @@ const caseSchema = new Schema(
 
     dol: {
       type: Date,
-      required: true,
+      
       get: timestamp => dateFormat(timestamp)
     },
     sol: {

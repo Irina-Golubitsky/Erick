@@ -27,6 +27,50 @@ export const QUERY_USERS = gql`
       department
       
       
+      
+    }
+  }
+`;
+export const QUERY_ACTIVEMANAGERS = gql`
+  query activemanagers {
+    activemanagers {
+      _id
+      username
+     
+      email
+      active
+      role
+      department
+      cases {
+        _id
+        createdAt
+        username
+        dol
+        sol
+        typesol
+        fv
+        client
+        passenger
+        typecase
+        liability
+        levelinjury
+        phase
+        propertyd
+        policy
+        umbrella
+        umuim
+        med
+        lps
+        def
+        status
+        level
+        lastupdate
+        show
+        
+        }
+      
+      
+      
     }
   }
 `;
@@ -130,6 +174,29 @@ query allcases {
   lastupdate
   show
 }}
+
+
+`;
+export const ALL_PREFS = gql`
+query preferences {
+  preferences {
+    name
+    typesol
+    typecase
+    liability
+    levelinjury
+    phase
+    policy
+    level1
+    level2
+    level3
+    umbrella
+    umuim
+    lps
+    showactive
+    showtransfer
+  }
+}
 
 
 `;

@@ -43,6 +43,40 @@ type User {
 
 
   }
+  type Preferences{
+    name:String
+    typesol: [String]
+    typecase: [String]
+    liability: [String]
+    levelinjury: [String]
+    phase: [String]
+    policy: [String]
+    level1: [String]
+    level2: [String]
+    level3: [String]
+    umbrella: [String]
+    umuim: [String]
+    lps: [String]
+    showactive: [String]
+    showtransfer: [String]   
+
+  }
+  type CS2{
+    username:String
+   
+    phase:String
+    
+    
+
+  }
+  type CS{
+    _id: CS2
+    phaseCount:Int
+    
+
+  }
+
+ 
 
  
   
@@ -53,10 +87,14 @@ type Auth {
   type Query {
     me: User
     users: [User]
+    preferences: Preferences
     casesdata: [Casedata]
     user(_id: ID!): User 
     casedata(_id: ID!): Casedata
     allcases:[Casedata]
+    activemanagers:[User]
+    caseStage:[CS]
+    
   }
 
   type Mutation {
@@ -83,7 +121,8 @@ type Auth {
       status:String,
       level:String,
       show:String):Casedata
-      updateCase(caseId:ID!,
+      addData(
+        username: String,
         dol: String,
         sol: String,
         typesol: String,
@@ -104,7 +143,59 @@ type Auth {
         status:String,
         level:String,
         show:String):Casedata
+      updateCase(caseId:ID!,
+        dol: String,
+        sol: String,
+        typesol: String,
+        fv: String,
+        client: String,
+        passenger: String,
+        typecase: String,
+        liability: String,
+        levelinjury: String,
+        phase: String,
+        propertyd: String,
+        policy: String,
+        umbrella: String,
+        umuim:String,
+        med:String,
+        lps:String,
+        def:String,
+        status:String,
+        level:String,
+        show:String):Casedata  
     updateUser(userId:ID!,username: String, email: String, role: String, department: String, active:Boolean): User
+    updatePrefs(typesol: [String],
+      typecase: [String],
+      liability: [String],
+      levelinjury: [String],
+      phase: [String],
+      policy: [String],
+      level1: [String],
+      level2: [String],
+      level3: [String],
+      umbrella: [String],
+      umuim: [String],
+      lps: [String],
+      showactive: [String],
+      showtransfer: [String] ): Preferences
+   
+        createPrefs(typesol: [String],
+          typecase: [String],
+          liability: [String],
+          levelinjury: [String],
+          phase: [String],
+          policy: [String],
+          level1: [String],
+          level2: [String],
+          level3: [String],
+          umbrella: [String],
+          umuim: [String],
+          lps: [String],
+          showactive: [String],
+          showtransfer: [String] ): Preferences
+    cleanAll(aa:String):String
+  
   
   }
   `;

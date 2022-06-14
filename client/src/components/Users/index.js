@@ -4,6 +4,7 @@ import { QUERY_USERS } from '../../utils/queries';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Auth from '../../utils/auth';
+
 import Hero from '../Hero'
 import {
     Button,
@@ -12,6 +13,7 @@ import {
 
 } from "react-bootstrap";
 import Header from '../Header';
+import Signup from '../Signup';
 
 const Users = props => {
     const history = useHistory();
@@ -60,6 +62,9 @@ const Users = props => {
 
         return recordList;
     }
+    function AddUserButton(){
+
+    }
     return (
 
 
@@ -87,12 +92,17 @@ const Users = props => {
                                                                 {renderListing()}
                                                             </tbody>
                                                         </Table>
+                                                       
+                                                        <Signup ></Signup>
                                                         
            
 </div>
                     </div>
+                
                 </div>
+               
             </div>
+           
         </div>
 
     );

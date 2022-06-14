@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Auth from '../../utils/auth';
 
 
@@ -7,21 +7,47 @@ import {  QUERY_ME } from '../../utils/queries';
 import { Redirect } from 'react-router-dom';
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
+import AllManagers from '../AllManagers'
+import ManagersDashboard from '../ManagersDashboard'
 import Users from '../Users'
+import Prefs from '../Prefs'
 import CMData from '../CMData'
 import AddCase from '../AddCase'
 import { useQuery } from '@apollo/react-hooks';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import {
+  Dropdown
+} from "react-bootstrap";
+import { QUERY_USERS } from '../../utils/queries';
 
 const Sidebar = props => {
   const [currentCategory, setCurrentCategory] = useState('IntDashboard');
+  const [usersState, setusersState] = useState([]);
   const { loading, data } = useQuery( QUERY_ME, {    
   });
+  const { loading:loading2, data:data2 } = useQuery(QUERY_USERS, {
+  });
+  useEffect(() => {
+    if (typeof data2 !== "undefined") {
+      console.log("users "+ data2.users)
+    setusersState(data2.users);}
+  
+  }, [ data2]);
+
   const user = data?.me || {};
   if (loading) {
     return <div>Loading...</div>;
   }
+  
+
+  const users = data2?.users || [];
+  
+  if (loading) {
+      return <div>Loading...</div>;
+  }
+
+
   
   const loggedIn = Auth.loggedIn();
 
@@ -86,7 +112,7 @@ $("#show-sidebar").click(function() {
       <div class="sidebar-header">
      
         <div class="user-info">
-          <span class="user-name"><strong> {user.username}</strong>
+          <span class="user-name"><strong>{user.username} </strong>
             
           </span>
           <span class="user-role">Administrator</span>
@@ -112,20 +138,37 @@ $("#show-sidebar").click(function() {
             
               <ul>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntDashboard")}>Intakes Platforms
+                  <a href="#" class={` ${currentCategory === 'IntDashboard' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntDashboard")}>Intakes Platforms
                     <span class="badge badge-pill badge-success">v</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntMembers")}>Intakes Members
+                  <a href="#" class={` ${currentCategory === 'IntMembers' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntMembers")}>Intakes Members
                     <span class="badge badge-pill badge-success">v</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
+                  <a href="#" class={` ${currentCategory === 'ManagersDashboard' ? 'active' : ''}`} onClick={() => setCurrentCategory("ManagersDashboard")}>Dashboard: Case Managers</a>
                 </li>
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
+                  <a href="#" class={` ${currentCategory === 'CMData' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
+                </li>
+                <li>      <Dropdown >
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Case Managers
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+  {users.map(user => (
+    <Dropdown.Item  href="#/action-1">{user.username}</Dropdown.Item>
+                    ))}
+    
+    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown></li>
+                <li>
+                  <a href="#" class={` ${currentCategory === 'AllCases' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
                 </li>
                 <li>
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Negotiaions</a>
@@ -148,7 +191,7 @@ $("#show-sidebar").click(function() {
                   </a>
                 </li>
                 <li>
-                  <a href="#">Case Managers</a>
+  
                 </li>
                 <li>
                   <a href="#">Demands</a>
@@ -165,16 +208,17 @@ $("#show-sidebar").click(function() {
          
         </ul>
       </div>
+
       
     </div>
     
     <div class="sidebar-footer">
     
-    <a href="#" class={` ${currentCategory === 'users' ? 'active' : ''}`} onClick={() => setCurrentCategory("Users")}>
+    <a href="#" class={` ${currentCategory === 'Users' ? 'active' : ''}`} onClick={() => setCurrentCategory("Users")}>
         <i class="fa fa-user"></i>
         
       </a>
-      <a href="#">
+      <a href="#" class={` ${currentCategory === 'Prefs' ? 'active' : ''}`} onClick={() => setCurrentCategory("Prefs")}>
         <i class="fa fa-cog"></i>
         
       </a>
@@ -187,14 +231,16 @@ $("#show-sidebar").click(function() {
   </div>
   <div>
   
-  {(currentCategory === "IntDashboard") ? <IntDashboard user={user}/> : <>  </>}
-  {(currentCategory === "IntMembers") ? <IntMembers user={user}/> : <>  </>}
-  {(currentCategory === "CMData") ? <CMData user={user}/> : <>  </>}
-  {(currentCategory === "Users") ? <Users user={user}/> : <>  </>}
+  {(currentCategory === "IntDashboard") ? <IntDashboard /> : <>  </>}
+  {(currentCategory === "IntMembers") ? <IntMembers /> : <>  </>}
+  {(currentCategory === "CMData") ? <AllManagers /> : <>  </>}
+  {(currentCategory === "Users") ? <Users /> : <>  </>}
+  {(currentCategory === "Prefs") ? <Prefs /> : <>  </>}
+  {(currentCategory === "ManagersDashboard") ? <ManagersDashboard/> : <>  </>}
   {(currentCategory === "AllCases") ? <Redirect to="/admin/allcases" /> : <>  </>}
 
       </div>
-      <script src="script.js"></script>
+     
   </div>
   
 

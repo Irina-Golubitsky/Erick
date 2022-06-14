@@ -90,6 +90,7 @@ console.log(myuser);
             await updateUser({
                 variables: {...userState}
               });
+              window.location.replace("/admin");
     
 
         } catch (e) {
@@ -185,6 +186,7 @@ console.log(myuser);
                                     type="checkbox"
                                     id="activeCheck"
                                     defaultChecked={myuser.active}
+                                    checked={userState.active}
                                 
                                     onChange={handleChange}
                                     // placeholder="Team 2"

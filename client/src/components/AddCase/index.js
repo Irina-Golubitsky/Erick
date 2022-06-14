@@ -5,17 +5,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation,useQuery } from '@apollo/react-hooks';
 import { ADD_CASEDATA} from '../../utils/mutations';
+import { ALL_PREFS} from '../../utils/queries';
 import { UPDATE_CASE} from '../../utils/mutations';
 import { UPDATE_USER } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 
 
 import Auth from '../../utils/auth';
-import { useQuery } from '@apollo/react-hooks';
 import { QUERY_CASE} from '../../utils/queries';
-import {roles, departments, typesol,typecase,liability,levelinjury,phase,policy,umbrella,umuim, lps,level1,level2,level3} from "../arrays.js"
 
 
 const AddCase = props => {
@@ -39,12 +38,15 @@ const AddCase = props => {
         def:"",
         status:"",
         level:""});
+       
 
         const { id: caseId } = useParams();
+        const prefs=props.location.state;
 
         const { loading, data } = useQuery(QUERY_CASE, {
             variables: { id: caseId }
         });
+      
 
         function dateToInput(mydate){
             mydate=mydate.split("/");
@@ -95,8 +97,12 @@ const AddCase = props => {
             </h4>
         );
     }
+
+    
     const handleChange = event => {
         const { name, value } = event.target;
+        
+      
         // if (((name=="dol")||(name=="typesol"))&((userState.dol!=="")&(userState.typesol!=="")))
 
        if ((name ==="dol")&(userState.typesol!=="")){
@@ -149,11 +155,11 @@ const AddCase = props => {
 
        }else if(name ==="policy"){
            let level="";
-           if (level1.includes(value)){level="Level 1";} 
+           if (prefs.level1.includes(value)){level="Level 1";} 
            else if
-            (level2.includes(value)){level="Level 2";}  
+            (prefs.level2.includes(value)){level="Level 2";}  
             else if
-            (level3.includes(value)){level="Level 3";}  
+            (prefs.level3.includes(value)){level="Level 3";}  
         setuserState({
             ...userState,
             [name]: value,
@@ -181,7 +187,10 @@ const AddCase = props => {
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
-        let show="active";
+    //    "Investigation & Treatment","Collecting Meds", "Demand","Litigation","Negotiation","Drop",
+    //     "Sub Out","Boicourt","Minors Comp","Policy Pop", "Referred Out"
+       let show="";
+       if (prefs.showactive.includes(userState.phase)){show="active"}  else { show= "transfer"}
       
       
 if (caseId==="new"){
@@ -249,7 +258,7 @@ if (caseId==="new"){
                         required
                         onChange={handleChange} >
                         <option ></option>
-                                     {typesol.map(role => (
+                                     {prefs.typesol.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -327,7 +336,7 @@ if (caseId==="new"){
                         onChange={handleChange}
                         required >
                         <option ></option>
-                                     {typecase.map(role => (
+                                     {prefs.typecase.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -347,7 +356,7 @@ if (caseId==="new"){
                         
                         >
                                   <option ></option>
-                                     {liability.map(role => (
+                                     {prefs.liability.map(role => (
                       <option >{role}</option>
                     ))}
                     </select>
@@ -368,7 +377,7 @@ if (caseId==="new"){
                         onChange={handleChange} 
                         required>
                         <option ></option>
-                                     {levelinjury.map(role => (
+                                     {prefs.levelinjury.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -386,7 +395,7 @@ if (caseId==="new"){
                         onChange={handleChange}
                         required >
                         <option ></option>
-                                     {phase.map(role => (
+                                     {prefs.phase.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -417,7 +426,7 @@ if (caseId==="new"){
                         value={userState.policy}
                         onChange={handleChange} >
                                   <option ></option>
-                                     {policy.map(role => (
+                                     {prefs.policy.map(role => (
                       <option >{role}</option>
                     ))}
                     </select>
@@ -437,7 +446,7 @@ if (caseId==="new"){
                         value={userState.umbrella}
                         onChange={handleChange} >
                         <option ></option>
-                                     {umbrella.map(role => (
+                                     {prefs.umbrella.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -454,7 +463,7 @@ if (caseId==="new"){
                         value={userState.umuim}
                         onChange={handleChange} >
                         <option ></option>
-                                     {umuim.map(role => (
+                                     {prefs.umuim.map(role => (
                       <option >{role}</option>
                     ))}
                         </select>
@@ -485,7 +494,7 @@ if (caseId==="new"){
                         value={userState.lps}
                         onChange={handleChange} >
                                   <option ></option>
-                                     {lps.map(role => (
+                                     {prefs.lps.map(role => (
                       <option >{role}</option>
                     ))}
                     </select>
@@ -538,6 +547,7 @@ if (caseId==="new"){
                 <p class="text-muted"><strong>*</strong> These fields are required.</p>
             </div>
         </div>
+  
     </form>
 
 </div>
