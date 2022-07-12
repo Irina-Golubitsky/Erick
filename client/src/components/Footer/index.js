@@ -6,11 +6,14 @@ const Footer = () => {
     <footer >
       <div class="container ">
         <div class="row text-center">
-          <div class="col-lg-6 col-sm-12">
-            By Irina Golubitsky
+          <div class="col-lg-4 col-sm-12">
+          The Law Office of Arash Khorsandi  ©
           </div>
-          <div class="col-lg-6 col-sm-12">
-          <a href="https://github.com/Irina-Golubitsky/Erick" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+          <div class="col-lg-4 col-sm-12">
+          <a href="https://arashlaw.com/" target="_blank">arashlaw.com</a>
+          </div>
+          <div class="col-lg-4 col-sm-12">
+          <a href="mailto:irina@arashlaw.com" target="_blank"><i class="fa fa-envelope fa"></i></a>
           </div>
         </div>
       </div>

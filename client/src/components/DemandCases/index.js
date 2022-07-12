@@ -85,7 +85,7 @@ const DemandCases = props => {
                 <td >{casedata.client}</td>
                 <td >{casedata.fv}</td>
                <td >{casedata.dol}</td>
-               <td >{casedata.phase}</td>
+   
                <td >{casedata.transferedtodemand}</td>
                {casedata.dletter != "NaN/NaN/NaN" ? <td>{casedata.dletter}</td> : <td></td>}
                {casedata.offerreceived != "NaN/NaN/NaN" ? <td>{casedata.offerreceived}</td> : <td></td>}
@@ -144,7 +144,7 @@ const DemandCases = props => {
                                                                     <th className="border-0 text-center">DOL</th>
                                                                     
                                                                     
-                                                                    <th className="border-0 text-center">Phase</th>
+                                                                   
                                                                     <th className="border-0 text-center">Transferred to Demand</th>
                                                                     <th className="border-0 text-center ">Demand Letter Sent</th>
                                                                     <th className="border-0 text-center">Offer Received</th>
