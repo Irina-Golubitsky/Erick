@@ -28,7 +28,7 @@ const resolvers = {
         
       },
       activemanagers: async () => {
-        return User.find(( { "active": true, "role": "Manager" } ))
+        return User.find(( { "active": true, "role": "Case Manager" } ))
           .select('-__v -password')
           .sort( { "department": 1 } )  
           .populate({path: 'cases', options: { sort: { 'dol': 1 } } })

@@ -58,7 +58,8 @@ console.log(myuser);
         );
     }
     const handleChange = event => {
-        const { name, value } = event.target;
+        let { name, value } = event.target;
+       
        
         if (name==="active"){
 
@@ -186,7 +187,8 @@ console.log(myuser);
                                     type="checkbox"
                                     id="activeCheck"
                                     defaultChecked={myuser.active}
-                                    checked={userState.active}
+                                   
+                                    value={userState.active}
                                 
                                     onChange={handleChange}
                                     // placeholder="Team 2"

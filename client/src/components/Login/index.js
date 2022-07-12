@@ -31,7 +31,7 @@ const Login = props => {
             Auth.login(data.login.token);
             if (Auth.loggedIn()){
                 if (data.login.user.role==="Admin"){window.location.replace("/admin");}
-                if (data.login.user.role==="Manager"){window.location.replace("/manager");}
+                if (data.login.user.role==="Case Manager"){window.location.replace("/manager");}
                 if (data.login.user.role==="Demand"){window.location.replace("/demand");}
                 if (data.login.user.role==="Negotiation"){window.location.replace("/nego");}
             }
