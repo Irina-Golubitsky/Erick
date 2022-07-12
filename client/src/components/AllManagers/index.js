@@ -14,7 +14,7 @@ import {
 
 } from "react-bootstrap";
 import Header from '../Header';
-import Signup from '../Signup';
+
 import { event } from 'jquery';
 
 const AllManagers = props => {

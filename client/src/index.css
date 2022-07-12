@@ -1532,7 +1532,11 @@ width:100%;
   min-height:90vh;
 
 }
-
+.checkactive {
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+}
 .contact .php-email-form textarea {
   padding: 10px 12px;
 }

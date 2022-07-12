@@ -182,13 +182,14 @@ console.log(myuser);
                             </div>
                             <div class="form-group">
                                 <label >Active</label>
-                                <input class="form-control"
+                                <input class="checkactive"
                                     name="active"
                                     type="checkbox"
                                     id="activeCheck"
-                                    defaultChecked={myuser.active}
+                                   checked={userState.active} 
+                                
                                    
-                                    value={userState.active}
+                                   value={userState.active}
                                 
                                     onChange={handleChange}
                                     // placeholder="Team 2"

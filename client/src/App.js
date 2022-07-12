@@ -6,7 +6,7 @@ import ApolloClient from 'apollo-boost';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Signup from './components/Signup';
+
 import Login from './components/Login';
 import Hero from './components/Hero';
 import EditUser from './components/EditUser';
@@ -48,14 +48,14 @@ function App() {
         <Switch>
 
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+        
         </Switch>
 
 
         <Switch>
           <Route exact path="/" component={Hero} />
           <Route exact path="/login" component={Hero} />
-          <Route exact path="/signup" component={Hero} />
+     
           
         </Switch>
         <Switch>
