@@ -3,8 +3,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ME } from '../../utils/queries';
 import { Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import ActiveManagerCases from '../ActiveManagerCases'
-import TransferManagerCases from '../TransferManagerCases'
+import ManagerCases from '../ManagerCases'
+
 import Auth from '../../utils/auth';
 import { ALL_PREFS} from '../../utils/queries';
 import Hero from '../Hero'
@@ -32,7 +32,9 @@ const Manager = props => {
         umuim: [],
         lps: [],
         showactive: [],
-        showtransfer: []});
+        showtransfer: [],
+        language:[]
+      });
   
     const { loading, data } = useQuery(ALL_PREFS, {
     });
@@ -53,7 +55,9 @@ const Manager = props => {
             umuim: prefs.umuim,
             lps: prefs.lps,
             showactive: prefs.showactive,
-            showtransfer: prefs.showtransfer});
+            showtransfer: prefs.showtransfer,
+            language:prefs.language
+          });
 
         }
        
@@ -85,8 +89,8 @@ const Manager = props => {
      
       </div>
 
-      {(currentCategory === "Active") ? <ActiveManagerCases /> : <>  </>}
-      {(currentCategory === "Transfer") ? <TransferManagerCases /> : <>  </>}
+      {(currentCategory === "Active") ? <ManagerCases show={"active"}/> : <>  </>}
+      {(currentCategory === "Transfer") ? <ManagerCases show={"transfer"} /> : <>  </>}
       {(currentCategory === "Add") ? <Redirect to={{
     pathname: "/manager/casenew",
     state: { ...prefsState }

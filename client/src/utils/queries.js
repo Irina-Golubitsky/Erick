@@ -74,6 +74,49 @@ export const QUERY_ACTIVEMANAGERS = gql`
     }
   }
 `;
+export const QUERY_DEMANDUSERS = gql`
+  query demandusers {
+    demandusers {
+      _id
+      username
+     
+      email
+      active
+      role
+      department
+      cases {
+        _id
+        createdAt
+        username
+        dol
+        sol
+        typesol
+        fv
+        client
+        passenger
+        typecase
+        liability
+        levelinjury
+        phase
+        propertyd
+        policy
+        umbrella
+        umuim
+        med
+        lps
+        def
+        status
+        level
+        lastupdate
+        show
+        
+        }
+      
+      
+      
+    }
+  }
+`;
 export const QUERY_ME = gql`
   {
     me { 
@@ -108,6 +151,20 @@ export const QUERY_ME = gql`
         level
         lastupdate
         show
+        demandmem
+        transferedtodemand
+        transferedtonego
+        negomem
+        dletter
+        offerreceived
+        transferedtoliti
+        litimem
+        medicalbill
+        offer
+        tenderedpolicy
+        boicourttransfer
+        negonotes
+        language
         
         }
     }
@@ -140,6 +197,21 @@ export const QUERY_CASE = gql`
       level
       lastupdate
       show
+      demandmem
+      demandmem
+      transferedtodemand
+      transferedtonego
+      negomem
+      dletter
+      offerreceived
+      transferedtoliti
+      litimem
+      medicalbill
+      offer
+      tenderedpolicy
+      boicourttransfer
+      negonotes
+      language
       
     
     }
@@ -195,8 +267,44 @@ query preferences {
     lps
     showactive
     showtransfer
+    tenderedpolicy
+    boicourttransfer
+    language 
+    negostatus
+    negoclaim
   }
 }
 
 
+`;
+
+export const NEW_DEMAND = gql`
+query Newdemand {
+  newdemand {
+    _id
+    createdAt
+    username
+    dol
+    sol
+    typesol
+    fv
+    passenger
+    client
+    typecase
+    liability
+    levelinjury
+    phase
+    propertyd
+    policy
+    umbrella
+    umuim
+    med
+    lps
+    def
+    status
+    level
+    lastupdate
+    show
+  }
+}
 `;

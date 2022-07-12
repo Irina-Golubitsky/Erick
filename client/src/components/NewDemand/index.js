@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation,useQuery } from '@apollo/react-hooks';
 
-import { QUERY_ACTIVEMANAGERS} from '../../utils/queries';
-import { REASSIGN_CASE} from '../../utils/mutations';
+import { QUERY_DEMANDUSERS} from '../../utils/queries';
+import { ASSIGN_DEMAND} from '../../utils/mutations';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Auth from '../../utils/auth';
@@ -17,23 +17,18 @@ import Header from '../Header';
 import Signup from '../Signup';
 import { event } from 'jquery';
 
-const AllManagers = props => {
-    const [userState, setuserState] = useState({user:""});
-    const [selectState, setselectState] = useState({cases:[]});
-    const [currentCategory, setCurrentCategory] = useState('active');
-    const [currentmanager, setCurrentManager] = useState('');
+const NewDemand = ({ cases })=> {
     
+    const [selectState, setselectState] = useState({cases:[]});
+    
+    const [currentmanager, setCurrentManager] = useState('');
+    const [currentCategory, setCurrentCategory] = useState('transfer');
 
-    const { loading, data } = useQuery(QUERY_ACTIVEMANAGERS, {
+    const { loading, data } = useQuery(QUERY_DEMANDUSERS, {
     });
-    const [reassignCase, { error }] = useMutation(REASSIGN_CASE);
-    useEffect(() => {
-        if (typeof data !== "undefined")  {
-            console.log(data);
-
-            setuserState({user:data.activemanagers[0]});}       
-    }, [ data]);
-    const users = data?.activemanagers || [];
+    const [reassignCase, { error }] = useMutation(ASSIGN_DEMAND);
+  ;
+    const users = data?.demandusers || [];
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -49,11 +44,7 @@ const AllManagers = props => {
             </h4>
         );
     }
-    const UserClicked = (index) => (event) => {
-        
-        setuserState({user:data.activemanagers[index]}); 
-        console.log(users[index].cases);
-    }
+
     const handleChangeManager = event => {
         const { name, value } = event.target;
         setCurrentManager(value);
@@ -69,13 +60,11 @@ const AllManagers = props => {
     }
     const ReassignCase = async  (caseid) => {
         
-        console.log(currentmanager);
-        console.log(caseid);
-        console.log(userState.user.username);
+      
     
         try {        
             await reassignCase({
-                variables: {username:currentmanager, caseid:caseid, olduser:userState.user.username}
+                variables: {username:currentmanager, caseid:caseid}
               });
             //   
         } catch (e) {
@@ -107,12 +96,14 @@ const AllManagers = props => {
         
         let casedataList=[];
          let usercases=selectState.cases||[];
+         let i=1;
          
          usercases.map(casedata => {
  
             
              casedataList.push(<tr >
-      <td></td>
+             <td></td>
+      <td>{i}</td>
                  <td >{casedata.dol}</td>
                  <td >{casedata.sol}</td>
                 <td >{casedata.typesol}</td>
@@ -136,7 +127,7 @@ const AllManagers = props => {
                  <td >{casedata.lastupdate}</td>
      
                  
-             </tr>);}
+             </tr>);i++;}
          )
  
          return casedataList;
@@ -145,11 +136,11 @@ const AllManagers = props => {
         let i=1;
         
        let casedataList=[];
-        let usercases=userState.user.cases||[];
+        let usercases=cases||[];
         
         usercases.map(casedata => {
 
-            if (casedata.show===currentCategory){
+            
             casedataList.push(<tr >
      <td><input type="checkbox" key={casedata._id} name={casedata.id} onChange={(event) => toggleCaseSelected(casedata, event)}  />&nbsp;</td>
      <td >{i}</td>
@@ -177,7 +168,7 @@ const AllManagers = props => {
     
                 
             </tr>); i++;}
-        })
+        )
 
         return casedataList;
     }
@@ -193,11 +184,9 @@ const AllManagers = props => {
 
                     <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
                     <div class="content">
-                    <h3>Active Managers</h3>
+                    <h3>New Demand Cases</h3>
                     <div class="row">
-                    {users.map((user, index)=> (
-    <div class="col-3 userlist" onClick={UserClicked(index)}>{user.username}  </div>
-                    ))}
+        
        
                                                         
            
@@ -207,26 +196,23 @@ const AllManagers = props => {
                 </div>
                 
                 <div class=" d-flex justify-content-center">
-        <button type="button" class={`mebtn ${currentCategory === 'active' ? 'active' : ''}`} onClick={() => {setCurrentCategory("active");setselectState({cases:[]});}}>Active Cases</button>
-        <button type="button" class={`mebtn ${currentCategory === 'transfer' ? 'active' : ''}`} onClick={() => {setCurrentCategory("transfer");setselectState({cases:[]});}} >Transferred Cases</button>
-        <button type="button" class={`mebtn ${currentCategory === 'reassign' ? 'active' : ''}`} onClick={() => setCurrentCategory("reassign")} >Reassign Cases</button>
+        <button type="button" class={`mebtn ${currentCategory === 'reassign' ? 'active' : ''}`} onClick={() => setCurrentCategory("reassign")} >Assign to Demand Team Member</button>
      
       </div>
       <div class="row">
 
 <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
 <div class="content tabscroll">
-<h3>{userState.user.username}'s cases</h3>
-<p></p>
+
 { currentCategory === 'reassign' &&
 <div class="form-group">
-                        <label for="form_name">Choose new case manager</label>
+                        <label for="form_name">Choose Demand Team Member</label>
                         <select 
                         id="typecase"
                         type="text"
                         name="typecase" 
                         class="form-control w-50"
-                        value={userState.typecase}
+                       
                         onChange={handleChangeManager}
                         required >
                         <option ></option>
@@ -234,7 +220,7 @@ const AllManagers = props => {
                       <option >{user.username}</option>
                     ))}
                         </select> < br />
-                        <div className='btn btn-success' onClick={ReassignCases} > Reassign</div>
+                        <div className='btn btn-success' onClick={ReassignCases} > Assign</div>
                     </div>
 }
 <Table bordered hover className='bg-white tabscroll' size="sm">
@@ -285,4 +271,4 @@ const AllManagers = props => {
     );
 };
 
-export default AllManagers;
+export default NewDemand;

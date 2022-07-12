@@ -36,7 +36,7 @@ const IntDashboard = props => {
         var headers = {
             'QB-Realm-Hostname': 'arashlaw.quickbase.com',
             'User-Agent': '{User-Agent}',
-            'Authorization': 'QB-USER-TOKEN b7c3vd_m9e3_0_d8z459x75p332cz9g5dn6jss3n',
+            'Authorization': 'QB-USER-TOKEN b7c3vd_m9e3_0_dzvrvktmxt5vtc4eycu5hkisic',
             'Content-Type': 'application/json'
         }
          // 1-date created
@@ -44,7 +44,7 @@ const IntDashboard = props => {
         // 17- status (reffered-on...)
         //127 - type of injury (cat..)
         //129 - user
-        var body = { "from": "bsckevgt3", "select": [1, 129, 17, 127], "where": "{'1'.OAF.'" + quickDayStart + "'}AND{'1'.OBF.'" + quickDayEnd + "'}", "groupBy": [{ "fieldId": 129, "grouping": "equal-values" }], "options": { "skip": 0, "compareWithAppLocalTime": false } }
+        var body = { "from": "bpt3y5346", "select": [1, 129, 17, 127], "where": "{'1'.OAF.'" + quickDayStart + "'}AND{'1'.OBF.'" + quickDayEnd + "'}", "groupBy": [{ "fieldId": 129, "grouping": "equal-values" }], "options": { "skip": 0, "compareWithAppLocalTime": false } }
         console.log(body);
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.responseType = 'json';
@@ -293,8 +293,8 @@ const IntDashboard = props => {
                 <Card.Header>
                     <Card.Title as="h4">{record.user}</Card.Title>
                 </Card.Header>
-                <Card.Body className="table-full-width table-responsive px-0">
-                    <Table  bordered hover>
+                <Card.Body className="table-full-width table-responsive px-0" size="sm">
+                    <Table  bordered hover size="sm">
                         <thead>
                             <tr>
                                 <th className="border-0 text-center one-line">Type of Injury</th>
@@ -613,7 +613,7 @@ const IntDashboard = props => {
                                                         </p>
                                                     </Card.Header>
                                                     <Card.Body className="table-full-width table-responsive px-0">
-                                                        <Table striped bordered hover>
+                                                        <Table striped bordered hover size="sm">
                                                             <thead>
                                                                 <tr>
 

@@ -992,6 +992,10 @@ width:100%;
   background-color:#e7881b ;
   
 }
+.status {
+  width: 16.66%;
+  background-color: red;
+}
 .tablebtn {
   cursor: pointer;
   background: #47b2e4;

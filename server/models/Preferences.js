@@ -19,7 +19,13 @@ const prefSchema = new Schema(
     umuim: [String],
     lps: [String],
     showactive: [String],
-    showtransfer: [String]   
+    showtransfer: [String],
+    tenderedpolicy: [String],
+    boicourttransfer:[String],
+    language:[String],
+    negostatus:[String],
+    negoclaim:[String]
+
 
   }
 );

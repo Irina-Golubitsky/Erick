@@ -38,6 +38,30 @@ type User {
     level:String
     lastupdate:String
     show:String
+    demandmem:String
+    transferedtodemand:String
+    transferedtonego:String
+    negomem:String
+    dletter:String
+    offerreceived:String
+    transferedtoliti:String
+    litimem:String
+    medicalbill: String
+    offer: String
+    tenderedpolicy:String
+    boicourttransfer:String
+    negonotes:String
+    language:String
+    finaloffer:String
+    feesper:String
+    feesmoney:String
+    lastcall:String
+    nextcall:String
+    negostatus:String
+    negoclaim:String
+    outclient:String
+    outrandal:String
+
 
 
 
@@ -59,6 +83,11 @@ type User {
     lps: [String]
     showactive: [String]
     showtransfer: [String]   
+    tenderedpolicy: [String],
+    boicourttransfer:[String],
+    language:[String], 
+    negostatus:[String],
+    negoclaim:[String]
 
   }
   type CS2{
@@ -94,6 +123,8 @@ type Auth {
     allcases:[Casedata]
     activemanagers:[User]
     caseStage:[CS]
+    newdemand:[Casedata]
+    demandusers:[User]
     
   }
 
@@ -163,7 +194,22 @@ type Auth {
         def:String,
         status:String,
         level:String,
-        show:String):Casedata  
+        show:String,
+        transferedtodemand: String,
+        demandmem:String,
+        dletter:String,
+        offerreceived:String,
+        transferedtonego:String,
+        negomem: String,
+        transferedtoliti: String,
+        litimem: String,
+        medicalbill:String,
+        offer:String,
+        tenderedpolicy:String,
+        boicourttransfer:String,
+        negonotes:String,
+        language:String
+        ):Casedata  
     updateUser(userId:ID!,username: String, email: String, role: String, department: String, active:Boolean): User
     updatePrefs(typesol: [String],
       typecase: [String],
@@ -178,7 +224,12 @@ type Auth {
       umuim: [String],
       lps: [String],
       showactive: [String],
-      showtransfer: [String] ): Preferences
+      showtransfer: [String],
+      tenderedpolicy:[String],
+      boicourttransfer:[String],
+      language:[String],
+      negostatus:[String],
+    negoclaim:[String]): Preferences
    
         createPrefs(typesol: [String],
           typecase: [String],
@@ -193,8 +244,16 @@ type Auth {
           umuim: [String],
           lps: [String],
           showactive: [String],
-          showtransfer: [String] ): Preferences
+          showtransfer: [String],
+          tenderedpolicy:[String],
+          boicourttransfer:[String],
+          language:[String],
+          negostatus:[String],
+    negoclaim:[String] ): Preferences
     cleanAll(aa:String):String
+    reassignCase(username:String!, caseid:ID!, olduser:String!):Casedata
+    assignDemand(username:String!, caseid:ID!):Casedata
+    transferNego(phase:String!, negomem:String!, transferedtonego:String!, caseid:ID!):Casedata
   
   
   }

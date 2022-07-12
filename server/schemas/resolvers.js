@@ -30,7 +30,15 @@ const resolvers = {
       activemanagers: async () => {
         return User.find(( { "active": true, "role": "Manager" } ))
           .select('-__v -password')
-          .populate('cases')
+          .sort( { "department": 1 } )  
+          .populate({path: 'cases', options: { sort: { 'dol': 1 } } })
+       
+        
+      },
+      demandusers: async () => {
+        return User.find(( { "active": true, "role": "Demand" } ))
+          .select('-__v -password') 
+          .populate({path: 'cases', options: { sort: { 'dol': 1 } } })
        
         
       },
@@ -55,6 +63,27 @@ const resolvers = {
         .sort( { "username": 1 , "dol":-1} )   
       
     },
+    newdemand:async () =>  {
+      return Casedata.find({
+
+            $or: [
+              { phase: 'Demand'},
+              { phase: 'Litigation'},
+              { phase: 'Negotiation'},
+           
+            ]
+          ,
+            $and: [
+             
+              { demandmem: null }
+             
+            ]
+          })
+          
+       
+      .sort( { "username": 1 , "dol":-1} )  
+    
+  },
     caseStage: async () => {
       return Casedata.aggregate( [
         // Stage 1: Filter pizza order documents by pizza size
@@ -157,9 +186,79 @@ const resolvers = {
 
      throw new AuthenticationError('Not logged in');
    },
+   reassignCase: async (parent, { username, caseid, olduser }, context) => {
+
+    if (context.user) {
+        await User.findOneAndUpdate(
+          { username: username },
+          { $push: { cases: caseid } },
+          { new: true }
+        );
+        await User.findOneAndUpdate(
+          { username: olduser },
+          { $pull: { cases: caseid } },
+          { new: true }
+        );
+
+
+        return await Casedata.findOneAndUpdate(
+          { _id: caseid },
+          { $set: { username: username } },
+          {
+            new: true,
+          }
+        );
+      }
+
+      throw new AuthenticationError('Not logged in');
+
+      },
+
+      assignDemand: async (parent, { username, caseid }, context) => {
+
+        if (context.user) {
+            await User.findOneAndUpdate(
+              { username: username },
+              { $push: { cases: caseid } },
+              { new: true }
+            );
+            return await Casedata.findOneAndUpdate(
+              { _id: caseid },
+              { $set: {  demandmem: username, transferedtodemand:Date.now() } },
+              {
+                new: true,
+              }
+            );
+          }
+    
+          throw new AuthenticationError('Not logged in');
+    
+          },
+
+          transferNego: async (parent, { phase, negomem, transferedtonego, caseid }, context) => {
+
+            if (context.user) {
+                await User.findOneAndUpdate(
+                  { username: negomem },
+                  { $push: { cases: caseid } },
+                  { new: true }
+                );
+                return await Casedata.findOneAndUpdate(
+                  { _id: caseid },
+                  { $set: {  phase:phase, negomem:negomem, transferedtonego:transferedtonego} },
+                  {
+                    new: true,
+                  }
+                );
+              }
+        
+              throw new AuthenticationError('Not logged in');
+        
+              },
+
    updatePrefs: async (parent, args, context) => {
     if (context.user) {
-    
+    console.log(args);
 
      return await Preferences.findOneAndUpdate(
        { name: "myprefs"},

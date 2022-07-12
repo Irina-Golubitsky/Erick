@@ -1,4 +1,4 @@
-export let roles = ["Manager","Supervisor","Admin"];
+export let roles = ["Case Manager","Demand","Negotiation","Supervisor","Admin"];
 export let departments = ["Team 1","Team 2","Team 3","Team Allen Splopuko","Senior Case Managers"];
 
 export let typesol = ["2 years","1 year","6 months", "Minor"];

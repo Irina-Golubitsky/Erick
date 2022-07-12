@@ -37,7 +37,9 @@ const AddCase = props => {
         lps:"",
         def:"",
         status:"",
-        level:""});
+        level:"",
+        language:""
+    });
        
 
         const { id: caseId } = useParams();
@@ -79,7 +81,9 @@ const AddCase = props => {
                     lps:data.casedata.lps,
                     def:data.casedata.def,
                     status:data.casedata.status,
-                    level:data.casedata.level});}       
+                    level:data.casedata.level,
+                    language:data.casedata.language
+                });}       
         }, [ data]);
 
 
@@ -187,8 +191,6 @@ const AddCase = props => {
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
-    //    "Investigation & Treatment","Collecting Meds", "Demand","Litigation","Negotiation","Drop",
-    //     "Sub Out","Boicourt","Minors Comp","Policy Pop", "Referred Out"
        let show="";
        if (prefs.showactive.includes(userState.phase)){show="active"}  else { show= "transfer"}
       
@@ -205,12 +207,15 @@ if (caseId==="new"){
       
       }
       else{
+        console.log('update');
+        console.log(userState);
         try {        
             await updateCase({
                 variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00"),show:show}
               });
 
-              window.location.replace("/manager");
+
+             window.location.replace("/manager");
         } catch (e) {
         }
 
@@ -516,7 +521,25 @@ if (caseId==="new"){
                         </input>
                     </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-3">
+                <div class="form-group">
+                        <label for="form_name">Language</label>
+                        <select 
+                        id="language"
+                        type="text"
+                        name="language" 
+                        class="form-control"
+                        value={userState.language}
+                        onChange={handleChange} >
+                                      <option ></option>
+                                     {prefs.language.map(role => (
+                      <option >{role}</option>
+                    ))}
+                   
+                        </select>
+                    </div>
+                    </div>
+                <div class="col-sm-6">
                 <div class="form-group">
                         <label for="form_name">STATUS</label>
                         <input 
@@ -529,6 +552,9 @@ if (caseId==="new"){
                    
                         </input>
                     </div>
+                </div>
+                <div class="col-sm-3">
+      
                 </div>
                 
             </div>

@@ -27,7 +27,13 @@ const Prefs = props => {
     umuim: [],
     lps: [],
     showactive: [],
-    showtransfer: []});
+    showtransfer: [],
+    tenderedpolicy: [],
+    boicourttransfer:[],
+    language:[],
+    negostatus:[],
+    negoclaim:[]
+  });
     const [updatePrefs, { error }] = useMutation(UPDATE_PREFS);
     const [createPrefs, { error2 }] = useMutation(CREATE_PREFS);
    
@@ -52,7 +58,13 @@ const Prefs = props => {
             umuim: prefs.umuim,
             lps: prefs.lps,
             showactive: prefs.showactive,
-            showtransfer: prefs.showtransfer});
+            showtransfer: prefs.showtransfer,
+            tenderedpolicy: prefs.tenderedpolicy,
+            boicourttransfer:prefs.boicourttransfer,
+            language:prefs.language,
+            negostatus:prefs.negostatus,
+    negoclaim:prefs.negoclaim
+        });
 
         }
       }, [ data]);
@@ -88,6 +100,7 @@ const Prefs = props => {
         const {  name, value } = event.target;
 
         console.log(event.target);
+       
         
         if (value==="create"){
             console.log('create');
@@ -104,11 +117,11 @@ const Prefs = props => {
         
       }}else{
         try {
-            
+            console.log("args" +userState.tenderedpolicy);
             await updatePrefs({
                 variables: {...userState}
               });
-             window.location.replace("/admin");
+            window.location.replace("/admin");
     
 
         } catch (e) {
@@ -282,6 +295,61 @@ const Prefs = props => {
                                         type="text"
                                         id="showtransfer"
                                         value={userState.showtransfer}
+                                        onChange={handleChange}
+                                    // onChange={handleChange}
+                                    />
+                                </div> 
+                                <div class="form-group ">
+                                    <label >Tender policy</label>
+                                    <input class="form-control"
+                                        name='tenderedpolicy'
+                                        type="text"
+                                        id="tenderedpolicy"
+                                        value={userState.tenderedpolicy}
+                                        onChange={handleChange}
+                                    // onChange={handleChange}
+                                    />
+                                </div> 
+                                <div class="form-group ">
+                                    <label >Boicourt Transfer</label>
+                                    <input class="form-control"
+                                        name='boicourttransfer'
+                                        type="text"
+                                        id="boicourttransfer"
+                                        value={userState.boicourttransfer}
+                                        onChange={handleChange}
+                                    // onChange={handleChange}
+                                    />
+                                </div> 
+                                <div class="form-group ">
+                                    <label >Languge</label>
+                                    <input class="form-control"
+                                        name='language'
+                                        type="text"
+                                        id="language"
+                                        value={userState.language}
+                                        onChange={handleChange}
+                                    // onChange={handleChange}
+                                    />
+                                </div> 
+                                <div class="form-group ">
+                                    <label >Nego Status</label>
+                                    <input class="form-control"
+                                        name='negostatus'
+                                        type="text"
+                                        id="negostatus"
+                                        value={userState.negostatus}
+                                        onChange={handleChange}
+                                    // onChange={handleChange}
+                                    />
+                                </div> 
+                                <div class="form-group ">
+                                    <label >Claim Negotiator</label>
+                                    <input class="form-control"
+                                        name='negoclaim'
+                                        type="text"
+                                        id="negoclaim"
+                                        value={userState.negoclaim}
                                         onChange={handleChange}
                                     // onChange={handleChange}
                                     />

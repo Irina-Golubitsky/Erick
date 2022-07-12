@@ -3,12 +3,13 @@ import Auth from '../../utils/auth';
 
 
 
-import {  QUERY_ME } from '../../utils/queries';
+import {  QUERY_ME, NEW_DEMAND } from '../../utils/queries';
 import { Redirect } from 'react-router-dom';
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
 import AllManagers from '../AllManagers'
 import ManagersDashboard from '../ManagersDashboard'
+import NewDemand from '../NewDemand'
 import Users from '../Users'
 import Prefs from '../Prefs'
 import CMData from '../CMData'
@@ -24,6 +25,7 @@ import { QUERY_USERS } from '../../utils/queries';
 const Sidebar = props => {
   const [currentCategory, setCurrentCategory] = useState('IntDashboard');
   const [usersState, setusersState] = useState([]);
+  const [demandState, setdemandState] = useState([]);
   const { loading, data } = useQuery( QUERY_ME, {    
   });
   const { loading:loading2, data:data2 } = useQuery(QUERY_USERS, {
@@ -32,6 +34,14 @@ const Sidebar = props => {
     if (typeof data2 !== "undefined") {
       console.log("users "+ data2.users)
     setusersState(data2.users);}
+  
+  }, [ data2]);
+  const { loading:loading3, data:data3 } = useQuery(NEW_DEMAND, {
+  });
+  useEffect(() => {
+    if (typeof data3 !== "undefined") {
+      
+    setdemandState(data3.newdemand);}
   
   }, [ data2]);
 
@@ -150,26 +160,7 @@ $("#show-sidebar").click(function() {
                 <li>
                   <a href="#" class={` ${currentCategory === 'ManagersDashboard' ? 'active' : ''}`} onClick={() => setCurrentCategory("ManagersDashboard")}>Dashboard: Case Managers</a>
                 </li>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'CMData' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
-                </li>
-                <li>      <Dropdown >
-  <Dropdown.Toggle variant="success" id="dropdown-basic">
-    Case Managers
-  </Dropdown.Toggle>
-
-  <Dropdown.Menu>
-  {users.map(user => (
-    <Dropdown.Item  href="#/action-1">{user.username}</Dropdown.Item>
-                    ))}
-    
-    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown></li>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'AllCases' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
-                </li>
+                
                 <li>
                   <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Negotiaions</a>
                 </li>
@@ -185,6 +176,25 @@ $("#show-sidebar").click(function() {
             <div class="">
             
               <ul>
+              <li>
+                  <a href="#" class={` ${currentCategory === 'CMData' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
+                </li>
+                <li>      <Dropdown >
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Case Managers
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+  {users.map(user => (
+    <Dropdown.Item  href="#/action-1">{user.username}</Dropdown.Item>
+                    ))}
+    
+
+  </Dropdown.Menu>
+</Dropdown></li>
+                <li>
+                  <a href="#" class={` ${currentCategory === 'AllCases' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
+                </li>
                 <li>
                   <a href="#">Intakes
                     
@@ -196,6 +206,11 @@ $("#show-sidebar").click(function() {
                 <li>
                   <a href="#">Demands</a>
                 </li>
+                {demandState.length > 0 &&
+                  <li>
+                  <a href="#" class={` ${currentCategory === 'NewDemand' ? 'active' : ''} text-danger`} onClick={() => setCurrentCategory("NewDemand")}>New Demand Cases!!!</a>
+                </li>
+      }
                 <li>
                   <a href="#">Negotiaions</a>
                 </li>
@@ -237,6 +252,7 @@ $("#show-sidebar").click(function() {
   {(currentCategory === "Users") ? <Users /> : <>  </>}
   {(currentCategory === "Prefs") ? <Prefs /> : <>  </>}
   {(currentCategory === "ManagersDashboard") ? <ManagersDashboard/> : <>  </>}
+  {(currentCategory === "NewDemand") ? <NewDemand cases= {demandState} /> : <>  </>}
   {(currentCategory === "AllCases") ? <Redirect to="/admin/allcases" /> : <>  </>}
 
       </div>

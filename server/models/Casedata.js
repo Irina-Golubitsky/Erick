@@ -87,6 +87,108 @@ const caseSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
+
+    demandmem: {
+      type: String},
+
+      transferedtodemand:{
+        type:Date,
+        default: Date.now,
+        get: timestamp => dateFormat(timestamp)
+      },
+      dletter:{
+        type:Date,
+        get: timestamp => dateFormat(timestamp)
+      },
+      offerreceived:{
+        type:Date,
+        get: timestamp => dateFormat(timestamp)
+      },
+      transferedtonego:{
+        type:Date,
+        get: timestamp => dateFormat(timestamp)
+      },
+      negomem:{
+        type: String
+      },
+
+      transferedtoliti:{
+        type:Date,
+        get: timestamp => dateFormat(timestamp)
+      },
+      litimem:{
+        type: String
+      },
+      medicalbill: {
+        type: Number,
+        get: v => (v/100).toFixed(2),
+        set: v => v*100
+    },
+    finalmedicalbill: {
+      type: Number,
+      get: v => (v/100).toFixed(2),
+      set: v => v*100
+  },
+    offer:{
+      type: Number,
+      get: v => (v/100).toFixed(2),
+      set: v => v*100
+
+    },
+    finaloffer:{
+      type: Number,
+      get: v => (v/100).toFixed(2),
+      set: v => v*100
+
+    },
+    feesper:{
+      type: Number,
+      get: v => (v/100).toFixed(2),
+      set: v => v*100
+
+    },
+    feesmoney:{
+      type: Number,
+      get: v => (v/100).toFixed(2),
+      set: v => v*100
+
+    },
+    tenderedpolicy:{
+      type:String
+    },
+    boicourttransfer:{
+      type:String
+    },
+    
+    negonotes:{
+      type:String
+    },
+    lastcall:{
+      type:Date,
+      get: timestamp => dateFormat(timestamp)
+    },
+    nextcall:{
+      type:Date,
+      get: timestamp => dateFormat(timestamp)
+    },
+    negostatus:{
+      type:String
+    },
+    negoclaim:{
+      type:String
+    },
+    outclient:{
+      type:Date,
+      get: timestamp => dateFormat(timestamp)
+    },
+    outrandal:{
+      type:Date,
+      get: timestamp => dateFormat(timestamp)
+    },
+    language:{
+      type:String
+    },
+
     show:{
       type:String
     }

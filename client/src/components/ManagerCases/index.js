@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ME } from '../../utils/queries';
 import { ALL_PREFS } from '../../utils/queries';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Auth from '../../utils/auth';
 import Hero from '../Hero'
@@ -14,7 +15,7 @@ import {
 } from "react-bootstrap";
 import Header from '../Header';
 
-const ActiveManagerCases = props => {
+const ManagerCases = props => {
     const history = useHistory();
     const [currentCategory, setCurrentCategory] = useState('info');
 
@@ -34,7 +35,10 @@ const ActiveManagerCases = props => {
         umuim: [],
         lps: [],
         showactive: [],
-        showtransfer: []});
+        showtransfer: [],
+    language:[]});
+   
+    const show=props.show;
   
     const { loading:loading2, data:data2 } = useQuery(ALL_PREFS, {
     });
@@ -55,7 +59,9 @@ const ActiveManagerCases = props => {
             umuim: prefs.umuim,
             lps: prefs.lps,
             showactive: prefs.showactive,
-            showtransfer: prefs.showtransfer});
+            showtransfer: prefs.showtransfer,
+            language:prefs.language
+        });
 
         }
        
@@ -79,15 +85,14 @@ const ActiveManagerCases = props => {
       }  
 
     //   onClick={()=> handleRowClick(casedata._id)} 
-
-    function renderListing() {
+   function renderListing() {
         let casedataList=[];
         let i=0;
         let usercases=user.cases||[];
         console.log(usercases);
         usercases.map(casedata => {
 
-            if (casedata.show==="transfer"){i++;
+            if (casedata.show===show){i++;
             casedataList.push(<tr >
             <td > <Link to={{
     pathname: `/manager/case${casedata._id}`,
@@ -187,4 +192,4 @@ const ActiveManagerCases = props => {
     );
 };
 
-export default ActiveManagerCases;
+export default ManagerCases;
