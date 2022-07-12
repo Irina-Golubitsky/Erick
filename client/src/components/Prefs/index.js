@@ -360,9 +360,9 @@ const Prefs = props => {
                         <div class="text-center"><button className="btn  w-50" type="submit" name="submit_button" value="update" onClick={handleFormSubmit}>
                             Update
                         </button></div>
-                        <div class="text-center"><button className="btn  w-50" type="submit"  name="submit_button" value="create" onClick={handleFormSubmit}>
+                        {/* <div class="text-center"><button className="btn  w-50" type="submit"  name="submit_button" value="create" onClick={handleFormSubmit}>
                             Create
-                        </button></div>
+                        </button></div> */}
                        
                     </div>
 
