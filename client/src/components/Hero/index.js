@@ -12,8 +12,8 @@ const Hero = () => {
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-content-center pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                        <h1>INTAKES bla bla bla</h1>
-                        <h2>AK reports</h2>
+                        <h1>Case Management 360</h1>
+                        <h2>Welcome to our new platform</h2>
                         <div className="d-flex justify-content-center justify-content-lg-start">
                             {Auth.loggedIn() ? (
                                 <>

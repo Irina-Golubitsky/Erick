@@ -69,7 +69,9 @@ const handleFormSubmit = async event => {
     let array=textState.replace(/['"]+/g, '')
     console.log(array);
     array=array.split("endofline");
+  array.pop();
     // array=array.split(/\r?\n/);
+   
   console.log(array);
     array.map( (element) => {
         let newcase=element.split("\t");
