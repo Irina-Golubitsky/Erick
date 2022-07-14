@@ -165,6 +165,18 @@ export const QUERY_ME = gql`
         boicourttransfer
         negonotes
         language
+        finaloffer
+        finalmedicalbill
+        feesper
+        feesmoney
+    
+        negostatus
+        negoclaim
+        outclient
+        outrandal
+       
+        lastcall
+
         
         }
     }
@@ -174,44 +186,54 @@ export const QUERY_CASE = gql`
   query casedata($id: ID!) {
     casedata(_id: $id) {
       _id
-      createdAt
-      username
-      dol
-      sol
-      typesol
-      fv
-      client
-      passenger
-      typecase
-      liability
-      levelinjury
-      phase
-      propertyd
-      policy
-      umbrella
-      umuim
-      med
-      lps
-      def
-      status
-      level
-      lastupdate
-      show
-      demandmem
-      demandmem
-      transferedtodemand
-      transferedtonego
-      negomem
-      dletter
-      offerreceived
-      transferedtoliti
-      litimem
-      medicalbill
-      offer
-      tenderedpolicy
-      boicourttransfer
-      negonotes
-      language
+        createdAt
+        username
+        dol
+        sol
+        typesol
+        fv
+        client
+        passenger
+        typecase
+        liability
+        levelinjury
+        phase
+        propertyd
+        policy
+        umbrella
+        umuim
+        med
+        lps
+        def
+        status
+        level
+        lastupdate
+        show
+        demandmem
+        transferedtodemand
+        transferedtonego
+        negomem
+        dletter
+        offerreceived
+        transferedtoliti
+        litimem
+        medicalbill
+        offer
+        tenderedpolicy
+        boicourttransfer
+        negonotes
+        language
+        finaloffer
+        finalmedicalbill
+        feesper
+        feesmoney
+    
+        negostatus
+        negoclaim
+        outclient
+        outrandal
+       
+        lastcall
       
     
     }

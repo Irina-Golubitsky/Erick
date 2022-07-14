@@ -67,6 +67,21 @@ const Nego = props => {
       }  
 
     //   onClick={()=> handleRowClick(casedata._id)} 
+
+    function NextCall(mydate){
+        mydate=mydate.split("/");
+        
+        
+
+    let lastcall=new Date(parseInt(mydate[2]), parseInt(mydate[0])-1, parseInt(mydate[1])+14);
+    lastcall=lastcall.toISOString().split('T')[0];
+    lastcall=lastcall.split("-");
+
+
+        return  lastcall[1]+'/'+ lastcall[2]+"/"+lastcall[0]
+
+    }
+
    function renderListing() {
         let casedataList=[];
         let i=0;
@@ -92,19 +107,19 @@ const Nego = props => {
                 <td >{casedata.client}</td>
                 
                 <td >{casedata.fv}</td>
-                <td ></td>
+                <td >{casedata.language}</td>
                <td >{casedata.dol}</td>
                <td >{casedata.phase}</td>
                <td >{casedata.transferedtonego}</td>
-               {casedata.offer != "NaN" ? <td>{casedata.offer}</td> : <td></td>}
+               {casedata.offer !== "NaN" ? <td>{casedata.offer}</td> : <td></td>}
                <td >{casedata.finaloffer}</td>
-               {casedata.medicalbill != "NaN" ? <td>{casedata.medicalbill}</td> : <td></td>}
+               {casedata.medicalbill !=="NaN" ? <td>{casedata.medicalbill}</td> : <td></td>}
                
                 <td >{casedata.finalmedicalbill}</td>
                 <td >{casedata.feesper}</td>
                <td >{casedata.feesmoney}</td>
                 <td >{casedata.lastcall}</td>
-                <td ></td>
+                {((casedata.lastcall !== null)&(casedata.lastcall !== "NaN-NaN-NaN") )? <td>{NextCall(casedata.lastcall)}</td> : <td></td>}
                 <td >{casedata.negostatus}</td>
                <td >{casedata.negoclaim}</td>
                 <td >{casedata.umuim}</td>

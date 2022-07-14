@@ -11,7 +11,9 @@ import { ADD_CASEDATA} from '../../utils/mutations';
 
 import { ALL_PREFS} from '../../utils/queries';
 import { UPDATE_CASE} from '../../utils/mutations';
-import { TRANSFER_NEGO } from '../../utils/mutations';
+import { SEND_BACK} from '../../utils/mutations';
+
+import { NEGO_NEGO } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 
 
@@ -30,7 +32,11 @@ const EditNego = props => {
         username: "",
         offer: "",
         transferedtonego: "",
-        medicalbill:""
+        medicalbill:null,
+        offer:null,
+        demandmem:"",
+        negomem:"",
+        nextcall:"",
    
         
 
@@ -42,11 +48,12 @@ const EditNego = props => {
         client: "",
         phase: "",
         language:"",
-        finaloffer:"",
-        feesper:"",
-        feesmoney:"",
+        finaloffer:null,
+        finalmedicalbill:null,
+        feesper:null,
+        feesmoney:null,
         lastcall:"",
-        nextcall:"",
+        
         negostatus:"",
         negoclaim:"",
         umuim:"",
@@ -54,7 +61,9 @@ const EditNego = props => {
         outclient:"",
         outrandal:"",
        
-        negonotes: ""
+        negonotes: "",
+        phase:"",
+        show:""
         
 
         });
@@ -72,14 +81,14 @@ const EditNego = props => {
       
 
         function dateToInput(mydate){
-            if (typeof mydate!=="undefined"){
+            if (mydate!==null){
             mydate=mydate.split("/");
             
             if (mydate[0].length===1){mydate[0]="0"+mydate[0]}
             if (mydate[1].length===1){mydate[1]="0"+mydate[1]}
             return mydate[2]+"-"+mydate[0]+"-"+mydate[1];
             }
-
+            else return null;
         }
         useEffect(() => {
             if (typeof data !== "undefined")  {
@@ -93,23 +102,27 @@ const EditNego = props => {
                     phase: data.casedata.phase,
                     language:data.casedata.language,
                     finaloffer:data.casedata.finaloffer,
+                    finalmedicalbill:data.casedata.finalmedicalbill,
                     feesper:data.casedata.feesper,
                     feesmoney:data.casedata.feesmoney,
                     lastcall:dateToInput(data.casedata.lastcall),
-                    nextcall:dateToInput(data.casedata.nextcall),
+                   
                     negostatus:data.casedata.negostatus,
                     negoclaim:data.casedata.negoclaim,
                     umuim:data.casedata.umuim,
                     med:data.casedata.med,
-                    outclient:data.casedata.outclient,
-                    outrandal:data.casedata.outrandal,
+                    outclient:dateToInput(data.casedata.outclient),
+                    outrandal:dateToInput(data.casedata.outrandal),
                    
-                    negonotes: data.casedata.negonotes
+                    negonotes: data.casedata.negonotes,
+                    phase:data.casedata.phase,
+                    show:data.casedata.show
                     });
                     setreadonlyState({
                      
                         username: data.casedata.username,
-                    
+                    demandmem:data.casedata.demandmem,
+                    negomem:data.casedata.negomem,
                         offer: data.casedata.offer,
         transferedtonego: dateToInput(data.casedata.transferedtonego),
         medicalbill:data.casedata.medicalbill
@@ -124,7 +137,8 @@ const EditNego = props => {
     const [addCase, { error }] = useMutation(ADD_CASEDATA);
     const [updateCase, { error2 }] = useMutation(UPDATE_CASE);
 
-    const [transferNego, { error3 }] = useMutation(TRANSFER_NEGO);
+    const [negotoNego, { error3 }] = useMutation(NEGO_NEGO);
+    const [sendBack, { error4 }] = useMutation(SEND_BACK);
     
     const loggedIn = Auth.loggedIn();
 
@@ -149,7 +163,8 @@ const EditNego = props => {
     }
     
     const handleChange = event => {
-        const { name, value } = event.target;
+        let { name, value } = event.target;
+        if ((name==="finaloffer")||(name==="finalmedicalbill")||(name==="feesper")||(name==="feesmoney")){ value= Number(value)}
         
       
         
@@ -167,31 +182,66 @@ const EditNego = props => {
 
       const handleTransferSubmit = async event => {
         event.preventDefault(); 
-        console.log("nego");
+        
         try {        
-            await transferNego({
-                variables: {...transCasestate, transferedtonego:new Date(transCasestate.transferedtonego+"T00:00:00")}
+            await negotoNego({
+                variables: {username:transCasestate.negomem, caseid:caseId, olduser:readonlyState.negomem, transferedtonego:new Date(transCasestate.transferedtonego+"T00:00:00")}
               });
 
               window.location.replace("/nego");
         } catch (e) {
         }
       }
+
+      const SendBack = async event => {
+        event.preventDefault();
+      
+
+        try {        
+            await sendBack({
+                variables: {caseid:caseId, phase:userState.phase, olduser:readonlyState.negomem}
+              });
+
+              window.location.replace("/nego");
+        } catch (e) {
+        }
+
+      
+    };
  
    
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
-      
-      
-      
+        let phase = userState.phase;
+        let show=userState.show;
 
+        if ((userState.outrandal!==null)&(userState.outrandal!=="NaN-NaN-NaN")){
+            phase="Storage";
+            show="closed"
+        }
         try {        
             await updateCase({
-                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"),dletter:new Date(userState.dletter+"T00:00:00"), offerreceived:new Date(userState.offerreceived+"T00:00:00")}
+                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"), lastcall:new Date(userState.lastcall+"T00:00:00"),outclient:new Date(userState.outclient+"T00:00:00"),outrandal:new Date(userState.outrandal+"T00:00:00"), phase:phase,show:show }
               });
 
-              window.location.replace("/demand");
+               window.location.replace("/nego");
+        } catch (e) {
+        }
+
+      
+    };
+    
+       const SendBackfromStorage = async event => {
+        event.preventDefault();
+       
+       
+        try {        
+            await updateCase({
+                variables: {caseId:caseId, phase:"Negotiation", show:"active",outrandal:null}
+              });
+
+               window.location.replace("/nego");
         } catch (e) {
         }
 
@@ -199,7 +249,23 @@ const EditNego = props => {
     };
     const BackButton= event =>{
         event.preventDefault();
-        window.location.replace("/demand");
+        window.location.replace("/nego");
+    }
+    function NextCall(mydate){
+        if ((mydate!==null)&(mydate!=="")){
+        mydate=mydate.split("-");
+        
+        
+
+    let lastcall=new Date(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])+14);
+    lastcall=lastcall.toISOString().split('T')[0];
+    lastcall=lastcall.split("-");
+
+
+        return  lastcall[1]+'/'+ lastcall[2]+"/"+lastcall[0]
+    //  return mydate[0]+"/"+mydate[1]+"/"+ mydate[2];
+        }else {return ""}
+
     }
  
 
@@ -266,7 +332,7 @@ const EditNego = props => {
                                         class="form-control"
                                         value={userState.language}
                                         onChange={handleChange}
-                                        required >
+                                       >
 
                                    
                                         <option></option>
@@ -317,9 +383,10 @@ const EditNego = props => {
                                     <input
                                         id="offer"
                                         type="number"
+                                        step="0.01"
                                         name="offer"
                                         class="form-control"
-                                        value={userState.offer}
+                                        value={readonlyState.offer}
                                         readonly="readonly" >
 
 
@@ -332,6 +399,7 @@ const EditNego = props => {
                                     <input
                                         id="finaloffer"
                                         type="number"
+                                        step="0.01"
                                         name="finaloffer"
                                         class="form-control"
                                         value={userState.finaloffer}
@@ -353,9 +421,10 @@ const EditNego = props => {
                                     <input
                                         id="medicalbill"
                                         type="number"
+                                        step="0.01"
                                         name="medicalbill"
                                         class="form-control"
-                                        value={userState.medicalbill}
+                                        value={readonlyState.medicalbill}
                                         readonly="readonly" >
 
                                     </input>
@@ -367,6 +436,7 @@ const EditNego = props => {
                                     <input
                                         id="finalmedicalbill"
                                         type="number"
+                                        step="0.01"
                                         name="finalmedicalbill"
                                         class="form-control"
                                         value={userState.finalmedicalbill}
@@ -381,6 +451,7 @@ const EditNego = props => {
                                     <input
                                         id="feesper"
                                         type="number"
+                                        step="0.01"
                                         name="feesper"
                                         class="form-control"
                                         value={userState.feesper}
@@ -395,6 +466,7 @@ const EditNego = props => {
                                     <input
                                         id="feesmoney"
                                         type="number"
+                                        step="0.01"
                                         name="feesmoney"
                                         class="form-control"
                                         value={userState.feesmoney}
@@ -418,7 +490,7 @@ const EditNego = props => {
                                         class="form-control"
                                         value={userState.lastcall}
                                         onChange={handleChange}
-                                        required
+                                       
                                     />
                                 </div>
                             </div>
@@ -427,12 +499,13 @@ const EditNego = props => {
                                     <label for="form_name">Next Call</label>
                                     <input
                                         id="nextcall"
-                                        type="date"
+                                        type="text"
                                         name="nextcall"
                                         class="form-control"
-                                        value={userState.nextcall}
-                                        onChange={handleChange}
-                                        required
+                                        value={NextCall(userState.lastcall)}
+                                       
+                                        readOnly
+                                      
                                     />
                                 </div>
                             </div>
@@ -532,7 +605,9 @@ const EditNego = props => {
                                      name="outrandal"
                                      class="form-control"
                                      value={userState.outrandal}
-                                     onChange={handleChange} >
+                                     onChange={handleChange}
+                                   readOnly={ userState.phase === 'Storage' ? true : false }
+                                      >
 
                                  </input>
                              </div>
@@ -561,28 +636,7 @@ const EditNego = props => {
                         </div>
                     </div>
 
-                    <div class="row">
-
-
-                        <div class="col-md-3" align="center">
-                        
-                                <div class="form-group">
-                                    <label for="form_name">Phase</label>
-                                    <select
-                                        id="phase"
-                                        type="text"
-                                        name="phase"
-                                        class="form-control"
-                                        value={userState.phase}
-                                        onChange={handleChange} >
-                                        <option>Negotiation</option>
-                                        <option>Storage</option>
-
-                                    </select>
-                                </div>
-                           
-                        </div>
-                    </div>
+                  
                     <div class="clearfix"></div>
 
                     <div class="row">
@@ -602,6 +656,7 @@ const EditNego = props => {
 
                 </form>
 
+{ userState.phase === 'Negotiation' &&
     <form id="contact-form" onSubmit={handleTransferSubmit}>
      <h3 class="text-center">Transfer Case </h3>
 
@@ -622,7 +677,7 @@ const EditNego = props => {
                         <option></option>
                      <option>Negotiation</option>
                      <option>Litigation</option>
-                     <option>Demand</option>
+                   
                   
                         </select>
                         
@@ -685,7 +740,25 @@ const EditNego = props => {
             </div>
         </div>
         </form>
-  
+}
+<div class="clearfix"></div>
+{ userState.phase === 'Storage' &&
+        <button  class="btn btn-warning btn-send form-control" onClick={SendBackfromStorage}>Send back to Negotiation phase - {readonlyState.negomem}</button>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+{ userState.phase === 'Negotiation' &&
+        <button  class="btn btn-warning btn-send form-control" onClick={SendBack}>Send back to Demand - {readonlyState.demandmem}</button>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+            </div>
+        </div>
    
 
 </div>

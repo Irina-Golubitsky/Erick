@@ -120,37 +120,31 @@ const caseSchema = new Schema(
         type: String
       },
       medicalbill: {
-        type: Number,
-        get: v => (v/100).toFixed(2),
-        set: v => v*100
+        type: Number
+       
     },
     finalmedicalbill: {
-      type: Number,
-      get: v => (v/100).toFixed(2),
-      set: v => v*100
+      type: Number
+    
   },
     offer:{
       type: Number,
-      get: v => (v/100).toFixed(2),
-      set: v => v*100
+  
 
     },
     finaloffer:{
-      type: Number,
-      get: v => (v/100).toFixed(2),
-      set: v => v*100
+      type: Number
+    
 
     },
     feesper:{
-      type: Number,
-      get: v => (v/100).toFixed(2),
-      set: v => v*100
+      type: Number
+      
 
     },
     feesmoney:{
-      type: Number,
-      get: v => (v/100).toFixed(2),
-      set: v => v*100
+      type: Number
+    
 
     },
     tenderedpolicy:{

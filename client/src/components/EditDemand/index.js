@@ -11,6 +11,7 @@ import { ADD_CASEDATA} from '../../utils/mutations';
 
 import { ALL_PREFS} from '../../utils/queries';
 import { UPDATE_CASE} from '../../utils/mutations';
+import { SEND_BACK} from '../../utils/mutations';
 import { TRANSFER_NEGO } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 
@@ -51,8 +52,8 @@ const EditDemand = props => {
         phase: "",
         offerreceived: "",
     
-        medicalbill: "",
-        offer: "",
+        medicalbill: null,
+        offer: null,
         tenderedpolicy:"",
         boicourttransfer:"",
         negonotes: ""
@@ -73,12 +74,14 @@ const EditDemand = props => {
       
 
         function dateToInput(mydate){
+            if (mydate!==null){
             mydate=mydate.split("/");
             
             if (mydate[0].length===1){mydate[0]="0"+mydate[0]}
             if (mydate[1].length===1){mydate[1]="0"+mydate[1]}
             return mydate[2]+"-"+mydate[0]+"-"+mydate[1];
-
+            }
+            else return null;
         }
         useEffect(() => {
             if (typeof data !== "undefined")  {
@@ -89,6 +92,7 @@ const EditDemand = props => {
                     
                     fv: data.casedata.fv,
                     client: data.casedata.client,
+                    phase:data.casedata.phase,
                 
                   
                     dletter: dateToInput(data.casedata.dletter),
@@ -124,6 +128,7 @@ const EditDemand = props => {
     const [updateCase, { error2 }] = useMutation(UPDATE_CASE);
 
     const [transferNego, { error3 }] = useMutation(TRANSFER_NEGO);
+    const [sendBack, { error4 }] = useMutation(SEND_BACK);
     
     const loggedIn = Auth.loggedIn();
 
@@ -148,7 +153,8 @@ const EditDemand = props => {
     }
     
     const handleChange = event => {
-        const { name, value } = event.target;
+        let { name, value } = event.target;
+        if ((name==="offer")||(name==="medicalbill")){ value= Number(value)}
         
       
         
@@ -176,18 +182,45 @@ const EditDemand = props => {
         } catch (e) {
         }
       }
+
+      const SendBack = async event => {
+        event.preventDefault();
+        
+
+        try {        
+            await sendBack({
+                variables: {caseid:caseId, phase:userState.phase, olduser:readonlyState.demandmem}
+              });
+
+              window.location.replace("/demand");
+        } catch (e) {
+        }
+
+      
+    };
  
    
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
+        let dol="",dletter="",offerreceived="";
+        if (userState.dol!="NaN-NaN-NaN"){
+            dol=new Date(userState.dol+"T00:00:00")
+        } 
+        if (userState.dletter!="NaN-NaN-NaN"){
+            dletter=new Date(userState.dletter+"T00:00:00")
+        }
+        if (userState.offerreceived!="NaN-NaN-NaN"){
+            offerreceived=new Date(userState.offerreceived+"T00:00:00")
+        } 
+        console.log(dol + " "+ dletter+ " "+offerreceived);
       
       
       
 
         try {        
             await updateCase({
-                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"),dletter:new Date(userState.dletter+"T00:00:00"), offerreceived:new Date(userState.offerreceived+"T00:00:00")}
+                variables: {...userState,caseId:caseId, dol:dol,dletter:dletter, offerreceived:offerreceived}
               });
 
               window.location.replace("/demand");
@@ -284,7 +317,7 @@ const EditDemand = props => {
                         class="form-control"
                         value={userState.dletter}
                         onChange={handleChange} 
-                        required
+                        
                        
                         />
                     </div>
@@ -371,6 +404,7 @@ const EditDemand = props => {
                         <input 
                         id="medicalbill"
                         type="number"
+                        step="0.01"
                         name="medicalbill" 
                         class="form-control"
                         value={userState.medicalbill}
@@ -385,6 +419,7 @@ const EditDemand = props => {
                         <input
                         id="offer"
                         type="number"
+                        step="0.01"
                         name="offer" 
                         class="form-control"
                         value={userState.offer}
@@ -487,7 +522,7 @@ const EditDemand = props => {
         </div>
   
     </form>
-
+    { userState.phase === 'Demand' &&
     <form id="contact-form" onSubmit={handleTransferSubmit}>
      <h3 class="text-center">Transfer Case </h3>
 
@@ -508,7 +543,7 @@ const EditDemand = props => {
                         <option></option>
                      <option>Negotiation</option>
                      <option>Litigation</option>
-                     <option>Demand</option>
+                     
                   
                         </select>
                         
@@ -549,6 +584,14 @@ const EditDemand = props => {
                         />
                     </div>
                 </div>
+                <div class="col-sm-3">
+                    
+                    <label for="form_name">*</label>
+                        
+                    <input type="submit" class="btn btn-warning btn-send form-control" value="Transfer Case" />
+                        
+                  
+                </div>
           
                
                 
@@ -556,13 +599,6 @@ const EditDemand = props => {
         </div>
         <div class="clearfix"></div>
 
-        <div class="row">
-       
-         
-            <div class="col-md-12" align="center">
-                <input type="submit" class="btn btn-warning btn-send" value="Transfer Case" />
-            </div>
-        </div>
 
         
         <div class="row">
@@ -571,6 +607,20 @@ const EditDemand = props => {
             </div>
         </div>
         </form>
+        }
+        <div class="clearfix"></div>
+        <form>
+        { userState.phase === 'Demand' &&
+        <button  class="btn btn-warning btn-send form-control" onClick={SendBack}>Send back to Case Manager - {readonlyState.username}</button>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+            </div>
+        </div>
+        
+        </form>
+
   
    
 

@@ -149,9 +149,9 @@ const DemandCases = props => {
                                                                     <th className="border-0 text-center ">Demand Letter Sent</th>
                                                                     <th className="border-0 text-center">Offer Received</th>
                                                                     <th className="border-0 text-center">Nego Transfer Date</th>
-                                                                    <th className="border-0 text-center">Transferred to Negotiator Name</th>
+                                                                    <th className="border-0 text-center">Negotiator Name</th>
                                                                     <th className="border-0 text-center">Litigation Transfer Date</th>
-                                                                    <th className="border-0 text-center">Transferred to Litigaion Name</th>
+                                                                    <th className="border-0 text-center">Litigaion Name</th>
                          
                                                                     <th className="border-0 text-center">Initial Medical Bills</th>
                                                                     <th className="border-0 text-center">Initial Offer</th>

@@ -8,7 +8,7 @@ const resolvers = {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
             .select('-__v -password')
-            .populate({path: 'cases', options: { sort: { 'dol': 1 } } }) 
+            .populate({path: 'cases', options: { sort: { 'dol': -1 } } }) 
   
           return userData;
         }
@@ -31,14 +31,14 @@ const resolvers = {
         return User.find(( { "active": true, "role": "Case Manager" } ))
           .select('-__v -password')
           .sort( { "department": 1 } )  
-          .populate({path: 'cases', options: { sort: { 'dol': 1 } } })
+          .populate({path: 'cases', options: { sort: { 'dol': -1 } } })
        
         
       },
       demandusers: async () => {
         return User.find(( { "active": true, "role": "Demand" } ))
           .select('-__v -password') 
-          .populate({path: 'cases', options: { sort: { 'dol': 1 } } })
+          .populate({path: 'cases', options: { sort: { 'dol': -1 } } })
        
         
       },
@@ -213,6 +213,33 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
 
       },
+      negotoNego: async (parent, { username, caseid, olduser, transferedtonego }, context) => {
+
+        if (context.user) {
+            await User.findOneAndUpdate(
+              { username: username },
+              { $push: { cases: caseid } },
+              { new: true }
+            );
+            await User.findOneAndUpdate(
+              { username: olduser },
+              { $pull: { cases: caseid } },
+              { new: true }
+            );
+    
+    
+            return await Casedata.findOneAndUpdate(
+              { _id: caseid },
+              { $set: { negomem: username, transferedtonego:transferedtonego } },
+              {
+                new: true,
+              }
+            );
+          }
+    
+          throw new AuthenticationError('Not logged in');
+    
+          },
 
       assignDemand: async (parent, { username, caseid }, context) => {
 
@@ -234,6 +261,55 @@ const resolvers = {
           throw new AuthenticationError('Not logged in');
     
           },
+          sendBack: async (parent, { caseid,phase, olduser }, context) => {
+         
+
+            if (context.user) {
+
+           
+
+              await User.findOneAndUpdate(
+                { username: olduser },
+                { $pull: { cases: caseid } },
+                { new: true }
+              );
+              if (phase==="Demand"){
+                
+                return await Casedata.findOneAndUpdate(
+                  { _id: caseid },
+                  { $set: { phase: "Investigation & Treatment", transferedtodemand:null, demandmem:null } },
+                  {
+                    new: true,
+                  }
+                );
+
+
+              } else if (phase==="Negotiation"){ 
+                return await Casedata.findOneAndUpdate(
+                  { _id: caseid },
+                  { $set: { phase: "Demand", transferedtonego:null, negomem:null } },
+                  {
+                    new: true,
+                  }
+                );
+              }
+              else { 
+                return await Casedata.findOneAndUpdate(
+                  { _id: caseid },
+                  { $set: { phase: "Demand", transferedtoliti:null, litimem:null } },
+                  {
+                    new: true,
+                  }
+                );
+              }
+      
+      
+            
+            }
+      
+            throw new AuthenticationError('Not logged in');
+      
+            },
 
           transferNego: async (parent, { phase, negomem, transferedtonego, caseid }, context) => {
 

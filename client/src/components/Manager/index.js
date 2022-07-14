@@ -84,13 +84,15 @@ const Manager = props => {
     <section class="why-us ">
       <div class=" d-flex justify-content-center">
         <button type="button" class={`mebtn ${currentCategory === 'Active' ? 'active' : ''}`} onClick={() => setCurrentCategory("Active")}>Active Cases</button>
-        <button type="button" class={`mebtn ${currentCategory === 'Transfer' ? 'active' : ''}`} onClick={() => setCurrentCategory("Transfer")} >Transferred Case</button>
+        <button type="button" class={`mebtn ${currentCategory === 'Transfer' ? 'active' : ''}`} onClick={() => setCurrentCategory("Transfer")} >Transferred Cases</button>
+        <button type="button" class={`mebtn ${currentCategory === 'Quickbase' ? 'active' : ''}`} onClick={() => setCurrentCategory("Quickbase")} >New from Quickbase</button>
         <button type="button" class={`mebtn ${currentCategory === 'Add' ? 'active' : ''}`} onClick={() => setCurrentCategory("Add")} >Add Case</button>
      
       </div>
 
       {(currentCategory === "Active") ? <ManagerCases show={"active"}/> : <>  </>}
       {(currentCategory === "Transfer") ? <ManagerCases show={"transfer"} /> : <>  </>}
+      {(currentCategory === "Quickbase") ? <ManagerCases show={"quickbase"} /> : <>  </>}
       {(currentCategory === "Add") ? <Redirect to={{
     pathname: "/manager/casenew",
     state: { ...prefsState }

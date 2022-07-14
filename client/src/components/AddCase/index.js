@@ -398,7 +398,9 @@ if (caseId==="new"){
                         class="form-control"
                         value={userState.phase}
                         onChange={handleChange}
+                        disabled={ ((userState.phase === 'Demand')||(userState.phase === 'Negotiation') ||(userState.phase === 'Litigation'))? true : false }
                         required >
+                        
                         <option ></option>
                                      {prefs.phase.map(role => (
                       <option >{role}</option>

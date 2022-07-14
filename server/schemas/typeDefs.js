@@ -46,21 +46,24 @@ type User {
     offerreceived:String
     transferedtoliti:String
     litimem:String
-    medicalbill: String
-    offer: String
+    medicalbill: Float
+    finalmedicalbill:Float
+    offer: Float
     tenderedpolicy:String
     boicourttransfer:String
     negonotes:String
     language:String
-    finaloffer:String
-    feesper:String
-    feesmoney:String
-    lastcall:String
-    nextcall:String
+    finaloffer:Float
+    feesper:Float
+    feesmoney:Float
+
     negostatus:String
     negoclaim:String
     outclient:String
     outrandal:String
+   
+    lastcall:String
+   
 
 
 
@@ -203,12 +206,22 @@ type Auth {
         negomem: String,
         transferedtoliti: String,
         litimem: String,
-        medicalbill:String,
-        offer:String,
+        medicalbill:Float,
+        offer:Float,
         tenderedpolicy:String,
         boicourttransfer:String,
         negonotes:String,
-        language:String
+        language:String,
+        finaloffer:Float,
+        finalmedicalbill:Float,
+        feesper:Float,
+        feesmoney:Float,
+        lastcall:String,
+        negostatus:String,
+        outclient:String,
+        outrandal:String,
+        negoclaim:String
+
         ):Casedata  
     updateUser(userId:ID!,username: String, email: String, role: String, department: String, active:Boolean): User
     updatePrefs(typesol: [String],
@@ -254,6 +267,8 @@ type Auth {
     reassignCase(username:String!, caseid:ID!, olduser:String!):Casedata
     assignDemand(username:String!, caseid:ID!):Casedata
     transferNego(phase:String!, negomem:String!, transferedtonego:String!, caseid:ID!):Casedata
+    sendBack(caseid:ID!, phase:String!,olduser:String!):Casedata
+    negotoNego(username:String!, caseid:ID!, olduser:String!, transferedtonego:String!):Casedata
   
   
   }

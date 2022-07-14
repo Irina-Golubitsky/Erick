@@ -101,10 +101,9 @@ mutation addData($username: String, $dol: String, $sol: String, $typesol: String
 }
 `;
 export const UPDATE_CASE = gql`
-mutation updateCase($caseId: ID!, $dol: String, $sol: String, $typesol: String, $fv: String, $client: String, $passenger: String, $typecase: String, $liability: String, $levelinjury: String, $phase: String, $propertyd: String, $policy: String, $umbrella: String, $umuim: String, $med: String, $lps: String, $def: String, $status: String, $level: String, $show: String, $transferedtodemand: String, $demandmem: String, $dletter: String, $offerreceived: String, $transferedtonego: String, $negomem: String, $transferedtoliti: String, $litimem: String, $medicalbill: String, $offer: String, $tenderedpolicy: String, $boicourttransfer: String,$negonotes: String,$language:String) {
-  updateCase(caseId: $caseId, dol: $dol, sol: $sol, typesol: $typesol, fv: $fv, client: $client, passenger: $passenger, typecase: $typecase, liability: $liability, levelinjury: $levelinjury, phase: $phase, propertyd: $propertyd, policy: $policy, umbrella: $umbrella, umuim: $umuim, med: $med, lps: $lps, def: $def, status: $status, level: $level, show: $show, transferedtodemand: $transferedtodemand, demandmem: $demandmem, dletter: $dletter, offerreceived: $offerreceived, transferedtonego: $transferedtonego, negomem: $negomem, transferedtoliti: $transferedtoliti, litimem: $litimem, medicalbill: $medicalbill, offer: $offer, tenderedpolicy: $tenderedpolicy, boicourttransfer:$boicourttransfer,negonotes: $negonotes, language:$language){
+mutation updateCase($caseId: ID!, $dol: String, $sol: String, $typesol: String, $fv: String, $client: String, $passenger: String, $typecase: String, $liability: String, $levelinjury: String, $phase: String, $propertyd: String, $policy: String, $umbrella: String, $umuim: String, $med: String, $lps: String, $def: String, $status: String, $level: String, $show: String, $transferedtodemand: String, $demandmem: String, $dletter: String, $offerreceived: String, $transferedtonego: String, $negomem: String, $transferedtoliti: String, $litimem: String, $medicalbill: Float, $offer: Float, $tenderedpolicy: String, $boicourttransfer: String, $negonotes: String, $language: String, $finaloffer: Float, $finalmedicalbill: Float, $feesper: Float, $feesmoney: Float, $lastcall: String, $negostatus: String, $outclient: String, $outrandal: String,$negoclaim:String) {
+  updateCase(caseId: $caseId, dol: $dol, sol: $sol, typesol: $typesol, fv: $fv, client: $client, passenger: $passenger, typecase: $typecase, liability: $liability, levelinjury: $levelinjury, phase: $phase, propertyd: $propertyd, policy: $policy, umbrella: $umbrella, umuim: $umuim, med: $med, lps: $lps, def: $def, status: $status, level: $level, show: $show, transferedtodemand: $transferedtodemand, demandmem: $demandmem, dletter: $dletter, offerreceived: $offerreceived, transferedtonego: $transferedtonego, negomem: $negomem, transferedtoliti: $transferedtoliti, litimem: $litimem, medicalbill: $medicalbill, offer: $offer, tenderedpolicy: $tenderedpolicy, boicourttransfer: $boicourttransfer, negonotes: $negonotes, language: $language, finaloffer: $finaloffer, finalmedicalbill: $finalmedicalbill, feesper: $feesper, feesmoney: $feesmoney, lastcall: $lastcall, negostatus: $negostatus, outclient: $outclient, outrandal: $outrandal, negoclaim:$negoclaim) {
     _id
-
   }
 }
 `;
@@ -191,6 +190,21 @@ mutation assignDemand($username: String!, $caseid: ID!) {
 export const  TRANSFER_NEGO = gql`
 mutation transferNego($phase: String!, $negomem: String!, $transferedtonego: String!, $caseid: ID!) {
   transferNego(phase: $phase,negomem: $negomem, transferedtonego: $transferedtonego, caseid: $caseid) {
+    _id
+  }
+}
+`;
+
+export const  SEND_BACK = gql`
+mutation sendBack($caseid: ID!, $phase: String!, $olduser: String!) {
+  sendBack(caseid: $caseid, phase: $phase, olduser: $olduser) {
+    _id
+  }
+}
+`;
+export const  NEGO_NEGO = gql`
+mutation negotoNego($username: String!, $caseid: ID!, $olduser: String!, $transferedtonego: String!) {
+  negotoNego(username: $username, caseid: $caseid, olduser: $olduser, transferedtonego: $transferedtonego) {
     _id
   }
 }
