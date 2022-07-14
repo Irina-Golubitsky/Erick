@@ -93,7 +93,7 @@ const caseSchema = new Schema(
 
       transferedtodemand:{
         type:Date,
-        default: Date.now,
+        
         get: timestamp => dateFormat(timestamp)
       },
       dletter:{

@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_ALLDATA} from '../../utils/mutations';
 import { UPDATE_CASE} from '../../utils/mutations';
-import { UPDATE_USER } from '../../utils/mutations';
+import { CLEAN_ALL } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 import {showactive,showtransfer,level1,level2,level3} from "../arrays.js"
 
@@ -45,7 +45,7 @@ const AddData = props => {
 
 
     const [addData, { error }] = useMutation(ADD_ALLDATA);
-
+    const [cleanAll, { error2 }] = useMutation(CLEAN_ALL);
     
     const loggedIn = Auth.loggedIn();
 
@@ -110,7 +110,16 @@ const addNewCase = async (newcase) => {
         }
 
 }
-const cleanAll = async (newcase) => {
+const cleanAllCases = async event => {
+    event.preventDefault();
+    try {        
+        await cleanAll();
+        console.log("cleaned");
+
+         
+    } catch (e) { console.log("error" )
+    }
+
 
 }
 
@@ -125,7 +134,7 @@ const cleanAll = async (newcase) => {
 </textarea>
   <input type="submit" value="Submit" />
 </form>
-   <button onClick={cleanAll} >Clean All</button>
+   <button onClick={cleanAllCases} >Clean All</button>
 
 </div>
     

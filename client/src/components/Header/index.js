@@ -1,14 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
 
 import Auth from '../../utils/auth';
+import {  QUERY_ME } from '../../utils/queries';
 
 const Header = () => {
+  const { loading, data } = useQuery( QUERY_ME, {    
+  });
+  const user = data?.me || {};
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   const logout = event => {
     event.preventDefault();
     Auth.logout();
   };
-
+  let mepath="/admin";
+  if (user.role==="Demand"){mepath="/demand"}
+  else if(user.role==="Case Manager"){mepath="/manager"}
+  else if(user.role==="Negotiation"){mepath="/nego"}
+  
   return (
  
    
@@ -22,7 +34,7 @@ const Header = () => {
     <nav id="navbar" class="navbar">
     {Auth.loggedIn() ? (
             <>
-              <Link to="/admin">Me</Link>
+              <Link to={mepath} >Me</Link>
               <a href="/" onClick={logout}>
                 Logout
               </a>

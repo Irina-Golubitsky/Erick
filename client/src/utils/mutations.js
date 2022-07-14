@@ -209,3 +209,8 @@ mutation negotoNego($username: String!, $caseid: ID!, $olduser: String!, $transf
   }
 }
 `;
+export const  CLEAN_ALL = gql`
+mutation cleanAll {
+  cleanAll
+}
+`;
