@@ -81,6 +81,7 @@ const Nego = props => {
         return  lastcall[1]+'/'+ lastcall[2]+"/"+lastcall[0]
 
     }
+    
 
    function renderListing() {
         let casedataList=[];
@@ -119,7 +120,8 @@ const Nego = props => {
                 <td >{casedata.feesper}</td>
                <td >{casedata.feesmoney}</td>
                 <td >{casedata.lastcall}</td>
-                {((casedata.lastcall !== null)&(casedata.lastcall !== "NaN-NaN-NaN") )? <td>{NextCall(casedata.lastcall)}</td> : <td></td>}
+             
+                {((casedata.lastcall !== null)&(casedata.lastcall !== "NaN/NaN/NaN") )? <td>{NextCall(casedata.lastcall)}</td> : <td></td>}
                 <td >{casedata.negostatus}</td>
                <td >{casedata.negoclaim}</td>
                 <td >{casedata.umuim}</td>
@@ -135,6 +137,8 @@ const Nego = props => {
                 
             </tr>);}}
         )
+
+       
 
         return casedataList;
     }

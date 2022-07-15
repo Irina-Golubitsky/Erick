@@ -269,6 +269,7 @@ type Auth {
     transferNego(phase:String!, negomem:String!, transferedtonego:String!, caseid:ID!):Casedata
     sendBack(caseid:ID!, phase:String!,olduser:String!):Casedata
     negotoNego(username:String!, caseid:ID!, olduser:String!, transferedtonego:String!):Casedata
+    sendToDemandmember(caseid:ID!,demandmem:String!):Casedata
   
   
   }

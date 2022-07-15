@@ -90,6 +90,19 @@ const EditNego = props => {
             }
             else return null;
         }
+        function inputToDate(mydate){
+            if (mydate!==null){
+                console.log("inptodate "+mydate);
+            mydate=mydate.split("-");
+            
+            let nextcall=new Date(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])+14);
+            nextcall= nextcall.toISOString().split('T')[0];
+            console.log(nextcall);
+            nextcall=nextcall.split("-");
+            return nextcall[1]+"/"+nextcall[2]+"/"+nextcall[0];
+            }
+            else return null;
+        }
         useEffect(() => {
             if (typeof data !== "undefined")  {
                 console.log(data);
@@ -117,6 +130,7 @@ const EditNego = props => {
                     negonotes: data.casedata.negonotes,
                     phase:data.casedata.phase,
                     show:data.casedata.show
+                  
                     });
                     setreadonlyState({
                      
@@ -125,7 +139,8 @@ const EditNego = props => {
                     negomem:data.casedata.negomem,
                         offer: data.casedata.offer,
         transferedtonego: dateToInput(data.casedata.transferedtonego),
-        medicalbill:data.casedata.medicalbill
+        medicalbill:data.casedata.medicalbill,
+        nextcall:NextCall(data.casedata.lastcall)
                       
                         });
                 
@@ -165,6 +180,9 @@ const EditNego = props => {
     const handleChange = event => {
         let { name, value } = event.target;
         if ((name==="finaloffer")||(name==="finalmedicalbill")||(name==="feesper")||(name==="feesmoney")){ value= Number(value)}
+        if (name==="lastcall"){
+            console.log(inputToDate(value));
+            setreadonlyState({...readonlyState, nextcall: inputToDate(value) })}
         
       
         
@@ -252,21 +270,24 @@ const EditNego = props => {
         window.location.replace("/nego");
     }
     function NextCall(mydate){
-        if ((mydate!==null)&(mydate!=="")){
-        mydate=mydate.split("-");
+        if ((mydate!==null)&(mydate!=="NaN/NaN/NaN")){
+   
+            mydate=mydate.split("/");
         
         
 
-    let lastcall=new Date(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])+14);
-    lastcall=lastcall.toISOString().split('T')[0];
-    lastcall=lastcall.split("-");
-
-
-        return  lastcall[1]+'/'+ lastcall[2]+"/"+lastcall[0]
-    //  return mydate[0]+"/"+mydate[1]+"/"+ mydate[2];
-        }else {return ""}
+            let lastcall=new Date(parseInt(mydate[2]), parseInt(mydate[0])-1, parseInt(mydate[1])+14);
+            lastcall=lastcall.toISOString().split('T')[0];
+            lastcall=lastcall.split("-");
+        
+        
+                return  lastcall[1]+'/'+ lastcall[2]+"/"+lastcall[0]
+        
+            
+        }else {return null}
 
     }
+    
  
 
     return (
@@ -502,9 +523,9 @@ const EditNego = props => {
                                         type="text"
                                         name="nextcall"
                                         class="form-control"
-                                        value={NextCall(userState.lastcall)}
+                                        value={readonlyState.nextcall}
                                        
-                                        readOnly
+                                      
                                       
                                     />
                                 </div>

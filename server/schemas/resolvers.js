@@ -261,6 +261,26 @@ const resolvers = {
           throw new AuthenticationError('Not logged in');
     
           },
+          sendToDemandmember: async (parent, {  caseid,demandmem }, context) => {
+
+            if (context.user) {
+                await User.findOneAndUpdate(
+                  { username: demandmem },
+                  { $push: { cases: caseid } },
+                  { new: true }
+                );
+                return await Casedata.findOneAndUpdate(
+                  { _id: caseid },
+                  { $set: {  demandmem: demandmem, transferedtodemand:Date.now(), phase:"Demand",show:"newdemand" } },
+                  {
+                    new: true,
+                  }
+                );
+              }
+        
+              throw new AuthenticationError('Not logged in');
+        
+              },
           sendBack: async (parent, { caseid,phase, olduser }, context) => {
          
 

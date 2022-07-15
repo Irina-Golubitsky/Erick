@@ -17,7 +17,7 @@ import Header from '../Header';
 
 const ManagerCases = props => {
     const history = useHistory();
-    const [currentCategory, setCurrentCategory] = useState('info');
+    const [currentCategory, setCurrentCategory] = useState('Active');
 
     const { loading, data } = useQuery( QUERY_ME, {    
     });
@@ -89,10 +89,12 @@ const ManagerCases = props => {
         let casedataList=[];
         let i=0;
         let usercases=user.cases||[];
-        console.log(usercases);
+        let prefsarray=[];
+        if (show==="active"){ prefsarray=prefs.showactive}
+        else if (show==="transfer"){prefsarray=prefs.showtransfer};
         usercases.map(casedata => {
 
-            if (casedata.show===show){i++;
+            if (prefsarray.includes(casedata.phase)){i++;
             casedataList.push(<tr >
             <td > <Link to={{
     pathname: `/manager/case${casedata._id}`,

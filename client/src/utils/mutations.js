@@ -214,3 +214,10 @@ mutation cleanAll {
   cleanAll
 }
 `;
+export const  SEND_DEMANDMEMBER = gql`
+mutation sendToDemandmember($caseid: ID!, $demandmem: String!) {
+  sendToDemandmember(caseid: $caseid, demandmem: $demandmem) {
+    _id
+  }
+}
+`;

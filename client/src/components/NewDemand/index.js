@@ -200,11 +200,14 @@ const NewDemand = ({ cases })=> {
      
       </div>
       <div class="row">
+      
 
 <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
 <div class="content tabscroll">
 
 { currentCategory === 'reassign' &&
+<form onSubmit={ReassignCases}
+>
 <div class="form-group">
                         <label for="form_name">Choose Demand Team Member</label>
                         <select 
@@ -220,8 +223,11 @@ const NewDemand = ({ cases })=> {
                       <option >{user.username}</option>
                     ))}
                         </select> < br />
-                        <div className='btn btn-success' onClick={ReassignCases} > Assign</div>
+                        <div class="col-md-3" align="center">
+                <input type="submit" class="btn btn-warning btn-send" value="Assign" />
+            </div>
                     </div>
+                    </form>
 }
 <Table bordered hover className='bg-white tabscroll' size="sm">
                                         <thead>

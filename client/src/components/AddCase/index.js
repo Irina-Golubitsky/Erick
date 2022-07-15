@@ -9,7 +9,7 @@ import { useMutation,useQuery } from '@apollo/react-hooks';
 import { ADD_CASEDATA} from '../../utils/mutations';
 import { ALL_PREFS} from '../../utils/queries';
 import { UPDATE_CASE} from '../../utils/mutations';
-import { UPDATE_USER } from '../../utils/mutations';
+import { SEND_DEMANDMEMBER } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
 
 
@@ -90,6 +90,7 @@ const AddCase = props => {
 
     const [addCase, { error }] = useMutation(ADD_CASEDATA);
     const [updateCase, { error2 }] = useMutation(UPDATE_CASE);
+    const [sendToDemandmember, { error3 }] = useMutation(SEND_DEMANDMEMBER);
 
     
     const loggedIn = Auth.loggedIn();
@@ -191,15 +192,14 @@ const AddCase = props => {
          // submit form
     const handleFormSubmit = async event => {
         event.preventDefault();
-       let show="";
-       if (prefs.showactive.includes(userState.phase)){show="active"}  else { show= "transfer"}
+      
       
       
 if (caseId==="new"){
     
         try {        
             await addCase({
-                variables: {...userState,dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00"), show:show}
+                variables: {...userState,dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00")}
               });
               window.location.replace("/manager");
         } catch (e) {
@@ -211,7 +211,7 @@ if (caseId==="new"){
         console.log(userState);
         try {        
             await updateCase({
-                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00"),show:show}
+                variables: {...userState,caseId:caseId, dol:new Date(userState.dol+"T00:00:00"), sol:new Date(userState.sol+"T00:00:00")}
               });
 
 
@@ -221,6 +221,27 @@ if (caseId==="new"){
 
       }
     };
+
+    const SendDemandAdmin = async event => {
+        event.preventDefault();
+        try {        
+            await updateCase({
+                variables: ({caseId:caseId, phase:"Demand"})
+              });
+              window.location.replace("/manager");
+        } catch (e) {
+        }
+    }
+    const SendDemandMember = async event => {
+        event.preventDefault();
+        try {        
+            await sendToDemandmember({
+                variables: ({caseid:caseId, demandmem:"Sandra Casillas"})
+              });
+              window.location.replace("/manager");
+        } catch (e) {
+        }
+    }
     const BackButton= event =>{
         event.preventDefault();
         window.location.replace("/manager");
@@ -577,6 +598,24 @@ if (caseId==="new"){
         </div>
   
     </form>
+
+    <div class="clearfix"></div>
+{ prefs.showactive.includes(userState.phase) &&
+<div class="row">
+            <div class="col-md-6">
+            <button  class="btn btn-warning btn-send form-control" onClick={SendDemandAdmin}>Send to Demand - Admin</button>
+            </div>
+            <div class="col-md-6">
+            <button  class="btn btn-warning btn-send form-control" onClick={SendDemandMember}>Send to Demand - Sandra Casillas</button>
+            </div>
+        </div>
+      
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+            </div>
+        </div>
 
 </div>
     
