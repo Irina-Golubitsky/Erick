@@ -19,6 +19,7 @@ import { event } from 'jquery';
 
 const NewDemand = ({ cases })=> {
     
+    
     const [selectState, setselectState] = useState({cases:[]});
     
     const [currentmanager, setCurrentManager] = useState('');

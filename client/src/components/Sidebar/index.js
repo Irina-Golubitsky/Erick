@@ -8,7 +8,10 @@ import { Redirect } from 'react-router-dom';
 import IntDashboard from '../IntDashboard'
 import IntMembers from '../IntMembers'
 import AllManagers from '../AllManagers'
+import AllDemand from '../AllDemand'
+import AllNego from '../AllNego'
 import ManagersDashboard from '../ManagersDashboard'
+import NegoDashboard from '../NegoDashboard'
 import NewDemand from '../NewDemand'
 import Users from '../Users'
 import Prefs from '../Prefs'
@@ -23,7 +26,8 @@ import {
 import { QUERY_USERS } from '../../utils/queries';
 
 const Sidebar = props => {
-  const [currentCategory, setCurrentCategory] = useState('IntDashboard');
+  
+  const [currentCategory, setCurrentCategory] = useState('ManagersDashboard');
   const [usersState, setusersState] = useState([]);
   const [demandState, setdemandState] = useState([]);
   const { loading, data } = useQuery( QUERY_ME, {    
@@ -36,6 +40,11 @@ const Sidebar = props => {
     setusersState(data2.users);}
   
   }, [ data2]);
+  // useEffect(() => {
+  //   if (currentCategory!== "IntDashboard") {
+  //   window.location.reload(false);}
+  
+  // }, [ currentCategory]);
   const { loading:loading3, data:data3 } = useQuery(NEW_DEMAND, {
   });
   useEffect(() => {
@@ -53,7 +62,7 @@ const Sidebar = props => {
 
   const users = data2?.users || [];
   
-  if (loading) {
+  if (loading2) {
       return <div>Loading...</div>;
   }
 
@@ -147,23 +156,24 @@ $("#show-sidebar").click(function() {
             <div class="">
             
               <ul>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'IntDashboard' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntDashboard")}>Intakes Platforms
-                    <span class="badge badge-pill badge-success">v</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'IntMembers' ? 'active' : ''}`} onClick={() => setCurrentCategory("IntMembers")}>Intakes Members
-                    <span class="badge badge-pill badge-success">v</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'ManagersDashboard' ? 'active' : ''}`} onClick={() => setCurrentCategory("ManagersDashboard")}>Dashboard: Case Managers</a>
+                    <li>
+                  <div class="sidebarbutton"  onClick={() => setCurrentCategory("ManagersDashboard")}>Dashboard: Case Managers</div>
                 </li>
                 
                 <li>
-                  <a href="#" class={` ${currentCategory === 'info' ? 'active' : ''}`} onClick={() => setCurrentCategory("info")}>Negotiaions</a>
+                <div class="sidebarbutton"onClick={() => setCurrentCategory("NegoDashboard")}>Dashboard: Negotiaions</div>
                 </li>
+                <li>
+                  <div class="sidebarbutton"onClick={() => setCurrentCategory("IntDashboard")}>Intakes Platforms
+                    <span class="badge badge-pill badge-success">v</span>
+                  </div>
+                </li>
+                <li>
+                <div class="sidebarbutton" onClick={() => setCurrentCategory("IntMembers")}>Intakes Members
+                    <span class="badge badge-pill badge-success">v</span>
+                  </div>
+                </li>
+          
               </ul>
             </div>
           </li>
@@ -179,7 +189,7 @@ $("#show-sidebar").click(function() {
               <li>
                   <a href="#" class={` ${currentCategory === 'CMData' ? 'active' : ''}`} onClick={() => setCurrentCategory("CMData")}>Case Managers</a>
                 </li>
-                <li>      <Dropdown >
+                {/* <li>      <Dropdown >
   <Dropdown.Toggle variant="success" id="dropdown-basic">
     Case Managers
   </Dropdown.Toggle>
@@ -191,31 +201,25 @@ $("#show-sidebar").click(function() {
     
 
   </Dropdown.Menu>
-</Dropdown></li>
-                <li>
-                  <a href="#" class={` ${currentCategory === 'AllCases' ? 'active' : ''}`} onClick={() => setCurrentCategory("AllCases")}>AllCases</a>
-                </li>
-                <li>
-                  <a href="#">Intakes
-                    
-                  </a>
-                </li>
-                <li>
-  
-                </li>
-                <li>
-                  <a href="#">Demands</a>
-                </li>
+</Dropdown></li> */}
+          
+                
+       
+
                 {demandState.length > 0 &&
                   <li>
-                  <a href="#" class={` ${currentCategory === 'NewDemand' ? 'active' : ''} text-danger`} onClick={() => setCurrentCategory("NewDemand")}>New Demand Cases!!!</a>
+                  <div class="sidebarbutton"onClick={() => {setCurrentCategory("NewDemand")}}>New Demand Cases!!!</div>
                 </li>
+            
       }
-                <li>
-                  <a href="#">Negotiaions</a>
+      <li>
+      <div class="sidebarbutton" onClick={() => setCurrentCategory("AllDemand")}>Demands</div>
+                </li>
+      <li>
+      <div class="sidebarbutton"onClick={() => setCurrentCategory("AllNego")}>Negotiations</div>
                 </li>
                 <li>
-                  <a href="#">Litigation</a>
+                <div class="sidebarbutton" onClick={() => setCurrentCategory("AllCases")}>AllCases</div>
                 </li>
               </ul>
             </div>
@@ -229,14 +233,14 @@ $("#show-sidebar").click(function() {
     
     <div class="sidebar-footer">
     
-    <a href="#" class={` ${currentCategory === 'Users' ? 'active' : ''}`} onClick={() => setCurrentCategory("Users")}>
+    <div class="sidebarbutton"  onClick={() => setCurrentCategory("Users")}>
         <i class="fa fa-user"></i>
         
-      </a>
-      <a href="#" class={` ${currentCategory === 'Prefs' ? 'active' : ''}`} onClick={() => setCurrentCategory("Prefs")}>
+      </div>
+      <div class="sidebarbutton" onClick={() => setCurrentCategory("Prefs")}>
         <i class="fa fa-cog"></i>
         
-      </a>
+      </div>
       
     </div>
   </nav>
@@ -249,9 +253,12 @@ $("#show-sidebar").click(function() {
   {(currentCategory === "IntDashboard") ? <IntDashboard /> : <>  </>}
   {(currentCategory === "IntMembers") ? <IntMembers /> : <>  </>}
   {(currentCategory === "CMData") ? <AllManagers /> : <>  </>}
+  {(currentCategory === "AllDemand") ? <AllDemand /> : <>  </>}
+  {(currentCategory === "AllNego") ? <AllNego /> : <>  </>}
   {(currentCategory === "Users") ? <Users /> : <>  </>}
   {(currentCategory === "Prefs") ? <Prefs /> : <>  </>}
   {(currentCategory === "ManagersDashboard") ? <ManagersDashboard/> : <>  </>}
+  {(currentCategory === "NegoDashboard") ? <NegoDashboard/> : <>  </>}
   {(currentCategory === "NewDemand") ? <NewDemand cases= {demandState} /> : <>  </>}
   {(currentCategory === "AllCases") ? <Redirect to="/admin/allcases" /> : <>  </>}
 

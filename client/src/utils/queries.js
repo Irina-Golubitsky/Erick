@@ -117,6 +117,70 @@ export const QUERY_DEMANDUSERS = gql`
     }
   }
 `;
+
+export const QUERY_GETUSERSBYROLE = gql`
+query getusersbyrole($role: String!) {
+  getusersbyrole(role: $role) {
+    _id
+    username
+    email
+    active
+    role
+    department
+    cases {
+      _id
+      createdAt
+      username
+      dol
+      sol
+      typesol
+      fv
+      client
+      passenger
+      typecase
+      liability
+      levelinjury
+      phase
+      propertyd
+      policy
+      umbrella
+      umuim
+      med
+      lps
+      def
+      status
+      level
+      lastupdate
+      show
+      demandmem
+      transferedtodemand
+      transferedtonego
+      negomem
+      dletter
+      offerreceived
+      transferedtoliti
+      litimem
+      medicalbill
+      finalmedicalbill
+      offer
+      tenderedpolicy
+      boicourttransfer
+      negonotes
+      language
+      finaloffer
+      feesper
+      feesmoney
+      negostatus
+      negoclaim
+      outclient
+      outrandal
+      lastcall
+    }
+  }
+}
+`;
+
+
 export const QUERY_ME = gql`
   {
     me { 
@@ -327,6 +391,22 @@ query Newdemand {
     level
     lastupdate
     show
+  }
+}
+`;
+export const QUERY_GETRANGENEGO = gql`
+query getRangeNego($date1: String, $date2: String) {
+  getRangeNego(date1: $date1, date2: $date2) {
+    transferedtonego
+    feesmoney
+    client
+    negoclaim
+    negomem
+    offer
+    finaloffer
+    medicalbill
+    finalmedicalbill
+    feesper
   }
 }
 `;

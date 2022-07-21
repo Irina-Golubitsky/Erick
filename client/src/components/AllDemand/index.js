@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_ME } from '../../utils/queries';
 import { ALL_PREFS } from '../../utils/queries';
+import { QUERY_GETUSERSBYROLE } from '../../utils/queries';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Auth from '../../utils/auth';
@@ -16,36 +17,29 @@ import Header from '../Header';
 
 const AllDemand = props => {
     const history = useHistory();
+    const [userState, setuserState] = useState({user:""});
+    const [currentmanager, setCurrentManager] = useState('');
   
     const [currentCategory, setCurrentCategory] = useState('Demand');
 
-    const { loading, data } = useQuery( QUERY_ME, {    
+    const { loading, data } = useQuery(QUERY_GETUSERSBYROLE, {
+        variables: { role: "Demand" }
     });
-    const user = data?.me || {};
-    console.log("user " + user.username);
-    const [prefsState, setprefsState] = useState({    
-       
-        tenderedpolicy: "",
-        boicourttransfer: ""
-      });
-  
-    const { loading:loading2, data:data2 } = useQuery(ALL_PREFS, {
-    });
-    const prefs = data2?.preferences || [];
+   
     useEffect(() => {
-        if (typeof prefs !== "undefined") {
-           setprefsState({ 
-            tenderedpolicy:prefs.tenderedpolicy,
-            boicourttransfer:prefs.boicourttransfer
-            });
+        if (typeof data !== "undefined") {
+            
 
+            setuserState({ user: data.getusersbyrole[0] });
         }
-       
-      }, [ data2]);
+    }, [data]);
+   
+  
+
     if (loading) {
       return <div>Loading...</div>;
     }
-    
+    const users = data?.getusersbyrole || {};
    
     const loggedIn = Auth.loggedIn();
 
@@ -56,31 +50,30 @@ const AllDemand = props => {
             </h4>
         );
     }
-    const handleRowClick = (row) => {
-        history.push(`/demand/case${row}`);
-      }  
+
+     const UserClicked = (index) => (event) => {
+        
+        setuserState({user:data.getusersbyrole[index]}); 
+        console.log(users[index].cases);
+    }
+    const handleChangeManager = event => {
+        const { name, value } = event.target;
+        setCurrentManager(value);
+
+
+    }
 
     //   onClick={()=> handleRowClick(casedata._id)} 
    function renderListing() {
         let casedataList=[];
         let i=0;
-        let usercases=user.cases||[];
+        let usercases=userState.user.cases||[];
         console.log(usercases);
         usercases.map(casedata => {
 
             if (casedata.phase===currentCategory){  i++;
             casedataList.push(<tr >
-            <td > <Link to={{
-    pathname: `/demand/case${casedata._id}`,
-    state: { ...prefsState }
-  }}
-                >     <button
-                    className="tablebtn"
-                    key={casedata._id}
-                   >
-                    ✓
-                  </button></Link>
-                </td>
+            
                 <td>{i}</td>
                 <td >{casedata.client}</td>
                 <td >{casedata.fv}</td>
@@ -104,6 +97,7 @@ const AllDemand = props => {
                 <td >{casedata.boicourttransfer}</td>
                 <td >{casedata.username}</td>
                 <td >{casedata.negonotes}</td>
+                <td >{casedata.lastupdate}</td>
               
     
                 
@@ -114,14 +108,31 @@ const AllDemand = props => {
     }
     return (
 
+<div id="info" class="section-bg">
+            <div class="container-fluid" data-aos="fade-up">
 
 
-        <div id="info" class="section-bg-full">
-          <div class=" d-flex justify-content-center">
+
+                <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
+                    <div class="content">
+                        <h3>Demand Members</h3>
+                        <div class="row">
+                            {users.map((user, index) => (
+                                <div class="col-3 userlist" onClick={UserClicked(index)}>{user.username}  </div>
+                            ))}
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class=" d-flex justify-content-center">
         <button type="button" class={`mebtn ${currentCategory === 'Demand' ? 'active' : ''}`} onClick={() => setCurrentCategory("Demand")}>Demand</button>
         <button type="button" class={`mebtn ${currentCategory === 'Negotiation' ? 'active' : ''}`} onClick={() => setCurrentCategory("Negotiation")} >Negotiation</button>
         <button type="button" class={`mebtn ${currentCategory === 'Litigation' ? 'active' : ''}`} onClick={() => setCurrentCategory("Litigation")} >Litigation</button>
-     
+     </div>
       </div>
 
             <div class="container-fluid" data-aos="fade-up">
@@ -132,12 +143,12 @@ const AllDemand = props => {
 
                     <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1 infobox">
                     <div class="content tabscroll">
-                    <h3>{user.username}'s cases</h3>
+                    <h3>{userState.user.username}'s cases</h3>
                     <p></p>
                     <Table bordered hover className='bg-white tabscroll' size="sm">
                                                             <thead>
                                                                 <tr>
-                                                                <th class="checkwidth"></th>
+                                                              
                                                                 <th >N</th>
                                                                     <th className="border-0 text-center one-line">Case Name</th>
                                                                     <th className="border-0 text-center">FileVine ID#</th>
@@ -162,7 +173,7 @@ const AllDemand = props => {
                                                                     <th className="border-0 text-center">Boicourt Transfer</th>
                                                                     <th className="border-0 text-center">Case Manager</th>
                                                                     <th className="border-0 text-center">Notes</th>
-                   
+                                                                    <th className="border-0 text-center">Last Update</th>
                 
                                                                 </tr>
                                                             </thead>

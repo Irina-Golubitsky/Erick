@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const dateFormat = require('../utils/dateFormat');
 
+
 const caseSchema = new Schema(
   {
   
@@ -121,6 +122,7 @@ const caseSchema = new Schema(
       },
       medicalbill: {
         type: Number
+        
        
     },
     finalmedicalbill: {

@@ -221,3 +221,19 @@ mutation sendToDemandmember($caseid: ID!, $demandmem: String!) {
   }
 }
 `;
+
+export const  ADD_DEMAND = gql`
+mutation addDemand($client: String, $fv: String, $dol: String, $transferedtodemand: String, $dletter: String, $offerreceived: String, $transferedtonego: String, $negomem: String, $medicalbill: Float, $offer: Float, $tenderedpolicy: String, $boicourttransfer: String, $username: String, $negonotes: String, $phase:String) {
+  addDemand(client: $client, fv: $fv, dol: $dol, transferedtodemand: $transferedtodemand, dletter: $dletter, offerreceived: $offerreceived, transferedtonego: $transferedtonego, negomem: $negomem, medicalbill: $medicalbill, offer: $offer, tenderedpolicy: $tenderedpolicy, boicourttransfer: $boicourttransfer, username: $username, negonotes: $negonotes, phase:$phase) {
+    _id
+  }
+}
+`;
+
+export const  ADD_NEGO = gql`
+mutation addNego($negomem: String, $username: String, $client: String, $fv: String, $language: String, $dol: String, $transferedtonego: String, $offer: Float, $finaloffer: Float, $medicalbill: Float, $finalmedicalbill: Float, $feesper: Float, $feesmoney: Float, $lastcall: String, $negostatus: String, $negoclaim: String, $umuim: String, $med: String, $negonotes: String, $outclient: String, $outrandal: String, $phase: String) {
+  addNego(negomem: $negomem, username: $username, client: $client, fv: $fv, language: $language, dol: $dol, transferedtonego: $transferedtonego, offer: $offer, finaloffer: $finaloffer, medicalbill: $medicalbill, finalmedicalbill: $finalmedicalbill, feesper: $feesper, feesmoney: $feesmoney, lastcall: $lastcall, negostatus: $negostatus, negoclaim: $negoclaim, umuim: $umuim, med: $med, negonotes: $negonotes, outclient: $outclient, outrandal: $outrandal, phase: $phase) {
+    _id
+  }
+}
+`;

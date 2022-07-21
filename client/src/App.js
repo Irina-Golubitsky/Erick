@@ -14,6 +14,8 @@ import Manager from './components/Manager';
 import AddCase from './components/AddCase';
 import AllCases from './components/AllCases';
 import AddData from './components/AddData';
+import AddDemand from './components/AddDemand';
+import AddNego from './components/AddNego';
 import DemandCases from './components/DemandCases';
 import EditDemand from './components/EditDemand';
 import Nego from './components/Nego';
@@ -106,7 +108,12 @@ function App() {
 
 
      </Switch> 
-
+     <Switch>
+     <Route exact path="/adddemand" component={AddDemand} />
+</Switch>
+     <Switch>
+     <Route exact path="/addnego" component={AddNego} />
+</Switch>
         <Footer />
 
 

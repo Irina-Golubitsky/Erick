@@ -91,7 +91,7 @@ const ManagerCases = props => {
         let usercases=user.cases||[];
         let prefsarray=[];
         if (show==="active"){ prefsarray=prefs.showactive}
-        else if (show==="transfer"){prefsarray=prefs.showtransfer};
+        else if (show==="transferred"){prefsarray=prefs.showtransfer};
         usercases.map(casedata => {
 
             if (prefsarray.includes(casedata.phase)){i++;

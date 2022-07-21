@@ -1694,11 +1694,11 @@ body {
 .sidebar-wrapper .sidebar-brand > a,
 .sidebar-wrapper .sidebar-dropdown > a:after,
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before,
-.sidebar-wrapper ul li a i,
+.sidebar-wrapper ul li a i div,
 .page-wrapper .page-content,
 .sidebar-wrapper .sidebar-search input.search-menu,
 .sidebar-wrapper .sidebar-search .input-group-text,
-.sidebar-wrapper .sidebar-menu ul li a,
+.sidebar-wrapper .sidebar-menu ul li a div,
 #show-sidebar,
 #close-sidebar {
   -webkit-transition: all 0.3s ease;
@@ -1874,7 +1874,7 @@ body {
   padding: 8px 30px 8px 20px;
 }
 
-.sidebar-wrapper .sidebar-menu ul li a i {
+.sidebar-wrapper .sidebar-menu ul li a i  {
   margin-right: 10px;
   font-size: 12px;
   width: 30px;
@@ -2075,15 +2075,29 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text,
 .chiller-theme .sidebar-wrapper .sidebar-brand>a,
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a,
-.chiller-theme .sidebar-footer>a {
+.chiller-theme .sidebar-footer>a button {
     color: #aeb2b9;
 }
+.sidebarbutton {
+  color: #aeb2b9;
+ 
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+  position: relative;
+  padding: 8px 30px 8px 30px;
+  cursor: pointer;
+  }
+  .sidebarbutton:hover {
+    color: #ebedf0;
+  }
+
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li:hover>a,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active>a,
 .chiller-theme .sidebar-wrapper .sidebar-header .user-info,
 .chiller-theme .sidebar-wrapper .sidebar-brand>a:hover,
-.chiller-theme .sidebar-footer>a:hover i {
+.chiller-theme .sidebar-footer>a:hover  {
     color: #ebedf0;
 }
 

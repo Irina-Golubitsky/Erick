@@ -35,6 +35,14 @@ const resolvers = {
        
         
       },
+      getusersbyrole: async (parent, { role }) => {
+        return User.find(( { "active": true, "role": role } ))
+          .select('-__v -password')
+          .sort( { "department": 1 } )  
+          .populate({path: 'cases', options: { sort: { 'dol': -1 } } })
+       
+        
+      },
       demandusers: async () => {
         return User.find(( { "active": true, "role": "Demand" } ))
           .select('-__v -password') 
@@ -103,8 +111,22 @@ const resolvers = {
          
      ] )
     
-  }
+  },
+
+  getRangeNego: async (parent, { date1,date2 }) => {
+    return Casedata.find({ 
+      "transferedtonego": {
+          $gte:`${date1}T00:00:00.000Z`, 
+          $lt: `${date2}T23:59:59.999Z`
+      },
+      "feesmoney":{$gt:0}
+
+  })
+  .sort( { "negomem": 1} ) 
   
+}
+  
+
     
  
   
@@ -158,6 +180,56 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { username: args.username},
+          { $push: { cases: casedata._id } },
+          { new: true }
+        );
+
+        return casedata;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addDemand: async (parent, args, context) => {
+      if (context.user) {
+        let phase="Demand";
+       
+        if (args.transferedtonego!==""){phase="Negotiation" }
+        console.log(context.user.username);
+        const casedata = await Casedata.findOneAndUpdate(
+          {fv:args.fv},
+          { ...args, phase:phase },
+          {new: true,
+          upsert:true,
+          setDefaultsOnInsert: true}
+          );
+
+        await User.findOneAndUpdate(
+          { username: "Sandra Casillas", "cases._id":{$ne:casedata._id}},
+          { $push: { cases: casedata._id } },
+          { new: true }
+        );
+
+        return casedata;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addNego: async (parent, args, context) => {
+      if (context.user) {
+        let phase="Negotiation";
+       
+        if (args.outrandal!==""){phase="Storage" }
+        console.log(context.user.username);
+        const casedata = await Casedata.findOneAndUpdate(
+          {fv:args.fv},
+          { ...args, phase:phase },
+          {new: true,
+          upsert:true,
+          setDefaultsOnInsert: true}
+          );
+
+        await User.findOneAndUpdate(
+          { username: args.negomem, "cases._id":{$ne:casedata._id}},
           { $push: { cases: casedata._id } },
           { new: true }
         );
@@ -388,6 +460,18 @@ return "yes"
 // }
 //    throw new AuthenticationError('Not logged in');
  },
+ clearSandra: async (parent, args, context) => {
+  // if (context.user) {
+   
+
+    return User.findOneAndUpdate({username:"Sandra Casillas"}, { $set : {'cases': [] }} , {new:true} )
+    
+
+   
+return "yes"
+// }
+//    throw new AuthenticationError('Not logged in');
+},
       login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   

@@ -39,11 +39,12 @@ const AllCases = props => {
 
     function renderListing() {
        
-        
+        let i=1;
             let casedataList=[];
             cases.map(casedata => {
             casedataList.push(
             <tr >
+            <td>{i}</td>
             <td >{casedata.username}</td>
                 <td >{casedata.dol}</td>
                 <td >{casedata.sol}</td>
@@ -68,8 +69,8 @@ const AllCases = props => {
                 <td >{casedata.lastupdate}</td>
     
                 
-            </tr>);
-        })
+            </tr>); i++;
+        } )
 
         return casedataList;
     }
@@ -104,6 +105,7 @@ const AllCases = props => {
                     <Table bordered hover className='bg-white' size="sm">
                                                             <thead>
                                                                 <tr>
+                                                                <th className="border-0 text-center">N</th>
                                                                 <th className="border-0 text-center one-line">Manager</th>
                                                                     <th className="border-0 text-center one-line">DOL</th>
                                                                     <th className="border-0 text-center">SOL</th>

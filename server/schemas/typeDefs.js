@@ -125,9 +125,11 @@ type Auth {
     casedata(_id: ID!): Casedata
     allcases:[Casedata]
     activemanagers:[User]
+    getusersbyrole(role:String!):[User]
     caseStage:[CS]
     newdemand:[Casedata]
     demandusers:[User]
+    getRangeNego(date1:String,date2:String):[Casedata]
     
   }
 
@@ -270,6 +272,12 @@ type Auth {
     sendBack(caseid:ID!, phase:String!,olduser:String!):Casedata
     negotoNego(username:String!, caseid:ID!, olduser:String!, transferedtonego:String!):Casedata
     sendToDemandmember(caseid:ID!,demandmem:String!):Casedata
+    addDemand(client:String, fv:String, dol:String,transferedtodemand:String, dletter:String, offerreceived:String, transferedtonego:String, negomem:String,
+      medicalbill:Float, offer:Float, tenderedpolicy:String,boicourttransfer:String, username:String, negonotes:String, phase:String):Casedata
+    addNego(negomem:String,username:String,client:String, fv:String, language:String, dol:String,transferedtonego:String, offer:Float,finaloffer:Float, medicalbill:Float, finalmedicalbill:Float,
+        feesper:Float, feesmoney:Float, lastcall:String,negostatus:String, negoclaim:String, umuim:String,med:String, negonotes:String, outclient:String, outrandal:String, phase:String):Casedata
+      clearSandra(aa:String):User
+    
   
   
   }
